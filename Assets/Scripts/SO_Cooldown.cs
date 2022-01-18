@@ -5,5 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Cooldown", menuName = "ScriptableObjects/Cooldown")]
 public class SO_Cooldown : ScriptableObject
 {
-    public float fCooldown = 10;
+    public float fCooldown = 0;
+
 }
