@@ -31,7 +31,7 @@ namespace Complete
         {
             // The fire axis is based on the player number.
             m_FireButton = "Fire" + m_PlayerNumber;
-            m_soCooldown.fCooldown = 0;
+            //m_soCooldown.fCooldown = 0;
         }
 
 
