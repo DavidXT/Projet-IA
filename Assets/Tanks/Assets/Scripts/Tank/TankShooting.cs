@@ -18,7 +18,7 @@ namespace Complete
         [SerializeField] private float m_CurrentLaunchForce = 50;         // The force that will be given to the shell when the fire button is released.
         private float m_ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
         private bool m_Fired;                       // Whether or not the shell has been launched with this button press.
-        [SerializeField] private SO_Cooldown m_cooldown;
+        [SerializeField] private SO_Cooldown m_soCooldown;
         [SerializeField] private float m_resetCooldown;
         [SerializeField] private float m_currCooldown;
 
@@ -31,7 +31,7 @@ namespace Complete
         {
             // The fire axis is based on the player number.
             m_FireButton = "Fire" + m_PlayerNumber;
-            m_cooldown.fCooldown = 0;
+            m_soCooldown.fCooldown = 0;
         }
 
 
@@ -41,11 +41,11 @@ namespace Complete
             {
                 Fire();
             }
-            //if(m_cooldown.fCooldown >= 0)
+            //if(m_soCooldown.fCooldown >= 0)
             //{
-            //    m_cooldown.fCooldown -= Time.deltaTime;
+            //    m_soCooldown.fCooldown -= Time.deltaTime;
             //}
-            if(m_currCooldown >= 0)
+            if (m_currCooldown >= 0)
             {
                 m_currCooldown -= Time.deltaTime;
             }
@@ -68,7 +68,7 @@ namespace Complete
             m_ShootingAudio.clip = m_FireClip;
             m_ShootingAudio.Play ();
 
-            //m_cooldown.fCooldown = m_resetCooldown;
+            //m_soCooldown.fCooldown = m_resetCooldown;
             m_currCooldown = m_resetCooldown;
 
         }
