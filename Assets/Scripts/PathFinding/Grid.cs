@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    public static Grid Instance;
     public LayerMask unwalkableMask;
     public Vector2 gridWorldSize;
     public float nodeRadius;
     public Node[,] grid;
 
     float nodeDiameter;
-    int gridSizeX, gridSizeY;
+    public int gridSizeX, gridSizeY;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
