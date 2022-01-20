@@ -1,136 +1,100 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
-    public GameObject[] Dijkstra(Node begin, Node end)
-    {
-        Node tempBegin = begin;
 
-        List<Node> tempToCheck = new List<Node>();
-        List<Node> tempChecked = new List<Node>();
-        tempToCheck.Add(tempBegin);
+	public Transform seeker, target;
+	Grid grid;
 
-        Node[,] tempGrounds = Grid.Instance.grid;
+	void Awake()
+	{
+		grid = GetComponent<Grid>();
+	}
 
-        Node tempEndTile = end;
-
-        while (tempToCheck.Count > 0)
+	void Update()
+	{
+		if(seeker!=null && target != null)
         {
-            Node tempTile = tempToCheck[0];
-            tempToCheck.RemoveAt(0);
+			AStar(seeker.position, target.position);
+		}
+	}
 
-            //en haut
-            if (tempTile.m_worldPosition.y < Grid.Instance.gridSizeY - 1)
-            {
-                Node tempSecondTile = new Node(true,new Vector3(0,0));
-                tempSecondTile = tempGrounds[(int)tempTile.m_worldPosition.x, (int)tempTile.m_worldPosition.z + 1];
-                //tempSecondTile.Coordonnee = tempSecondTile.transform.position;
-                //tempSecondTile.Origin = tempTile;
+	void AStar(Vector3 startPos, Vector3 targetPos)
+	{
+		Node startNode = grid.NodeFromWorldPoint(startPos);
+		Node targetNode = grid.NodeFromWorldPoint(targetPos);
 
-                if (tempSecondTile == end)
-                {
-                    tempEndTile = tempSecondTile;
-                    break;
-                }
+		List<Node> openSet = new List<Node>();
+		HashSet<Node> closedSet = new HashSet<Node>();
+		openSet.Add(startNode);
 
-                if (!Node.Contains(tempToCheck, tempSecondTile) && !Node.Contains(tempChecked, tempSecondTile))
-                {
-                    tempToCheck.Add(tempSecondTile);
-                    //tempSecondTile.HimSelf.GetComponent<Renderer>().material.color = Color.red;
-                }
-            }
-            //à droite
-            if (tempTile.m_worldPosition.x < Grid.Instance.gridSizeX - 1)
-            {
-                Node tempSecondTile = new Node(true, new Vector3(0, 0));
-                //tempSecondTile.HimSelf = tempGrounds[(int)tempTile.Coordonnee.x + 1, (int)tempTile.Coordonnee.z];
-                //tempSecondTile.Coordonnee = tempSecondTile.HimSelf.transform.position;
-                //tempSecondTile.Origin = tempTile;
+		while (openSet.Count > 0)
+		{
+			Node node = openSet[0];
+			for (int i = 1; i < openSet.Count; i++)
+			{
+				if (openSet[i].fCost < node.fCost || openSet[i].fCost == node.fCost)
+				{
+					if (openSet[i].hCost < node.hCost)
+						node = openSet[i];
+				}
+			}
 
-                if (tempSecondTile == end)
-                {
-                    tempEndTile = tempSecondTile;
-                    break;
-                }
+			openSet.Remove(node);
+			closedSet.Add(node);
 
+			if (node == targetNode)
+			{
+				RetracePath(startNode, targetNode);
+				return;
+			}
 
-                if (!Node.Contains(tempToCheck, tempSecondTile) && !Node.Contains(tempChecked, tempSecondTile))
-                {
-                    tempToCheck.Add(tempSecondTile);
-                    //tempSecondTile.HimSelf.GetComponent<Renderer>().material.color = Color.red;
-                }
-            }
-            //en bas
-            if (tempTile.m_worldPosition.z > 0)
-            {
-                Node tempSecondTile = new Node(true, new Vector3(0, 0));
-                //tempSecondTile.HimSelf = tempGrounds[(int)tempTile.Coordonnee.x, (int)tempTile.Coordonnee.z - 1];
-                //tempSecondTile.Coordonnee = tempSecondTile.HimSelf.transform.position;
-                //tempSecondTile.Origin = tempTile;
+			foreach (Node neighbour in grid.GetNeighbours(node))
+			{
+				if (!neighbour.walkable || closedSet.Contains(neighbour))
+				{
+					continue;
+				}
 
-                if (tempSecondTile == end)
-                {
-                    tempEndTile = tempSecondTile;
-                    break;
-                }
+				int newCostToNeighbour = node.gCost + GetDistance(node, neighbour);
+				if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+				{
+					neighbour.gCost = newCostToNeighbour;
+					neighbour.hCost = GetDistance(neighbour, targetNode);
+					neighbour.parent = node;
 
+					if (!openSet.Contains(neighbour))
+						openSet.Add(neighbour);
+				}
+			}
+		}
+	}
 
-                if (!Node.Contains(tempToCheck, tempSecondTile) && !Node.Contains(tempChecked, tempSecondTile))
-                {
-                    tempToCheck.Add(tempSecondTile);
-                    //tempSecondTile.HimSelf.GetComponent<Renderer>().material.color = Color.red;
-                }
-            }
-            //à gauche
-            if (tempTile.m_worldPosition.x > 0)
-            {
-                Node tempSecondTile = new Node(true, new Vector3(0, 0));
-                //tempSecondTile.HimSelf = tempGrounds[(int)tempTile.Coordonnee.x - 1, (int)tempTile.Coordonnee.z];
-                //tempSecondTile.Coordonnee = tempSecondTile.HimSelf.transform.position;
-                //tempSecondTile.Origin = tempTile;
+	void RetracePath(Node startNode, Node endNode)
+	{
+		List<Node> path = new List<Node>();
+		Node currentNode = endNode;
 
-                if (tempSecondTile == end)
-                {
-                    tempEndTile = tempSecondTile;
-                    break;
-                }
+		while (currentNode != startNode)
+		{
+			path.Add(currentNode);
+			currentNode = currentNode.parent;
+		}
+		path.Reverse();
 
+		grid.path = path;
 
-                if (!Node.Contains(tempToCheck, tempSecondTile) && !Node.Contains(tempChecked, tempSecondTile))
-                {
-                    tempToCheck.Add(tempSecondTile);
-                    //tempSecondTile.HimSelf.GetComponent<Renderer>().material.color = Color.red;
-                }
-            }
+	}
 
-            tempChecked.Add(tempTile);
+	int GetDistance(Node nodeA, Node nodeB)
+	{
+		int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
+		int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 
-            //tempTile.gameobject.GetComponent<Renderer>().material.color = Color.green;
-        }
-
-        if (tempEndTile == null)
-        {
-            return null;
-        }
-
-        List<Node> tempResult = new List<Node>();
-        while (tempEndTile != begin)
-        {
-            tempResult.Add(tempEndTile);
-        }
-        tempResult.Add(tempEndTile);
-
-        //tempResult.Reverse();
-        //return tempResult.ToArray();
-
-        GameObject[] tempTilesResult = new GameObject[tempResult.Count];
-        for (int i = 0; i < tempTilesResult.Length; ++i)
-        {
-            //tempTilesResult[i] = tempResult[tempResult.Count - i - 1];
-        }
-
-        return tempTilesResult;
-    }
+		if (dstX > dstY)
+			return 14 * dstY + 10 * (dstX - dstY);
+		return 14 * dstX + 10 * (dstY - dstX);
+	}
 }
