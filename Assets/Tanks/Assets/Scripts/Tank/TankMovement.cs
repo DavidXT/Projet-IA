@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Complete
 {
+    public enum Controller
+    {
+        IA,
+        Player,
+        None
+    }
     public class TankMovement : MonoBehaviour
     {
         public int m_PlayerNumber = 1;              // Used to identify which tank belongs to which player.  This is set by this tank's manager.
@@ -19,6 +26,8 @@ namespace Complete
         private float m_TurnInputValue;             // The current value of the turn input.
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
+        
+        [SerializeField] private Controller m_Controller = Controller.None; // References to all the particles systems used by the Tanks
 
         private void Awake ()
         {
@@ -42,6 +51,11 @@ namespace Complete
             for (int i = 0; i < m_particleSystems.Length; ++i)
             {
                 m_particleSystems[i].Play();
+            }
+
+            if (m_Controller == Controller.IA)
+            {
+                GetComponent<TankIA>().InitSM();
             }
         }
 
@@ -72,9 +86,12 @@ namespace Complete
 
         private void Update ()
         {
-            // Store the value of both input axes.
-            m_MovementInputValue = Input.GetAxis (m_MovementAxisName);
-            m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
+            if (m_Controller == Controller.Player)
+            {
+                // Store the value of both input axes.
+                m_MovementInputValue = Input.GetAxis (m_MovementAxisName);
+                m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
+            }
 
             EngineAudio ();
         }
