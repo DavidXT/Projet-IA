@@ -6,7 +6,7 @@ public class PathManager : MonoBehaviour
 {
     public Pathfinding pathfinding;
     public Grid grid;
-    public int speed = 10;
+    public GameObject[] allTanks;
     void Awake()
     {
         grid = GetComponent<Grid>();
@@ -21,16 +21,27 @@ public class PathManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(grid.path != null)
-        //{
-        //    if(grid.path.Count > 0)
-        //    {
-        //        pathfinding.seeker.transform.position = Vector3.MoveTowards(pathfinding.seeker.transform.position, grid.path[0].worldPosition, speed * Time.deltaTime);
-        //    }
-        //}
-        if (pathfinding.target != null)
+        allTanks = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject go in allTanks)
         {
-            pathfinding.seeker.transform.LookAt(pathfinding.target.transform.position);
+            GetDistanceTank(allTanks, go);
+        }
+
+    }
+
+    void GetDistanceTank(GameObject[] _tankList, GameObject _currentTank)
+    {
+        float currDistance = 1000;
+        for(int i = 0; i < _tankList.Length; i++)
+        {
+            if (Vector3.Distance(_tankList[i].transform.position,_currentTank.transform.position) < currDistance && currDistance > 0)
+            {
+                if(_currentTank != _tankList[i])
+                {
+                    currDistance = Vector3.Distance(_tankList[i].transform.position, _currentTank.transform.position);
+                    _currentTank.GetComponent<Complete.TankShooting>().m_target = _tankList[i].transform;
+                }
+            }
         }
     }
 }

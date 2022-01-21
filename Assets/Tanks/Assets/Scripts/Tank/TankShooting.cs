@@ -48,8 +48,9 @@ namespace Complete
             }
             if(m_target != null)
             {
-                if (Vector3.Distance(this.transform.position, m_target.position) < m_shootDistance && m_currCooldown < 0)
+                if (Vector3.Distance(this.transform.position, m_target.position) < m_shootDistance && m_currCooldown < 0 && m_target != this)
                 {
+                    this.transform.LookAt(m_target.transform.position);
                     Fire();
                 }
             }

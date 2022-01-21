@@ -8,7 +8,7 @@ public class Pathfinding : MonoBehaviour
 	public static Pathfinding Instance;
 	public GameObject seeker, target;
 	Grid grid;
-	public bool b_AStar;
+	public bool b_AStar = true;
 
 	void Awake()
 	{

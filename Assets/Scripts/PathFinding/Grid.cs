@@ -13,6 +13,8 @@ public class Grid : MonoBehaviour
 	public List<Node> path;
 	public List<Node> checkedPath;
 
+
+
 	float nodeDiameter;
 	int gridSizeX, gridSizeY;
 
@@ -43,6 +45,10 @@ public class Grid : MonoBehaviour
 			}
 		}
 	}
+	void FindPlayer()
+    {
+
+    }
 
 	public List<Node> GetNeighbours(Node node)
 	{
