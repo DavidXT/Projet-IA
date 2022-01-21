@@ -11,6 +11,7 @@ namespace Complete
         public AudioClip m_EngineIdling;            // Audio to play when the tank isn't moving.
         public AudioClip m_EngineDriving;           // Audio to play when the tank is moving.
 		public float m_PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
+        public bool m_IsIA;
 
         private string m_MovementAxisName;          // The name of the input axis for moving forward and back.
         private string m_TurnAxisName;              // The name of the input axis for turning.
@@ -19,6 +20,7 @@ namespace Complete
         private float m_TurnInputValue;             // The current value of the turn input.
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
+        [SerializeField] Complete.TankShooting m_shootScript;
 
         private void Awake ()
         {
@@ -75,6 +77,16 @@ namespace Complete
             // Store the value of both input axes.
             m_MovementInputValue = Input.GetAxis (m_MovementAxisName);
             m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
+            if (m_IsIA)
+            {
+                if (Grid.Instance.path != null)
+                {
+                    if (Grid.Instance.path.Count > 0)
+                    {
+                        this.transform.position = Vector3.MoveTowards(this.transform.position, Grid.Instance.path[0].worldPosition, m_Speed * Time.deltaTime);
+                    }
+                }
+            }
 
             EngineAudio ();
         }

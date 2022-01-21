@@ -5,13 +5,17 @@ using Complete;
 
 public class Pathfinding : MonoBehaviour
 {
-
+	public static Pathfinding Instance;
 	public GameObject seeker, target;
 	Grid grid;
 	public bool b_AStar;
 
 	void Awake()
 	{
+		if(Instance != null)
+        {
+			Instance = this;
+        }
 		grid = GetComponent<Grid>();
 	}
 

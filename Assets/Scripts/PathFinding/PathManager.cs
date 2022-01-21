@@ -21,14 +21,16 @@ public class PathManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(grid.path != null)
+        //if(grid.path != null)
+        //{
+        //    if(grid.path.Count > 0)
+        //    {
+        //        pathfinding.seeker.transform.position = Vector3.MoveTowards(pathfinding.seeker.transform.position, grid.path[0].worldPosition, speed * Time.deltaTime);
+        //    }
+        //}
+        if (pathfinding.target != null)
         {
-            pathfinding.seeker.transform.position = Vector3.MoveTowards(pathfinding.seeker.transform.position,grid.path[0].worldPosition,speed * Time.deltaTime);
-            if(pathfinding.target != null)
-            {
-                pathfinding.seeker.transform.LookAt(pathfinding.target.transform.position);
-            }
+            pathfinding.seeker.transform.LookAt(pathfinding.target.transform.position);
         }
-
     }
 }
