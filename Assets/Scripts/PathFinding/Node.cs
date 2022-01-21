@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Node
 {
@@ -19,6 +20,18 @@ public class Node
 		worldPosition = _worldPos;
 		gridX = _gridX;
 		gridY = _gridY;
+	}
+
+	public static bool Contains(List<Node> list, Node value)
+	{
+		foreach (Node node in list)
+		{
+			if (node == value)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int fCost
