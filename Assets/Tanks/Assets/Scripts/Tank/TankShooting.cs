@@ -12,7 +12,8 @@ namespace Complete
         public AudioSource m_ShootingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
         public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
         public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
-
+        public Transform m_target;
+        public float m_shootDistance = 20;
 
         private string m_FireButton;                // The input axis that is used for launching shells.
         [SerializeField] private float m_CurrentLaunchForce = 50;         // The force that will be given to the shell when the fire button is released.
@@ -21,6 +22,7 @@ namespace Complete
         [SerializeField] private SO_Cooldown m_soCooldown;
         [SerializeField] private float m_resetCooldown;
         [SerializeField] private float m_currCooldown;
+
 
         private void OnEnable()
         {
@@ -31,7 +33,10 @@ namespace Complete
         {
             // The fire axis is based on the player number.
             m_FireButton = "Fire" + m_PlayerNumber;
-            //m_soCooldown.fCooldown = 0;
+            m_shootDistance = 20;
+            m_currCooldown = 0;
+
+        //m_soCooldown.fCooldown = 0;
         }
 
 
@@ -40,6 +45,13 @@ namespace Complete
             if (Input.GetButtonDown(m_FireButton) && m_currCooldown < 0)
             {
                 Fire();
+            }
+            if(m_target != null)
+            {
+                if (Vector3.Distance(this.transform.position, m_target.position) < m_shootDistance && m_currCooldown < 0)
+                {
+                    Fire();
+                }
             }
             //if(m_soCooldown.fCooldown >= 0)
             //{

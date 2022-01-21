@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Complete;
 
 public class Pathfinding : MonoBehaviour
 {
 
-	public Transform seeker, target;
+	public GameObject seeker, target;
 	Grid grid;
 	public bool b_AStar;
 
@@ -18,13 +19,17 @@ public class Pathfinding : MonoBehaviour
 	{
 		if(seeker!=null && target != null)
         {
+			if (seeker.GetComponent<Complete.TankShooting>() != null)
+            {
+				seeker.GetComponent<Complete.TankShooting>().m_target = target.transform;
+			}
             if (b_AStar)
             {
-				AStar(seeker.position, target.position);
+				AStar(seeker.transform.position, target.transform.position);
             }
             else
             {
-				Dijkstra(seeker.position, target.position);
+				Dijkstra(seeker.transform.position, target.transform.position);
             }
 
 		}

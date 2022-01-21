@@ -24,6 +24,10 @@ public class PathManager : MonoBehaviour
         if(grid.path != null)
         {
             pathfinding.seeker.transform.position = Vector3.MoveTowards(pathfinding.seeker.transform.position,grid.path[0].worldPosition,speed * Time.deltaTime);
+            if(pathfinding.target != null)
+            {
+                pathfinding.seeker.transform.LookAt(pathfinding.target.transform.position);
+            }
         }
 
     }
