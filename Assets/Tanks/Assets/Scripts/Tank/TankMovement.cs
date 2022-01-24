@@ -93,10 +93,16 @@ namespace Complete
             {
                 if (path != null)
                 {
-                    if (path.Count > 3)
+                    if(this.GetComponent<Complete.TankShooting>().m_currCooldown < 0)
                     {
                         //this.transform.position = Vector3.MoveTowards(this.transform.position, path[0].worldPosition, m_Speed * Time.deltaTime);
                         //this.transform.LookAt(path[0].worldPosition);
+                        var lookVector = new Vector3(path[0].worldPosition.x, path[0].worldPosition.y, path[0].worldPosition.z);
+                        this.transform.LookAt(lookVector);
+                    }
+                    else
+                    {
+                        Turn(-1);
                     }
                 }
             }
@@ -135,14 +141,25 @@ namespace Complete
 
         private void FixedUpdate ()
         {
-            // Adjust the rigidbodies position and orientation in FixedUpdate.
-            Move ();
-            Turn ();
+            if (m_IsIA)
+            {
+                if (path != null)
+                {
+                    Move();
+
+                }
+            }
+            else
+            {
+                Move();
+                Turn();
+            }
         }
 
 
         private void Move ()
         {
+            /** Florian
             Vector3 nextLocation = m_MovementMode.GetNextLocation(transform.position, GetComponent<TankShooting>().m_target.position, GetComponent<NavMeshAgent>().agentTypeID);
             
             transform.position = Vector3.MoveTowards(transform.position, nextLocation, m_Speed * Time.deltaTime);
@@ -150,7 +167,20 @@ namespace Complete
             
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
             //Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
-
+            */
+            
+            Vector3 movement;
+            if (!m_IsIA)
+            {
+                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
+                movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+            }
+            else
+            {
+                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
+                movement = transform.forward * m_Speed * Time.deltaTime;
+            }
+            
             // Apply this movement to the rigidbody's position.
             //m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
         }
@@ -158,14 +188,41 @@ namespace Complete
 
         private void Turn ()
         {
-            // Determine the number of degrees to be turned based on the input, speed and time between frames.
-            float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
+            float turn;
+            if (!m_IsIA)
+            {
+                // Determine the number of degrees to be turned based on the input, speed and time between frames.
+                turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
+            }
+            else
+            {
+                turn = 1 * m_TurnSpeed * Time.deltaTime;
+            }
 
             // Make this into a rotation in the y axis.
             Quaternion turnRotation = Quaternion.Euler (0f, turn, 0f);
 
             // Apply this rotation to the rigidbody's rotation.
             m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
+        }
+        private void Turn(float rotationRate)
+        {
+            float turn;
+            if (!m_IsIA)
+            {
+                // Determine the number of degrees to be turned based on the input, speed and time between frames.
+                turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
+            }
+            else
+            {
+                turn = -1 * m_TurnSpeed * Time.deltaTime;
+            }
+
+            // Make this into a rotation in the y axis.
+            Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+
+            // Apply this rotation to the rigidbody's rotation.
+            m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
         }
     }
 }
