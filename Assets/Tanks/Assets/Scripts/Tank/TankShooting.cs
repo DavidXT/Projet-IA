@@ -31,8 +31,12 @@ namespace Complete
 
         private void Start ()
         {
-            // The fire axis is based on the player number.
-            m_FireButton = "Fire" + m_PlayerNumber;
+            if(m_PlayerNumber <= 2)
+            {
+                // The fire axis is based on the player number.
+                m_FireButton = "Fire" + m_PlayerNumber;
+            }
+
             m_shootDistance = 20;
             m_currCooldown = 0;
 
@@ -42,9 +46,12 @@ namespace Complete
 
         private void Update ()
         {
-            if (Input.GetButtonDown(m_FireButton) && m_currCooldown < 0)
+            if(m_PlayerNumber <= 2)
             {
-                Fire();
+                if (Input.GetButtonDown(m_FireButton) && m_currCooldown < 0)
+                {
+                    Fire();
+                }
             }
             if(m_target != null)
             {

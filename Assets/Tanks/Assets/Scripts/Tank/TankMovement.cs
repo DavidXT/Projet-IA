@@ -66,9 +66,11 @@ namespace Complete
         private void Start ()
         {
             // The axes names are based on player number.
-            m_MovementAxisName = "Vertical" + m_PlayerNumber;
-            m_TurnAxisName = "Horizontal" + m_PlayerNumber;
-
+            if(m_PlayerNumber <= 2)
+            {
+                m_MovementAxisName = "Vertical" + m_PlayerNumber;
+                m_TurnAxisName = "Horizontal" + m_PlayerNumber;
+            }
             // Store the original pitch of the audio source.
             m_OriginalPitch = m_MovementAudio.pitch;
             m_IsIA = true;
@@ -77,9 +79,12 @@ namespace Complete
 
         private void Update ()
         {
+            if(m_PlayerNumber <= 2)
+            {
+                m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
+                m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+            }
             // Store the value of both input axes.
-            m_MovementInputValue = Input.GetAxis (m_MovementAxisName);
-            m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
             if (m_IsIA)
             {
                 if (path != null)
