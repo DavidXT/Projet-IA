@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Complete
 {
@@ -11,7 +12,7 @@ namespace Complete
         public AudioClip m_EngineIdling;            // Audio to play when the tank isn't moving.
         public AudioClip m_EngineDriving;           // Audio to play when the tank is moving.
 		public float m_PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
-        public bool m_IsIA;
+        public bool m_IsIA = true;
 
         private string m_MovementAxisName;          // The name of the input axis for moving forward and back.
         private string m_TurnAxisName;              // The name of the input axis for turning.
@@ -21,6 +22,7 @@ namespace Complete
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
         [SerializeField] Complete.TankShooting m_shootScript;
+        public List<Node> path;
 
         private void Awake ()
         {
@@ -69,6 +71,7 @@ namespace Complete
 
             // Store the original pitch of the audio source.
             m_OriginalPitch = m_MovementAudio.pitch;
+            m_IsIA = true;
         }
 
 
@@ -79,11 +82,12 @@ namespace Complete
             m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
             if (m_IsIA)
             {
-                if (Grid.Instance.path != null)
+                if (path != null)
                 {
-                    if (Grid.Instance.path.Count > 0)
+                    if (path.Count > 3)
                     {
-                        this.transform.position = Vector3.MoveTowards(this.transform.position, Grid.Instance.path[0].worldPosition, m_Speed * Time.deltaTime);
+                        this.transform.position = Vector3.MoveTowards(this.transform.position, path[0].worldPosition, m_Speed * Time.deltaTime);
+                        this.transform.LookAt(path[0].worldPosition);
                     }
                 }
             }

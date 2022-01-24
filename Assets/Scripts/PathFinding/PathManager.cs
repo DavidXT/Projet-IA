@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class PathManager : MonoBehaviour
 {
+    public static PathManager Instance;
     public Pathfinding pathfinding;
     public Grid grid;
     public GameObject[] allTanks;
     void Awake()
     {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
         grid = GetComponent<Grid>();
         pathfinding = GetComponent<Pathfinding>();
     }
@@ -25,8 +30,9 @@ public class PathManager : MonoBehaviour
         foreach (GameObject go in allTanks)
         {
             GetDistanceTank(allTanks, go);
+            pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().m_target.transform.position, go.GetComponent<Complete.TankMovement>().path);
+            go.GetComponent<Complete.TankMovement>().path = Grid.Instance.path;
         }
-
     }
 
     void GetDistanceTank(GameObject[] _tankList, GameObject _currentTank)

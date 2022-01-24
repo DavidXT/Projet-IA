@@ -21,25 +21,25 @@ public class Pathfinding : MonoBehaviour
 
 	void Update()
 	{
-		if(seeker!=null && target != null)
-        {
-			if (seeker.GetComponent<Complete.TankShooting>() != null)
-            {
-				seeker.GetComponent<Complete.TankShooting>().m_target = target.transform;
-			}
-            if (b_AStar)
-            {
-				AStar(seeker.transform.position, target.transform.position);
-            }
-            else
-            {
-				Dijkstra(seeker.transform.position, target.transform.position);
-            }
+		//if(seeker!=null && target != null)
+  //      {
+		//	if (seeker.GetComponent<Complete.TankShooting>() != null)
+  //          {
+		//		seeker.GetComponent<Complete.TankShooting>().m_target = target.transform;
+		//	}
+    //        if (b_AStar)
+    //        {
+				//AStar(seeker.transform.position, target.transform.position);
+    //        }
+    //        else
+    //        {
+				//Dijkstra(seeker.transform.position, target.transform.position);
+    //        }
 
-		}
+		//}
 	}
 
-	void AStar(Vector3 startPos, Vector3 targetPos)
+	public void AStar(Vector3 startPos, Vector3 targetPos, List<Node> _p)
 	{
 		Node startNode = grid.NodeFromWorldPoint(startPos);
 		Node targetNode = grid.NodeFromWorldPoint(targetPos);
@@ -65,7 +65,7 @@ public class Pathfinding : MonoBehaviour
 
 			if (node == targetNode)
 			{
-				RetracePath(startNode, targetNode);
+				RetracePath(startNode, targetNode, _p);
 				return;
 			}
 
@@ -90,7 +90,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-	void Dijkstra(Vector3 startPos, Vector3 targetPos)
+	void Dijkstra(Vector3 startPos, Vector3 targetPos, List<Node> _p)
 	{
 		Node startNode = grid.NodeFromWorldPoint(startPos);
 		Node targetNode = grid.NodeFromWorldPoint(targetPos);
@@ -116,7 +116,7 @@ public class Pathfinding : MonoBehaviour
 
 			if (node == targetNode)
 			{
-				RetracePath(startNode, targetNode);
+				RetracePath(startNode, targetNode, _p);
 				return;
 			}
 
@@ -141,7 +141,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-	void RetracePath(Node startNode, Node endNode)
+	void RetracePath(Node startNode, Node endNode, List<Node> _p)
 	{
 		List<Node> path = new List<Node>();
 		Node currentNode = endNode;
@@ -154,7 +154,8 @@ public class Pathfinding : MonoBehaviour
 		path.Reverse();
 
 		grid.path = path;
-
+		//_p = grid.path;
+		//Debug.Log(_p);
 	}
 
 	int GetDistance(Node nodeA, Node nodeB)

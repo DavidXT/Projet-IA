@@ -11,9 +11,6 @@ public class Grid : MonoBehaviour
 	public Node[,] grid;
 
 	public List<Node> path;
-	public List<Node> checkedPath;
-
-
 
 	float nodeDiameter;
 	int gridSizeX, gridSizeY;
@@ -45,10 +42,6 @@ public class Grid : MonoBehaviour
 			}
 		}
 	}
-	void FindPlayer()
-    {
-
-    }
 
 	public List<Node> GetNeighbours(Node node)
 	{
@@ -95,9 +88,13 @@ public class Grid : MonoBehaviour
 			foreach (Node n in grid)
 			{
 				Gizmos.color = (n.walkable) ? Color.white : Color.red;
-				if (path != null)
-					if (path.Contains(n))
-						Gizmos.color = Color.green;
+				foreach (GameObject go in PathManager.Instance.allTanks)
+				{
+					if (go.GetComponent<Complete.TankMovement>().path != null)
+						if (go.GetComponent<Complete.TankMovement>().path.Contains(n))
+							Gizmos.color = Color.green;
+				}
+
 				Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
 			}
 		}
