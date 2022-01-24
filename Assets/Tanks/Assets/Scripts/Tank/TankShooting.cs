@@ -14,6 +14,7 @@ namespace Complete
         public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
         public Transform m_target;
         public float m_shootDistance = 20;
+        private Rigidbody m_Rigidbody;
 
         private string m_FireButton;                // The input axis that is used for launching shells.
         [SerializeField] private float m_CurrentLaunchForce = 50;         // The force that will be given to the shell when the fire button is released.
@@ -21,7 +22,7 @@ namespace Complete
         private bool m_Fired;                       // Whether or not the shell has been launched with this button press.
         [SerializeField] private SO_Cooldown m_soCooldown;
         [SerializeField] private float m_resetCooldown;
-        [SerializeField] private float m_currCooldown;
+        [SerializeField] public float m_currCooldown;
 
 
         private void OnEnable()
@@ -31,7 +32,8 @@ namespace Complete
 
         private void Start ()
         {
-            if(m_PlayerNumber <= 2)
+            m_Rigidbody = GetComponent<Rigidbody>();
+            if (m_PlayerNumber <= 2)
             {
                 // The fire axis is based on the player number.
                 m_FireButton = "Fire" + m_PlayerNumber;
@@ -46,28 +48,37 @@ namespace Complete
 
         private void Update ()
         {
-            if(m_PlayerNumber <= 2)
+            if (m_PlayerNumber <= 2)
             {
                 if (Input.GetButtonDown(m_FireButton) && m_currCooldown < 0)
                 {
                     Fire();
                 }
             }
-            if(m_target != null)
-            {
-                if (Vector3.Distance(this.transform.position, m_target.position) < m_shootDistance && m_currCooldown < 0 && m_target != this)
-                {
-                    this.transform.LookAt(m_target.transform.position);
-                    Fire();
-                }
-            }
-            //if(m_soCooldown.fCooldown >= 0)
-            //{
-            //    m_soCooldown.fCooldown -= Time.deltaTime;
-            //}
             if (m_currCooldown >= 0)
             {
                 m_currCooldown -= Time.deltaTime;
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            RaycastHit hit;
+            int layerMask = 1 << 8;
+            layerMask = ~layerMask;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_shootDistance, layerMask))
+            {
+                if (hit.collider.gameObject.CompareTag("Player"))
+                {
+                    if (m_currCooldown < 0)
+                    {
+                        Fire();
+                        //Rotate tank around target
+                        Quaternion turnRotation = Quaternion.Euler(0f, 90f, 0f);
+                        // Apply this rotation to the rigidbody's rotation.
+                        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+                    }
+                }
             }
         }
 
