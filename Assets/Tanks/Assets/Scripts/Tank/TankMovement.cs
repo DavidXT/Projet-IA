@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 namespace Complete
 {
@@ -23,6 +24,8 @@ namespace Complete
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
         [SerializeField] Complete.TankShooting m_shootScript;
         public List<Node> path;
+
+        [SerializeField] private TankMovementMode m_MovementMode;
 
         private void Awake ()
         {
@@ -74,6 +77,7 @@ namespace Complete
             // Store the original pitch of the audio source.
             m_OriginalPitch = m_MovementAudio.pitch;
             m_IsIA = true;
+            GetComponent<NavMeshAgent>().updatePosition = false;
         }
 
 
@@ -91,8 +95,8 @@ namespace Complete
                 {
                     if (path.Count > 3)
                     {
-                        this.transform.position = Vector3.MoveTowards(this.transform.position, path[0].worldPosition, m_Speed * Time.deltaTime);
-                        this.transform.LookAt(path[0].worldPosition);
+                        //this.transform.position = Vector3.MoveTowards(this.transform.position, path[0].worldPosition, m_Speed * Time.deltaTime);
+                        //this.transform.LookAt(path[0].worldPosition);
                     }
                 }
             }
@@ -139,11 +143,16 @@ namespace Complete
 
         private void Move ()
         {
+            Vector3 nextLocation = m_MovementMode.GetNextLocation(transform.position, GetComponent<TankShooting>().m_target.position, GetComponent<NavMeshAgent>().agentTypeID);
+            
+            transform.position = Vector3.MoveTowards(transform.position, nextLocation, m_Speed * Time.deltaTime);
+            transform.LookAt(nextLocation);
+            
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-            Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+            //Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
 
             // Apply this movement to the rigidbody's position.
-            m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+            //m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
         }
 
 

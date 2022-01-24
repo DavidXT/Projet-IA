@@ -30,7 +30,7 @@ public class PathManager : MonoBehaviour
         foreach (GameObject go in allTanks)
         {
             GetDistanceTank(allTanks, go);
-            pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().m_target.transform.position, go.GetComponent<Complete.TankMovement>().path);
+            pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().m_target.transform.position);
             go.GetComponent<Complete.TankMovement>().path = Grid.Instance.path;
         }
     }

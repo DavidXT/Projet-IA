@@ -12,7 +12,7 @@ public class Pathfinding : MonoBehaviour
 
 	void Awake()
 	{
-		if(Instance != null)
+		if(Instance == null)
         {
 			Instance = this;
         }
@@ -39,7 +39,7 @@ public class Pathfinding : MonoBehaviour
 		//}
 	}
 
-	public void AStar(Vector3 startPos, Vector3 targetPos, List<Node> _p)
+	public void AStar(Vector3 startPos, Vector3 targetPos)
 	{
 		Node startNode = grid.NodeFromWorldPoint(startPos);
 		Node targetNode = grid.NodeFromWorldPoint(targetPos);
@@ -65,7 +65,7 @@ public class Pathfinding : MonoBehaviour
 
 			if (node == targetNode)
 			{
-				RetracePath(startNode, targetNode, _p);
+				RetracePath(startNode, targetNode);
 				return;
 			}
 
@@ -90,7 +90,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-	void Dijkstra(Vector3 startPos, Vector3 targetPos, List<Node> _p)
+	public void Dijkstra(Vector3 startPos, Vector3 targetPos)
 	{
 		Node startNode = grid.NodeFromWorldPoint(startPos);
 		Node targetNode = grid.NodeFromWorldPoint(targetPos);
@@ -116,7 +116,7 @@ public class Pathfinding : MonoBehaviour
 
 			if (node == targetNode)
 			{
-				RetracePath(startNode, targetNode, _p);
+				RetracePath(startNode, targetNode);
 				return;
 			}
 
@@ -141,7 +141,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-	void RetracePath(Node startNode, Node endNode, List<Node> _p)
+	void RetracePath(Node startNode, Node endNode)
 	{
 		List<Node> path = new List<Node>();
 		Node currentNode = endNode;
