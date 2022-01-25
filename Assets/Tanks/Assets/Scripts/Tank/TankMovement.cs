@@ -163,8 +163,7 @@ namespace Complete
         private void Move ()
         {
             Vector3 nextLocation = m_MovementMode.GetNextLocation(transform.position, GetComponent<TankShooting>().m_target.position, m_Agent.agentTypeID);
-            Debug.Log(nextLocation);
-            
+
             transform.position = Vector3.MoveTowards(transform.position, nextLocation, m_Speed * Time.deltaTime);
             transform.LookAt(nextLocation);
             
