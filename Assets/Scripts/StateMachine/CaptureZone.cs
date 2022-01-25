@@ -8,9 +8,12 @@ public class CaptureZone : MonoBehaviour
     [SerializeField] private AState m_StartingState = null;
     private StateMachine m_StateMachine = null;
     private bool m_IsActive = false;
+
+    public float Points = 0;
     
     private List<GameObject> _tanksOnZone;
     public bool TankOnZone => _tanksOnZone.Count > 0;
+    public int TanksOnZone => _tanksOnZone.Count;
 
     void Start()
     {
@@ -21,8 +24,8 @@ public class CaptureZone : MonoBehaviour
     private void InitSM()
     {
         m_StateMachine = CreateSM();
-        m_StateMachine.BeginState(m_StateMachine);
         m_IsActive = true;
+        m_StateMachine.BeginState(m_StateMachine);
     }
 
     private StateMachine CreateSM()

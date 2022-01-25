@@ -5,18 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "StateMachine/States/DeliverPoints")]
 public class DeliverPoints : AState
 {
+    private CaptureZone Zone;
     public DeliverPoints(GameObject ai) : base(ai)
     {
     }
 
     public override void BeginState(StateMachine sm)
     {
-        Debug.Log("Deliver start");
+        Zone = sm.AI.GetComponent<CaptureZone>();
     }
 
     public override void UpdateState(StateMachine sm)
     {
-        Debug.Log("Delivering...");
+        Zone.Points += Zone.TanksOnZone * Time.deltaTime;
     }
 
     public override void EndState(StateMachine sm)

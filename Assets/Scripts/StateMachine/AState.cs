@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class AState : ScriptableObject
 {
     public GameObject AI;
-    private ATransition[] Transitions;
+    public ATransition[] Transitions;
 
     public AState(GameObject ai)
     {
