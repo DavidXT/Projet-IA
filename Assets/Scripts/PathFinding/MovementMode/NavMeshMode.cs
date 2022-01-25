@@ -13,11 +13,10 @@ public class NavMeshMode : TankMovementMode
         };
         NavMeshPath path = new NavMeshPath();
 
-        NavMesh.CalculatePath(from, target, navMeshQueryFilter, path);
-
-        if (path.status == NavMeshPathStatus.PathComplete)
-            return path.corners[0];
-
+        if (NavMesh.CalculatePath(from, target, navMeshQueryFilter, path))
+        {
+            return path.corners[1];
+        }
         return from;
     }
 }

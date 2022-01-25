@@ -26,10 +26,12 @@ namespace Complete
         public List<Node> path;
 
         [SerializeField] private TankMovementMode m_MovementMode;
+        private NavMeshAgent m_Agent;
 
         private void Awake ()
         {
-            m_Rigidbody = GetComponent<Rigidbody> ();
+            m_Rigidbody = GetComponent<Rigidbody>();
+            m_Agent = GetComponent<NavMeshAgent>();
         }
 
 
@@ -77,12 +79,12 @@ namespace Complete
             // Store the original pitch of the audio source.
             m_OriginalPitch = m_MovementAudio.pitch;
             m_IsIA = true;
-            GetComponent<NavMeshAgent>().updatePosition = false;
         }
 
 
         private void Update ()
         {
+            m_Agent.nextPosition = m_Rigidbody.position;
             if(m_PlayerNumber <= 2)
             {
                 m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
@@ -97,12 +99,13 @@ namespace Complete
                     {
                         //this.transform.position = Vector3.MoveTowards(this.transform.position, path[0].worldPosition, m_Speed * Time.deltaTime);
                         //this.transform.LookAt(path[0].worldPosition);
-                        var lookVector = new Vector3(path[0].worldPosition.x, path[0].worldPosition.y, path[0].worldPosition.z);
-                        this.transform.LookAt(lookVector);
+                        
+                        //var lookVector = new Vector3(path[0].worldPosition.x, path[0].worldPosition.y, path[0].worldPosition.z);
+                        //this.transform.LookAt(lookVector);
                     }
                     else
                     {
-                        Turn(-1);
+                        //Turn(-1);
                     }
                 }
             }
@@ -145,13 +148,13 @@ namespace Complete
             {
                 if (path != null)
                 {
-                    Move();
+                   Move();
 
                 }
             }
             else
             {
-                Move();
+                MoveWithInput();
                 Turn();
             }
         }
@@ -159,30 +162,22 @@ namespace Complete
 
         private void Move ()
         {
-            /** Florian
-            Vector3 nextLocation = m_MovementMode.GetNextLocation(transform.position, GetComponent<TankShooting>().m_target.position, GetComponent<NavMeshAgent>().agentTypeID);
+            Vector3 nextLocation = m_MovementMode.GetNextLocation(transform.position, GetComponent<TankShooting>().m_target.position, m_Agent.agentTypeID);
+            Debug.Log(nextLocation);
             
             transform.position = Vector3.MoveTowards(transform.position, nextLocation, m_Speed * Time.deltaTime);
             transform.LookAt(nextLocation);
             
+            // Vector3 movement = transform.forward * m_Speed * Time.deltaTime;
+        }
+
+        private void MoveWithInput()
+        {
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-            //Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
-            */
-            
-            Vector3 movement;
-            if (!m_IsIA)
-            {
-                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-                movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
-            }
-            else
-            {
-                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-                movement = transform.forward * m_Speed * Time.deltaTime;
-            }
+            Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
             
             // Apply this movement to the rigidbody's position.
-            //m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+            m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
         }
 
 
