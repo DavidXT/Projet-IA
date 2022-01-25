@@ -198,6 +198,7 @@ namespace Complete
             else
             {
                 Move();
+                MoveWithInput();
                 Turn();
             }
         }
@@ -248,7 +249,13 @@ namespace Complete
             // Apply this movement to the rigidbody's position.
             m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
         }
+        private void MoveWithInput()
+        {
+            Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
 
+            // Apply this movement to the rigidbody's position.
+            m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        }
 
         private void Turn ()
         {
@@ -288,5 +295,8 @@ namespace Complete
             // Apply this rotation to the rigidbody's rotation.
             m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
         }
+
+
+
     }
 }
