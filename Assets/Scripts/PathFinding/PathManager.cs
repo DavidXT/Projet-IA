@@ -8,6 +8,7 @@ public class PathManager : MonoBehaviour
     public Pathfinding pathfinding;
     public Grid grid;
     public GameObject[] allTanks;
+    public GameObject targetPoint;
     void Awake()
     {
         if(Instance == null)
@@ -38,9 +39,14 @@ public class PathManager : MonoBehaviour
     void GetDistanceTank(GameObject[] _tankList, GameObject _currentTank)
     {
         float currDistance = 1000;
-        for(int i = 0; i < _tankList.Length; i++)
+        if (!_currentTank.gameObject.GetComponent<Complete.TankMovement>().b_onPoint)
         {
-            if (Vector3.Distance(_tankList[i].transform.position,_currentTank.transform.position) < currDistance && currDistance > 0)
+            currDistance = Vector3.Distance(_currentTank.transform.position, targetPoint.transform.position);
+            _currentTank.GetComponent<Complete.TankShooting>().m_target = targetPoint.transform;
+        }
+        for (int i = 0; i < _tankList.Length; i++)
+        {
+            if (Vector3.Distance(_tankList[i].transform.position,_currentTank.transform.position) < currDistance)
             {
                 if(_currentTank != _tankList[i])
                 {

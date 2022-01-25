@@ -14,6 +14,7 @@ namespace Complete
         public AudioClip m_EngineDriving;           // Audio to play when the tank is moving.
 		public float m_PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
         public bool m_IsIA = true;
+        public float m_moveDistance = 5;
 
         private string m_MovementAxisName;          // The name of the input axis for moving forward and back.
         private string m_TurnAxisName;              // The name of the input axis for turning.
@@ -24,6 +25,9 @@ namespace Complete
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
         [SerializeField] Complete.TankShooting m_shootScript;
         public List<Node> path;
+        private RaycastHit hit;
+        private RaycastHit hitBelow;
+        public bool b_onPoint;
 
         [SerializeField] private TankMovementMode m_MovementMode;
 
@@ -76,10 +80,38 @@ namespace Complete
             }
             // Store the original pitch of the audio source.
             m_OriginalPitch = m_MovementAudio.pitch;
+            m_moveDistance = 2;
             m_IsIA = true;
+            b_onPoint = false;
             GetComponent<NavMeshAgent>().updatePosition = false;
         }
 
+        public void MoveToTarget()
+        {
+            if (path != null)
+            {
+                if (this.GetComponent<Complete.TankShooting>().m_currCooldown <= 0)
+                {
+                    if(path.Count > 0)
+                    {
+                        if (!b_onPoint)
+                        {
+                            var lookVector = new Vector3(path[0].worldPosition.x, path[0].worldPosition.y, path[0].worldPosition.z);
+                            this.transform.LookAt(lookVector);
+                        }
+                        else
+                        {
+                            var lookVector = this.GetComponent<Complete.TankShooting>().m_target.transform.position;
+                            this.transform.LookAt(lookVector);
+                        }
+                    }
+                }
+                else
+                {
+                    Turn(-1);
+                }
+            }
+        }
 
         private void Update ()
         {
@@ -91,25 +123,11 @@ namespace Complete
             // Store the value of both input axes.
             if (m_IsIA)
             {
-                if (path != null)
-                {
-                    if(this.GetComponent<Complete.TankShooting>().m_currCooldown < 0)
-                    {
-                        //this.transform.position = Vector3.MoveTowards(this.transform.position, path[0].worldPosition, m_Speed * Time.deltaTime);
-                        //this.transform.LookAt(path[0].worldPosition);
-                        var lookVector = new Vector3(path[0].worldPosition.x, path[0].worldPosition.y, path[0].worldPosition.z);
-                        this.transform.LookAt(lookVector);
-                    }
-                    else
-                    {
-                        Turn(-1);
-                    }
-                }
+                MoveToTarget();
             }
 
             EngineAudio ();
         }
-
 
         private void EngineAudio ()
         {
@@ -141,12 +159,40 @@ namespace Complete
 
         private void FixedUpdate ()
         {
+            if (Physics.Raycast(transform.position+ Vector3.up*2, transform.TransformDirection(Vector3.down), out hitBelow, Mathf.Infinity))
+            {
+                if (hitBelow.collider.gameObject.CompareTag("Flag"))
+                {
+                    b_onPoint = true;
+                }
+                else
+                {
+                    b_onPoint = false;
+                }
+            }
             if (m_IsIA)
             {
                 if (path != null)
                 {
-                    Move();
-
+                    if(path.Count > 0)
+                    {
+                        if (!b_onPoint)
+                        {
+                            Move(true);
+                            float currDistance = 1000;
+                            for (int i = 0; i < PathManager.Instance.allTanks.Length; i++)
+                            {
+                                if (Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position) < currDistance)
+                                {
+                                    if (this.gameObject != PathManager.Instance.allTanks[i])
+                                    {
+                                        currDistance = Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position);
+                                        this.GetComponent<Complete.TankShooting>().m_target = PathManager.Instance.allTanks[i].transform;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -182,7 +228,25 @@ namespace Complete
             }
             
             // Apply this movement to the rigidbody's position.
-            //m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+            m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        }
+        private void Move(bool _b)
+        {
+
+            Vector3 movement;
+            if (_b)
+            {
+                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
+                movement = transform.forward * m_Speed * Time.deltaTime;
+            }
+            else
+            {
+                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
+                movement = -transform.forward * m_Speed * Time.deltaTime;
+            }
+
+            // Apply this movement to the rigidbody's position.
+            m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
         }
 
 

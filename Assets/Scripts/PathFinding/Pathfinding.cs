@@ -6,7 +6,6 @@ using Complete;
 public class Pathfinding : MonoBehaviour
 {
 	public static Pathfinding Instance;
-	public GameObject seeker, target;
 	Grid grid;
 	public bool b_AStar = true;
 
@@ -21,22 +20,6 @@ public class Pathfinding : MonoBehaviour
 
 	void Update()
 	{
-		//if(seeker!=null && target != null)
-  //      {
-		//	if (seeker.GetComponent<Complete.TankShooting>() != null)
-  //          {
-		//		seeker.GetComponent<Complete.TankShooting>().m_target = target.transform;
-		//	}
-    //        if (b_AStar)
-    //        {
-				//AStar(seeker.transform.position, target.transform.position);
-    //        }
-    //        else
-    //        {
-				//Dijkstra(seeker.transform.position, target.transform.position);
-    //        }
-
-		//}
 	}
 
 	public void AStar(Vector3 startPos, Vector3 targetPos)

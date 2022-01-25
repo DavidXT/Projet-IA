@@ -79,24 +79,24 @@ public class Grid : MonoBehaviour
 		return grid[x, y];
 	}
 
-	void OnDrawGizmos()
-	{
-		Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
-		if (grid != null)
-		{
-			foreach (Node n in grid)
-			{
-				Gizmos.color = (n.walkable) ? Color.white : Color.red;
-				foreach (GameObject go in PathManager.Instance.allTanks)
-				{
-					if (go.GetComponent<Complete.TankMovement>().path != null)
-						if (go.GetComponent<Complete.TankMovement>().path.Contains(n))
-							Gizmos.color = Color.green;
-				}
+        if (grid != null)
+        {
+            foreach (Node n in grid)
+            {
+                Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                foreach (GameObject go in PathManager.Instance.allTanks)
+                {
+                    if (go.GetComponent<Complete.TankMovement>().path != null)
+                        if (go.GetComponent<Complete.TankMovement>().path.Contains(n))
+                            Gizmos.color = Color.green;
+                }
 
-				Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
-			}
-		}
-	}
+                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
+            }
+        }
+    }
 }

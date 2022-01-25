@@ -13,8 +13,9 @@ namespace Complete
         public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
         public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
         public Transform m_target;
-        public float m_shootDistance = 20;
+public float m_shootDistance;
         private Rigidbody m_Rigidbody;
+        RaycastHit hit;
 
         private string m_FireButton;                // The input axis that is used for launching shells.
         [SerializeField] private float m_CurrentLaunchForce = 50;         // The force that will be given to the shell when the fire button is released.
@@ -39,7 +40,7 @@ namespace Complete
                 m_FireButton = "Fire" + m_PlayerNumber;
             }
 
-            m_shootDistance = 20;
+            m_shootDistance = 50;
             m_currCooldown = 0;
 
         //m_soCooldown.fCooldown = 0;
@@ -55,22 +56,20 @@ namespace Complete
                     Fire();
                 }
             }
-            if (m_currCooldown >= 0)
+            if (m_currCooldown > 0)
             {
                 m_currCooldown -= Time.deltaTime;
             }
+
         }
 
         private void FixedUpdate()
         {
-            RaycastHit hit;
-            int layerMask = 1 << 8;
-            layerMask = ~layerMask;
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_shootDistance, layerMask))
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_shootDistance))
             {
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
-                    if (m_currCooldown < 0)
+                    if (m_currCooldown <= 0)
                     {
                         Fire();
                         //Rotate tank around target
@@ -81,6 +80,12 @@ namespace Complete
                 }
             }
         }
+
+        //void OnDrawGizmos()
+        //{
+        //    // Draws a 5 unit long red line in front of the object
+        //    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
+        //}
 
 
         private void Fire ()

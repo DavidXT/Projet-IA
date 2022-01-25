@@ -15,7 +15,8 @@ namespace Complete
         public GameObject m_TankPrefab;             // Reference to the prefab the players will control.
         public TankManager[] m_Tanks;               // A collection of managers for enabling and disabling different aspects of the tanks.
 
-        
+        public GameObject m_hellipad;
+
         private int m_RoundNumber;                  // Which round the game is currently on.
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
         private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.
@@ -41,7 +42,6 @@ namespace Complete
             // Once the tanks have been created and the camera is using them as targets, start the game.
             StartCoroutine (GameLoop ());
         }
-
 
         private void SpawnAllTanks()
         {
@@ -85,6 +85,10 @@ namespace Complete
 
             // Once execution has returned here, run the 'RoundEnding' coroutine, again don't return until it's finished.
             yield return StartCoroutine (RoundEnding());
+            m_hellipad.GetComponent<StateMachine>().currentState = m_hellipad.GetComponent<StateMachine>().Idle;
+            m_hellipad.GetComponent<StateMachine>().nbPlayerOnHellipad.Clear();
+            m_hellipad.GetComponent<StateMachine>().teamOwner = 0;
+            m_hellipad.GetComponent<StateMachine>().teamOnHellipad = 0;
 
             // This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
             if (m_GameWinner != null)
