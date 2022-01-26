@@ -24,7 +24,7 @@ namespace Complete
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
         [SerializeField] Complete.TankShooting m_shootScript;
-        public List<Node> path;
+        public List<Vector3> path;
         private RaycastHit hit;
         private RaycastHit hitBelow;
         public bool b_onPoint;
@@ -93,11 +93,12 @@ namespace Complete
                 if (this.GetComponent<Complete.TankShooting>().m_currCooldown <= 0)
                 {
                     if(path.Count > 0)
+                    //if(path.Count > 1)
                     {
                         if (!b_onPoint)
                         {
-                            var lookVector = new Vector3(path[0].worldPosition.x, path[0].worldPosition.y, path[0].worldPosition.z);
-                            this.transform.LookAt(lookVector);
+                            this.transform.LookAt(path[0]);
+                            //this.transform.LookAt((path[0] + path[1]) / 2);
                         }
                         else
                         {
@@ -117,10 +118,10 @@ namespace Complete
         {
             if(m_PlayerNumber <= 2)
             {
+                // Store the value of both input axes.
                 m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
                 m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
             }
-            // Store the value of both input axes.
             if (m_IsIA)
             {
                 MoveToTarget();
@@ -159,6 +160,8 @@ namespace Complete
 
         private void FixedUpdate ()
         {
+            
+            path = m_MovementMode.GetPathToLocation(transform.position, GetComponent<TankShooting>().m_target.position, GetComponent<NavMeshAgent>().agentTypeID);
             if (Physics.Raycast(transform.position+ Vector3.up*2, transform.TransformDirection(Vector3.down), out hitBelow, Mathf.Infinity))
             {
                 if (hitBelow.collider.gameObject.CompareTag("Flag"))
@@ -197,24 +200,17 @@ namespace Complete
             }
             else
             {
-                Move();
+                //Move();
                 MoveWithInput();
                 Turn();
             }
         }
-
-
+        
         private void Move ()
         {
-            /** Florian
-            Vector3 nextLocation = m_MovementMode.GetNextLocation(transform.position, GetComponent<TankShooting>().m_target.position, GetComponent<NavMeshAgent>().agentTypeID);
-            
-            transform.position = Vector3.MoveTowards(transform.position, nextLocation, m_Speed * Time.deltaTime);
-            transform.LookAt(nextLocation);
-            
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
             //Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
-            */
+            
             
             Vector3 movement;
             if (!m_IsIA)
@@ -249,6 +245,7 @@ namespace Complete
             // Apply this movement to the rigidbody's position.
             m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
         }
+        
         private void MoveWithInput()
         {
             Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;

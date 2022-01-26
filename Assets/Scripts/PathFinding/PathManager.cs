@@ -30,13 +30,15 @@ public class PathManager : MonoBehaviour
         allTanks = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject go in allTanks)
         {
-            GetDistanceTank(allTanks, go);
-            pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().m_target.transform.position);
-            go.GetComponent<Complete.TankMovement>().path = Grid.Instance.path;
+            GetNextLocation(allTanks, go);
+            //pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().m_target.transform.position);
+            //go.GetComponent<Complete.TankMovement>().path = Grid.Instance.path;
         }
     }
 
-    void GetDistanceTank(GameObject[] _tankList, GameObject _currentTank)
+    //Return the next location the tank will want to go
+    //Will be replaced by the behaviour tree
+    void GetNextLocation(GameObject[] _tankList, GameObject _currentTank)
     {
         float currDistance = 1000;
         if (!_currentTank.gameObject.GetComponent<Complete.TankMovement>().b_onPoint)
