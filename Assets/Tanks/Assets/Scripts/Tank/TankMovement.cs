@@ -168,11 +168,8 @@ namespace Complete
         public void SearchTarget()
         {
             float currDistance = 1000;
-            if (!this.gameObject.GetComponent<Complete.TankMovement>().b_onPoint)
-            {
-                currDistance = Vector3.Distance(this.transform.position, PathManager.Instance.targetPoint.transform.position);
-                this.GetComponent<Complete.TankShooting>().m_target = PathManager.Instance.targetPoint.transform;
-            }
+            currDistance = Vector3.Distance(this.transform.position, PathManager.Instance.targetPoint.transform.position);
+            this.GetComponent<Complete.TankShooting>().m_target = PathManager.Instance.targetPoint.transform;
             for (int i = 0; i < PathManager.Instance.allTanks.Length; i++)
             {
                 if (Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position) < currDistance)

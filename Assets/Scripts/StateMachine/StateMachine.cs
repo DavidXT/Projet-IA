@@ -45,8 +45,23 @@ public class StateMachine : MonoBehaviour
                 nbPlayer++;
             }
         }
+        checkTanks();
     }
 
+    public void checkTanks()
+    {
+        if(nbPlayerOnHellipad.Count > 0)
+        {
+            foreach (GameObject go in nbPlayerOnHellipad.ToArray())
+            {
+                if (go.activeSelf == false)
+                {
+                    nbPlayerOnHellipad.Remove(go);
+                }
+            }
+        }
+
+    }
 
 
     public void ChangeState(State newState)
@@ -85,6 +100,7 @@ public class StateMachine : MonoBehaviour
             }
         }
     }
+
 
     private void OnTriggerExit(Collider other)
     {
