@@ -23,10 +23,10 @@ namespace Complete
         private float m_TurnInputValue;             // The current value of the turn input.
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
-        [SerializeField] Complete.TankShooting m_shootScript;
         public List<Vector3> path;
-        private RaycastHit hit;
+        public List<Node> pathNode;
         private RaycastHit hitBelow;
+        private RaycastHit hitAhead;
         public bool b_onPoint;
 
         [SerializeField] private TankMovementMode m_MovementMode;
@@ -97,7 +97,7 @@ namespace Complete
                     {
                         if (!b_onPoint)
                         {
-                            this.transform.LookAt(path[0]);
+                            this.transform.LookAt(pathNode[0].worldPosition);
                             //this.transform.LookAt((path[0] + path[1]) / 2);
                         }
                         else
@@ -121,10 +121,6 @@ namespace Complete
                 // Store the value of both input axes.
                 m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
                 m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
-            }
-            if (m_IsIA)
-            {
-                MoveToTarget();
             }
 
             EngineAudio ();
@@ -160,49 +156,48 @@ namespace Complete
 
         private void FixedUpdate ()
         {
-            
-            path = m_MovementMode.GetPathToLocation(transform.position, GetComponent<TankShooting>().m_target.position, GetComponent<NavMeshAgent>().agentTypeID);
-            if (Physics.Raycast(transform.position+ Vector3.up*2, transform.TransformDirection(Vector3.down), out hitBelow, Mathf.Infinity))
-            {
-                if (hitBelow.collider.gameObject.CompareTag("Flag"))
-                {
-                    b_onPoint = true;
-                }
-                else
-                {
-                    b_onPoint = false;
-                }
-            }
-            if (m_IsIA)
-            {
-                if (path != null)
-                {
-                    if(path.Count > 0)
-                    {
-                        if (!b_onPoint)
-                        {
-                            Move(true);
-                            float currDistance = 1000;
-                            for (int i = 0; i < PathManager.Instance.allTanks.Length; i++)
-                            {
-                                if (Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position) < currDistance)
-                                {
-                                    if (this.gameObject != PathManager.Instance.allTanks[i])
-                                    {
-                                        currDistance = Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position);
-                                        this.GetComponent<Complete.TankShooting>().m_target = PathManager.Instance.allTanks[i].transform;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
+
+            if (!m_IsIA){
                 //Move();
                 MoveWithInput();
                 Turn();
+            }
+
+        }
+
+        public void SearchTarget()
+        {
+            float currDistance = 1000;
+            if (!this.gameObject.GetComponent<Complete.TankMovement>().b_onPoint)
+            {
+                currDistance = Vector3.Distance(this.transform.position, PathManager.Instance.targetPoint.transform.position);
+                this.GetComponent<Complete.TankShooting>().m_target = PathManager.Instance.targetPoint.transform;
+            }
+            for (int i = 0; i < PathManager.Instance.allTanks.Length; i++)
+            {
+                if (Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position) < currDistance)
+                {
+                    if (this.gameObject != PathManager.Instance.allTanks[i])
+                    {
+                        currDistance = Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position);
+                        this.GetComponent<Complete.TankShooting>().m_target = PathManager.Instance.allTanks[i].transform;
+                    }
+                }
+            }
+        }
+
+        public void IAMoveTo()
+        {
+            if (pathNode != null)
+            {
+                if (pathNode.Count > 0)
+                {
+                    if (!b_onPoint)
+                    {
+                        this.transform.LookAt(pathNode[0].worldPosition);
+                        Move();
+                    }
+                }
             }
         }
         
@@ -292,8 +287,6 @@ namespace Complete
             // Apply this rotation to the rigidbody's rotation.
             m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
         }
-
-
 
     }
 }

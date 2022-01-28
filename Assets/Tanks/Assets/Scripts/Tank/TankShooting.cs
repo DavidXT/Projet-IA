@@ -49,6 +49,7 @@ public float m_shootDistance;
 
         private void Update ()
         {
+
             if (m_PlayerNumber <= 2)
             {
                 if (Input.GetButtonDown(m_FireButton) && m_currCooldown < 0)
@@ -80,6 +81,8 @@ public float m_shootDistance;
                 }
             }
         }
+
+
 
         //void OnDrawGizmos()
         //{

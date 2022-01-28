@@ -13,6 +13,7 @@ public class CapturedState : State
     public override void CheckState(StateMachine _sm)
     {
         base.CheckState(_sm);
+        //TO DO
     }
 
 }

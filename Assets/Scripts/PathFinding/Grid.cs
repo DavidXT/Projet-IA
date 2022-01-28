@@ -90,8 +90,8 @@ public class Grid : MonoBehaviour
                 Gizmos.color = (n.walkable) ? Color.white : Color.red;
                 foreach (GameObject go in PathManager.Instance.allTanks)
                 {
-                    if (go.GetComponent<Complete.TankMovement>().path != null)
-                        if (go.GetComponent<Complete.TankMovement>().path.Contains(n.worldPosition))
+                    if (go.GetComponent<Complete.TankMovement>().pathNode != null)
+                        if (go.GetComponent<Complete.TankMovement>().pathNode.Contains(n))
                             Gizmos.color = Color.green;
                 }
 
