@@ -1,20 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StateMachine : MonoBehaviour
 {
 
     public State currentState;
     public State Captured;
-    public State Capturing;
-    public State Idle;
-    public float teamOnHellipad;
-    public float teamOwner;
+    public CapturingState Capturing;
+    public State Neutral;
+    public int teamOnHellipad;
+    public int teamOwner;
     public bool b_isCapturing;
     public bool b_isCaptured;
     public List<GameObject> nbPlayerOnHellipad;
     public float nbPlayer;
+    public Image fillBar;
 
     public StateMachine(State _currentState)
     {
@@ -24,7 +26,7 @@ public class StateMachine : MonoBehaviour
     void Start()
     {
         currentState = GetInitialState();
-        currentState = Idle;
+        currentState = Capturing;
         teamOnHellipad = 0;
         teamOwner = 0;
         nbPlayer = 0;
@@ -45,6 +47,7 @@ public class StateMachine : MonoBehaviour
                 nbPlayer++;
             }
         }
+        fillBar.fillAmount = Capturing.m_currentTime / Capturing.m_captureTime;
         checkTanks();
     }
 
@@ -89,15 +92,19 @@ public class StateMachine : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             nbPlayerOnHellipad.Add(other.gameObject);
-            if (currentState != Capturing && nbPlayerOnHellipad.Count == 1)
+            if (nbPlayerOnHellipad.Count == 1)
             {
-                if (other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber != teamOwner)
+                if (currentState != Capturing)
                 {
-                    b_isCapturing = true;
-                    ChangeState(Capturing);
-                    teamOnHellipad = other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber;
+                    if (other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber != teamOwner)
+                    {
+                        b_isCapturing = true;
+                        ChangeState(Capturing);
+                        teamOnHellipad=other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber;
+                    }
                 }
             }
+
         }
     }
 

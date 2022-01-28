@@ -85,7 +85,7 @@ namespace Complete
 
             // Once execution has returned here, run the 'RoundEnding' coroutine, again don't return until it's finished.
             yield return StartCoroutine (RoundEnding());
-            m_hellipad.GetComponent<StateMachine>().currentState = m_hellipad.GetComponent<StateMachine>().Idle;
+            m_hellipad.GetComponent<StateMachine>().currentState = m_hellipad.GetComponent<StateMachine>().Neutral;
             m_hellipad.GetComponent<StateMachine>().nbPlayerOnHellipad.Clear();
             m_hellipad.GetComponent<StateMachine>().teamOwner = 0;
             m_hellipad.GetComponent<StateMachine>().teamOnHellipad = 0;

@@ -22,9 +22,12 @@ public class CapturingState : State
     public override void CheckState(StateMachine _sm)
     {
         base.CheckState(_sm);
-        if (_sm.b_isCapturing && _sm.teamOnHellipad != 0)
+        if (_sm.nbPlayerOnHellipad.Count == 1)
         {
-            m_currentTime += Time.deltaTime;
+            if (m_captureTime >= m_currentTime)
+            {
+                m_currentTime += Time.deltaTime;
+            }
             if (m_captureTime <= m_currentTime)
             {
                 _sm.ChangeState(m_transition[0].nextState);
@@ -33,10 +36,7 @@ public class CapturingState : State
         }
         else
         {
-            if(m_currentTime > 0)
-            {
-                m_currentTime -= Time.deltaTime;
-            }
+            m_currentTime -= Time.deltaTime;
             if(m_currentTime < 0)
             {
                 if(_sm.teamOwner != 0)
