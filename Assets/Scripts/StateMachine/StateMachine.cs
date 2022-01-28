@@ -55,17 +55,27 @@ public class StateMachine : MonoBehaviour
     {
         if(nbPlayerOnHellipad.Count > 0)
         {
-            foreach (GameObject go in nbPlayerOnHellipad.ToArray())
+            if (nbPlayerOnHellipad.Count == 1)
             {
-                if (go.activeSelf == false)
+                if (nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_PlayerNumber != teamOwner)
                 {
-                    nbPlayerOnHellipad.Remove(go);
+                    //TODO
+                }
+                ChangeState(Capturing);
+            }
+            else
+            {
+                foreach (GameObject go in nbPlayerOnHellipad.ToArray())
+                {
+                    if (go.activeSelf == false)
+                    {
+                        nbPlayerOnHellipad.Remove(go);
+                    }
                 }
             }
         }
 
     }
-
 
     public void ChangeState(State newState)
     {

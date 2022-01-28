@@ -10,6 +10,12 @@ public class CapturedState : State
         this.m_transition = _transition;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+        this.m_stateMachine.b_isCaptured = true;
+    }
+
     public override void CheckState(StateMachine _sm)
     {
         base.CheckState(_sm);
