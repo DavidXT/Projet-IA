@@ -51,7 +51,7 @@ public class StateMachine : MonoBehaviour
 
     public void ChangeState(State newState)
     {
-        foreach (Transition _transi in currentState.m_transition)
+        foreach (Transition _transi in currentState.transition)
         {
             if(_transi.nextState == newState)
             {
@@ -76,11 +76,11 @@ public class StateMachine : MonoBehaviour
             nbPlayerOnHellipad.Add(other.gameObject);
             if (currentState != Capturing && nbPlayerOnHellipad.Count == 1)
             {
-                if (other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber != teamOwner)
+                if (other.gameObject.GetComponent<Complete.TankMovement>().PlayerNumber != teamOwner)
                 {
                     b_isCapturing = true;
                     ChangeState(Capturing);
-                    teamOnHellipad = other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber;
+                    teamOnHellipad = other.gameObject.GetComponent<Complete.TankMovement>().PlayerNumber;
                 }
             }
         }
@@ -95,7 +95,7 @@ public class StateMachine : MonoBehaviour
             {
                 if (b_isCaptured)
                 {
-                    if(other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber != teamOwner)
+                    if(other.gameObject.GetComponent<Complete.TankMovement>().PlayerNumber != teamOwner)
                     {
                         b_isCapturing = false;
                         ChangeState(Capturing);

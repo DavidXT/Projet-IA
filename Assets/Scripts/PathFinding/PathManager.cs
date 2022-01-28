@@ -31,7 +31,7 @@ public class PathManager : MonoBehaviour
         foreach (GameObject go in allTanks)
         {
             GetNextLocation(allTanks, go);
-            //pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().m_target.transform.position);
+            //pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().target.transform.position);
             //go.GetComponent<Complete.TankMovement>().path = Grid.Instance.path;
         }
     }
@@ -44,7 +44,7 @@ public class PathManager : MonoBehaviour
         if (!_currentTank.gameObject.GetComponent<Complete.TankMovement>().b_onPoint)
         {
             currDistance = Vector3.Distance(_currentTank.transform.position, targetPoint.transform.position);
-            _currentTank.GetComponent<Complete.TankShooting>().m_target = targetPoint.transform;
+            _currentTank.GetComponent<Complete.TankShooting>().target = targetPoint.transform;
         }
         for (int i = 0; i < _tankList.Length; i++)
         {
@@ -53,7 +53,7 @@ public class PathManager : MonoBehaviour
                 if(_currentTank != _tankList[i])
                 {
                     currDistance = Vector3.Distance(_tankList[i].transform.position, _currentTank.transform.position);
-                    _currentTank.GetComponent<Complete.TankShooting>().m_target = _tankList[i].transform;
+                    _currentTank.GetComponent<Complete.TankShooting>().target = _tankList[i].transform;
                 }
             }
         }

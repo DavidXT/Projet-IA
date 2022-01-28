@@ -2,49 +2,49 @@
 
 public class TankMovement : MonoBehaviour
 {
-    public int m_PlayerNumber = 1;         
-    public float m_Speed = 12f;            
-    public float m_TurnSpeed = 180f;       
-    public AudioSource m_MovementAudio;    
-    public AudioClip m_EngineIdling;       
-    public AudioClip m_EngineDriving;      
-    public float m_PitchRange = 0.2f;
+    public int PlayerNumber = 1;         
+    public float Speed = 12f;            
+    public float TurnSpeed = 180f;       
+    public AudioSource MovementAudio;    
+    public AudioClip EngineIdling;       
+    public AudioClip EngineDriving;      
+    public float PitchRange = 0.2f;
 
     /*
-    private string m_MovementAxisName;     
-    private string m_TurnAxisName;         
-    private Rigidbody m_Rigidbody;         
-    private float m_MovementInputValue;    
-    private float m_TurnInputValue;        
-    private float m_OriginalPitch;         
+    private string MovementAxisName;     
+    private string TurnAxisName;         
+    private Rigidbody Rigidbody;         
+    private float MovementInputValue;    
+    private float TurnInputValue;        
+    private float OriginalPitch;         
 
 
     private void Awake()
     {
-        m_Rigidbody = GetComponent<Rigidbody>();
+        Rigidbody = GetComponent<Rigidbody>();
     }
 
 
-    private void OnEnable ()
+    private void OnEnable()
     {
-        m_Rigidbody.isKinematic = false;
-        m_MovementInputValue = 0f;
-        m_TurnInputValue = 0f;
+        Rigidbody.isKinematic = false;
+        MovementInputValue = 0f;
+        TurnInputValue = 0f;
     }
 
 
-    private void OnDisable ()
+    private void OnDisable()
     {
-        m_Rigidbody.isKinematic = true;
+        Rigidbody.isKinematic = true;
     }
 
 
     private void Start()
     {
-        m_MovementAxisName = "Vertical" + m_PlayerNumber;
-        m_TurnAxisName = "Horizontal" + m_PlayerNumber;
+        MovementAxisName = "Vertical" + PlayerNumber;
+        TurnAxisName = "Horizontal" + PlayerNumber;
 
-        m_OriginalPitch = m_MovementAudio.pitch;
+        OriginalPitch = MovementAudio.pitch;
     }
     */
 
