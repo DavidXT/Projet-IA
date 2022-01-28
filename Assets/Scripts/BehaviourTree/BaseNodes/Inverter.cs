@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "Inverter", menuName = "BehaviourTree/Nodes/Inverter")]
 public class Inverter : BTNode
 {
-    [SerializeField] private BTNode _node = null;
+    private BTNode _node = null;
+
+    public Inverter(BTNode node)
+    {
+        _node = node;
+    }
 
     public override NodeStates Evaluate()
     {

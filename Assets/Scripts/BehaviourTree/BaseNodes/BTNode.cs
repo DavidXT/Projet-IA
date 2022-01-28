@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
 
 [System.Serializable]
-public abstract class BTNode : ScriptableObject
+public abstract class BTNode
 {
     public delegate NodeStates NodeReturn();
 

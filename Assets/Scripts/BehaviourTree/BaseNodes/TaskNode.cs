@@ -1,19 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "Task", menuName = "BehaviourTree/Nodes/Task")]
 public class TaskNode : BTNode
 {
     public delegate NodeStates ActionNodeDelegate();
 
-    private ActionNodeDelegate _action = () =>
-    {
-        Debug.Log("Nodes passed + 1");
-        return NodeStates.SUCCESS;
-    };
+    private ActionNodeDelegate _action;
 
-    public void SetupAction(ActionNodeDelegate action)
+    public TaskNode (ActionNodeDelegate action)
     {
         _action = action;
     }

@@ -18,11 +18,6 @@ public class PathManager : MonoBehaviour
         grid = GetComponent<Grid>();
         pathfinding = GetComponent<Pathfinding>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

@@ -29,8 +29,8 @@ namespace Complete
         private RaycastHit hitBelow;
         public bool b_onPoint;
 
-        [SerializeField] private TankMovementMode MovementMode = null;
-        [SerializeField] private BehaviourTree BehaviourTree = null;
+        public TankMovementMode MovementMode = null;
+        public BehaviourTree BehaviourTree = null;
 
         private void Awake()
         {
@@ -87,11 +87,35 @@ namespace Complete
             b_onPoint = false;
             GetComponent<NavMeshAgent>().updatePosition = false;
             
+            BehaviourTree.SetupTree(new Sequence(
+                new List<BTNode>()
+                {
+                    new MoveTo(this),
+                    new LookAtTarget(this)
+                })
+            );
+            
             BehaviourTree.StartTree();
         }
 
+
+        private void Update()
+        {
+            if(PlayerNumber <= 2)
+            {
+                // Store the value of both input axes.
+                MovementInputValue = Input.GetAxis(MovementAxisName);
+                TurnInputValue = Input.GetAxis(TurnAxisName);
+            }
+
+            BehaviourTree.Blackboard.position = transform.position;
+
+            EngineAudio();
+        }
+        
         public void MoveToTarget()
         {
+            /*
             if (path != null)
             {
                 if (this.GetComponent<Complete.TankShooting>().currCooldown <= 0)
@@ -116,24 +140,7 @@ namespace Complete
                     Turn(-1);
                 }
             }
-        }
-
-        private void Update()
-        {
-            if(PlayerNumber <= 2)
-            {
-                // Store the value of both input axes.
-                MovementInputValue = Input.GetAxis(MovementAxisName);
-                TurnInputValue = Input.GetAxis(TurnAxisName);
-            }
-            if (IsIA)
-            {
-                MoveToTarget();
-            }
-
-            BehaviourTree.Blackboard.position = transform.position;
-
-            EngineAudio();
+            */
         }
 
         private void EngineAudio()
@@ -167,49 +174,6 @@ namespace Complete
         private void FixedUpdate()
         {
             
-            path = MovementMode.GetPathToLocation(transform.position, GetComponent<TankShooting>().target.position, GetComponent<NavMeshAgent>().agentTypeID);
-            if (Physics.Raycast(transform.position+ Vector3.up*2, transform.TransformDirection(Vector3.down), out hitBelow, Mathf.Infinity))
-            {
-                if (hitBelow.collider.gameObject.CompareTag("Flag"))
-                {
-                    b_onPoint = true;
-                }
-                else
-                {
-                    b_onPoint = false;
-                }
-            }
-            if (IsIA)
-            {
-                if (path != null)
-                {
-                    if(path.Count > 0)
-                    {
-                        if (!b_onPoint)
-                        {
-                            Move(true);
-                            float currDistance = 1000;
-                            for (int i = 0; i < PathManager.Instance.allTanks.Length; i++)
-                            {
-                                if (Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position) < currDistance)
-                                {
-                                    if (this.gameObject != PathManager.Instance.allTanks[i])
-                                    {
-                                        currDistance = Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position);
-                                        this.GetComponent<Complete.TankShooting>().target = PathManager.Instance.allTanks[i].transform;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                //Move();
-                MoveWithInput();
-                Turn();
-            }
         }
         
         private void Move()

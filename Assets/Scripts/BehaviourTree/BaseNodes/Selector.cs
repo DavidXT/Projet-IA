@@ -1,12 +1,13 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-[CreateAssetMenu(fileName = "Selector", menuName = "BehaviourTree/Nodes/Selector")]
 public class Selector : BTNode
 {
-    [SerializeField] private List<BTNode> _nodes = new List<BTNode>();
+    private List<BTNode> _nodes = new List<BTNode>();
+
+    public Selector(List<BTNode> nodes)
+    {
+        _nodes = nodes;
+    }
 
     public override NodeStates Evaluate()
     {

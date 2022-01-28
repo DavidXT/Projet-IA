@@ -2,50 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f7f0668-50d4-4529-aa82-a61e6732c745" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/BTNode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/BTNode.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Inverter.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Inverter.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/NodeStates.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/NodeStates.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/TaskNode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/TaskNode.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/BTNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/BTNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Inverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Inverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO/Sequence.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO/Sequence.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO/TestTask.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO/TestTask.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/TaskNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/TaskNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/CapturedState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/CapturedState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/CapturingState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/CapturingState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/IdleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/IdleState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/State.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StateMachine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteShell.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteShell.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Camera/CameraControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Camera/CameraControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Managers/TankManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Managers/TankManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Shell/ShellExplosion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Shell/ShellExplosion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankHealth.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/UI/UIDirectionControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/UI/UIDirectionControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Scripts/Camera/CameraControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Scripts/Camera/CameraControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Scripts/Managers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Scripts/Managers/TankManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Scripts/Managers/TankManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Scripts/Shell/ShellExplosion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Scripts/Shell/ShellExplosion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Scripts/Tank/TankHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Scripts/Tank/TankHealth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Scripts/Tank/TankMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Scripts/Tank/TankMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Scripts/Tank/TankShooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Scripts/Tank/TankShooting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Scripts/UI/UIDirectionControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Scripts/UI/UIDirectionControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/_Complete-Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/_Complete-Game.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +32,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PathFinding/MovementMode/GridModeAStar.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/Actions/TrackActions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PathFinding/MovementMode/GridModeDijkstra.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveTo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/LookAtTarget.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
