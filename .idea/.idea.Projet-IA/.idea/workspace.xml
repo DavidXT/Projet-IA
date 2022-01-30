@@ -3,37 +3,29 @@
   <component name="ChangeListManager">
     <list default="true" id="7f7f0668-50d4-4529-aa82-a61e6732c745" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/BTNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/BTNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Inverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Inverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO/Sequence.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO/Sequence.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO/TestTask.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/SO/TestTask.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/TaskNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/TaskNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/LookAtTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/LookAtTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveTo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveTo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/BehaviourTree.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ads@3.7.1/Runtime/Monetization/MiniJSON.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/Window/TimelineWindow_EditorCallbacks.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3ddd8939ae524612ba7eb3c0214270e4c800/6e/e55d76a8/NavMeshQueryFilter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/TaskNode.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PathFinding/MovementMode/GridModeAStar.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/Actions/TrackActions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PathFinding/MovementMode/GridModeDijkstra.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveTo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/LookAtTarget.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ads@3.7.1/Runtime/Monetization/MiniJSON.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/Window/TimelineWindow_EditorCallbacks.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/TaskNode.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -85,6 +77,7 @@
       <workItem from="1643038891155" duration="128000" />
       <workItem from="1643098542967" duration="4037000" />
       <workItem from="1643193189677" duration="9526000" />
+      <workItem from="1643475808539" duration="2591000" />
     </task>
     <servers />
   </component>
@@ -104,6 +97,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

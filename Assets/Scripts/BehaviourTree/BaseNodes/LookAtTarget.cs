@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices.WindowsRuntime;
-
 namespace Complete
 {
     using UnityEngine;
@@ -15,12 +13,11 @@ namespace Complete
         public override NodeStates Evaluate()
         {
             Blackboard blackboard = _tankMovement.BehaviourTree.Blackboard;
-            Transform tankTransorm = _tankMovement.transform;
+            Transform tankTransform = _tankMovement.transform;
             
-            if (!Mathf.Approximately(Vector3.Angle(tankTransorm.forward, blackboard.targetLocation), 0))
+            if (!Mathf.Approximately(Vector3.Dot(tankTransform.forward, (blackboard.targetLocation - tankTransform.position).normalized), 1))
             {
-                Debug.Log("Rotate");
-                tankTransorm.RotateAround(tankTransorm.position, tankTransorm.up, Vector3.Angle(tankTransorm.position, blackboard.targetLocation));
+                tankTransform.RotateAround(tankTransform.position, tankTransform.up, Vector3.Angle(tankTransform.forward, (blackboard.targetLocation - tankTransform.position).normalized) * Time.deltaTime);
                 return NodeStates.RUNNING;
             }
 

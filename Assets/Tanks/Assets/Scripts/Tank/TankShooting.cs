@@ -26,11 +26,6 @@ public float shootDistance;
         [SerializeField] public float currCooldown;
 
 
-        private void OnEnable()
-        {
-        }
-
-
         private void Start()
         {
             Rigidbody = GetComponent<Rigidbody>();
@@ -65,18 +60,15 @@ public float shootDistance;
 
         private void FixedUpdate()
         {
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, shootDistance))
+            if (TargetInRange())
             {
-                if (hit.collider.gameObject.CompareTag("Player"))
+                if (currCooldown <= 0)
                 {
-                    if (currCooldown <= 0)
-                    {
-                        Fire();
-                        //Rotate tank around target
-                        Quaternion turnRotation = Quaternion.Euler(0f, 90f, 0f);
-                        // Apply this rotation to the rigidbody's rotation.
-                        Rigidbody.MoveRotation(Rigidbody.rotation * turnRotation);
-                    }
+                    Fire();
+                    //Rotate tank around target
+                    Quaternion turnRotation = Quaternion.Euler(0f, 90f, 0f);
+                    // Apply this rotation to the rigidbody's rotation.
+                    Rigidbody.MoveRotation(Rigidbody.rotation * turnRotation);
                 }
             }
         }
@@ -107,6 +99,19 @@ public float shootDistance;
             //soCooldown.fCooldown = resetCooldown;
             currCooldown = resetCooldown;
 
+        }
+
+        public bool TargetInRange()
+        {
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, shootDistance))
+            {
+                if (hit.collider.gameObject.CompareTag("Player"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
         }
     }
 }

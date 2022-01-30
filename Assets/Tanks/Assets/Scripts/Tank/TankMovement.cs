@@ -23,7 +23,7 @@ namespace Complete
         private float TurnInputValue;             // The current value of the turn input.
         private float OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] particleSystems; // References to all the particles systems used by the Tanks
-        [SerializeField] Complete.TankShooting shootScript;
+        [SerializeField] TankShooting shootScript;
         public List<Vector3> path;
         private RaycastHit hit;
         private RaycastHit hitBelow;
@@ -37,8 +37,7 @@ namespace Complete
             BehaviourTree = GetComponent<BehaviourTree>();
             Rigidbody = GetComponent<Rigidbody>();
         }
-
-
+        
         private void OnEnable()
         {
             // When the tank is turned on, make sure it's not kinematic.
@@ -90,8 +89,7 @@ namespace Complete
             BehaviourTree.SetupTree(new Sequence(
                 new List<BTNode>()
                 {
-                    new MoveTo(this),
-                    new LookAtTarget(this)
+                    new MoveTo(this)
                 })
             );
             
