@@ -30,7 +30,7 @@ namespace Complete
             Movement = Instance.GetComponent<TankMovement>();
             Shooting = Instance.GetComponent<TankShooting>();
             CanvasGameObject = Instance.GetComponentInChildren<Canvas>().gameObject;
-
+            
             // Set the player numbers to be consistent across the scripts.
             Movement.PlayerNumber = PlayerNumber;
             Shooting.PlayerNumber = PlayerNumber;

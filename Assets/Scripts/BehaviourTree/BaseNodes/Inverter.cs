@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.WindowsRuntime;
+
 namespace Complete
 {
     using UnityEngine;
@@ -6,6 +8,11 @@ namespace Complete
     public class Inverter : BTNode
     {
         [SerializeField] private BTNode _node = null;
+        
+        public override void InitNode(Blackboard blackboard)
+        {
+            _node.InitNode(blackboard);
+        }
 
         public override NodeStates Evaluate()
         {
@@ -24,6 +31,13 @@ namespace Complete
                     nodeState = NodeStates.SUCCESS;
                     return nodeState;
             }
+        }
+        
+        public override object Clone()
+        {
+            Inverter inverter = CreateInstance<Inverter>();
+            inverter._node = (BTNode)_node.Clone();
+            return inverter;
         }
     }
 }

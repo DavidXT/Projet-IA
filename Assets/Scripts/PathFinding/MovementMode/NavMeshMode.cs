@@ -19,6 +19,7 @@ public class NavMeshMode : TankMovementMode
         {
             return path.corners.ToList();
         }
+
         return new List<Vector3>() {from, target};
     }
 }

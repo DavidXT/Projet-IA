@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Complete
 {
@@ -36,9 +38,8 @@ namespace Complete
         private void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
-            
-            BehaviourTree = ScriptableObject.CreateInstance<BehaviourTree>();
-            BehaviourTree.SetupTree(_entryNode);
+
+            BehaviourTree = (BehaviourTree)BehaviourTree.Clone();
             BehaviourTree.Blackboard.tankMovement = this;
         }
         
@@ -91,7 +92,6 @@ namespace Complete
             GetComponent<NavMeshAgent>().updatePosition = false;
         }
 
-
         private void Update()
         {
             if(PlayerNumber <= 2)
@@ -100,8 +100,6 @@ namespace Complete
                 MovementInputValue = Input.GetAxis(MovementAxisName);
                 TurnInputValue = Input.GetAxis(TurnAxisName);
             }
-
-            BehaviourTree.Blackboard.position = transform.position;
 
             if (BehaviourTree.IsRunning)
             {
@@ -231,8 +229,12 @@ namespace Complete
             Vector3 direction = Vector3.Normalize(destination - transform.position);
 
             float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+            //angle += (float) Math.Sin(Time.time * 4) * 0.2f;
 
-            TurnInputValue = angle;
+            if (angle > 0)
+                TurnInputValue = 1;
+            else
+                TurnInputValue = -1;
         }
         
         private void TurnWithInput()
@@ -246,8 +248,5 @@ namespace Complete
             // Apply this rotation to the rigidbody's rotation.
             Rigidbody.MoveRotation(Rigidbody.rotation * turnRotation);
         }
-
-
-
     }
 }

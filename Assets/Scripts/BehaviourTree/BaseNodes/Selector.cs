@@ -8,6 +8,14 @@ namespace Complete
     {
         [SerializeField] private List<BTNode> _nodes = new List<BTNode>();
 
+        public override void InitNode(Blackboard blackboard)
+        {
+            foreach (var node in _nodes)
+            {
+                node.InitNode(blackboard);
+            }
+        }
+
         public override NodeStates Evaluate()
         {
             foreach (BTNode node in _nodes)
@@ -28,6 +36,16 @@ namespace Complete
             }
             nodeState = NodeStates.FAILURE;
             return nodeState;
+        }
+
+        public override object Clone()
+        {
+            Selector selector = CreateInstance<Selector>();
+            foreach (var node in _nodes)
+            {
+                selector._nodes.Add((BTNode)node.Clone());
+            }
+            return selector;
         }
     }
 }

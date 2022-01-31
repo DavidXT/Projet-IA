@@ -6,7 +6,11 @@ namespace Complete
     [CreateAssetMenu(fileName = "ChaseEnemy", menuName = "BehaviourTree/Nodes/Tasks/ChaseEnemy")]
     public class ChaseEnemy : BTNode
     {
-        [SerializeField] private Blackboard Blackboard;
+        private Blackboard Blackboard;
+        public override void InitNode(Blackboard blackboard)
+        {
+            Blackboard = blackboard;
+        }
 
         public override NodeStates Evaluate()
         {
@@ -17,7 +21,7 @@ namespace Complete
 
             if (!tankMovement.GetComponent<TankShooting>().TargetCouldBeInRange())
             {
-                tankMovement.Rotate(path[1]);
+                tankMovement.Rotate(path[0]);
                 tankMovement.MovementInputValue = 1;
             }
             else
@@ -26,6 +30,11 @@ namespace Complete
                 tankMovement.MovementInputValue = 1;
             }
             return NodeStates.RUNNING;
+        }
+        public override object Clone()
+        {
+            ChaseEnemy chaseEnemy = CreateInstance<ChaseEnemy>();
+            return chaseEnemy;
         }
     }
 }
