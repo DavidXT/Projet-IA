@@ -13,7 +13,7 @@ namespace Complete
         public AudioClip m_EngineIdling;            // Audio to play when the tank isn't moving.
         public AudioClip m_EngineDriving;           // Audio to play when the tank is moving.
 		public float m_PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
-        public bool m_IsIA = true;
+        public bool m_IsIA = false;
         public float m_moveDistance = 5;
 
         private string m_MovementAxisName;          // The name of the input axis for moving forward and back.

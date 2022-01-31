@@ -9,14 +9,21 @@ public class StateMachine : MonoBehaviour
     public State currentState;
     public State Captured;
     public CapturingState Capturing;
+    public State Contested;
+
     public State Neutral;
-    public int teamOnHellipad;
-    public int teamOwner;
-    public bool b_isCapturing;
-    public bool b_isCaptured;
-    public List<GameObject> nbPlayerOnHellipad;
+    public float currCaptureBar;
+    public float captureValue;
     public float nbPlayer;
     public Image fillBar;
+
+    public int teamOnHellipad;
+    public int nbTeamOnHellipad;
+    public int teamOwner;
+    public int currTeam;
+    public bool canCapture = false;
+    public List<GameObject> nbPlayerOnHellipad;
+
 
     public StateMachine(State _currentState)
     {
@@ -26,9 +33,12 @@ public class StateMachine : MonoBehaviour
     void Start()
     {
         currentState = GetInitialState();
-        currentState = Capturing;
-        teamOnHellipad = 0;
-        teamOwner = 0;
+        currentState = Neutral;
+        currCaptureBar = 0;
+        captureValue = 10;
+        teamOnHellipad = 0; 
+        currTeam = 0;
+         teamOwner = 0;
         nbPlayer = 0;
         if (currentState != null)
             currentState.Enter();
@@ -47,8 +57,102 @@ public class StateMachine : MonoBehaviour
                 nbPlayer++;
             }
         }
-        fillBar.fillAmount = Capturing.m_currentTime / Capturing.m_captureTime;
+        fillBar.fillAmount = currCaptureBar/captureValue;
         checkTanks();
+        canCapture = checkTeamOnHellipad();
+        checkState();
+    }
+
+    void checkState()
+    {
+        if(currentState != null)
+        {
+            if(currentState == Capturing)
+            {
+                if(canCapture == true)
+                {
+                    if(nbPlayerOnHellipad.Count > 0)
+                    {
+                        if (currCaptureBar < captureValue)
+                        {
+                            currCaptureBar += Time.deltaTime;
+                            if (currCaptureBar > captureValue)
+                            {
+                                ChangeState(Captured);
+                                teamOwner = currTeam;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(currCaptureBar >= 0)
+                        {
+                            currCaptureBar -= Time.deltaTime;
+                            if(currCaptureBar <= 0)
+                            {
+                                ChangeState(Neutral);
+                            }
+                        }
+                    }
+                   
+                }
+                else
+                {
+                    ChangeState(Contested);
+                }
+            }
+
+
+            if(currentState == Contested)
+            {
+                if(canCapture == false)
+                {
+                    if (currCaptureBar >= 0)
+                    {
+                        currCaptureBar -= Time.deltaTime;
+                        if (currCaptureBar <= 0)
+                        {
+                            ChangeState(Neutral);
+                        }
+                    }
+                }
+                else 
+                {
+                    ChangeState(Capturing);
+                }
+
+            }
+
+
+            if(currentState == Captured)
+            {
+                if(!checkOwner())
+                {
+                    currCaptureBar -= Time.deltaTime;
+                    if(currCaptureBar <= 0)
+                    {
+                        ChangeState(Neutral);
+                    }
+                }
+                else
+                {
+                    if(currCaptureBar < captureValue)
+                    {
+                        currCaptureBar += Time.deltaTime;
+                    }
+                }
+            }
+
+
+            if(currentState == Neutral)
+            {
+                teamOwner = 0;
+                if (nbPlayerOnHellipad.Count >= 1)
+                {
+                    ChangeState(Capturing);
+                }
+            }
+        }
     }
 
     public void checkTanks()
@@ -74,9 +178,42 @@ public class StateMachine : MonoBehaviour
                 }
             }
         }
-
     }
 
+    public bool checkTeamOnHellipad()
+    {
+        if(nbPlayerOnHellipad.Count > 1)
+        {
+            for (int i = 1; i < nbPlayerOnHellipad.Count; i++)
+            {
+                if(nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_PlayerNumber != nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_PlayerNumber)
+                {
+                    return false;
+                }
+                currTeam = nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_PlayerNumber;
+            }
+        }
+        if(nbPlayerOnHellipad.Count == 1)
+        {
+            currTeam = nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_PlayerNumber;
+        }
+        return true;
+    }
+
+    public bool checkOwner()
+    {
+        if (nbPlayerOnHellipad.Count >= 1)
+        {
+            for (int i = 0; i < nbPlayerOnHellipad.Count; i++)
+            {
+                if (teamOwner == nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_PlayerNumber)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public void ChangeState(State newState)
     {
         foreach (Transition _transi in currentState.m_transition)
@@ -84,7 +221,6 @@ public class StateMachine : MonoBehaviour
             if(_transi.nextState == newState)
             {
                 currentState.Exit();
-
                 currentState = newState;
                 currentState.Enter();
                 break;
@@ -102,19 +238,6 @@ public class StateMachine : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             nbPlayerOnHellipad.Add(other.gameObject);
-            if (nbPlayerOnHellipad.Count == 1)
-            {
-                if (currentState != Capturing)
-                {
-                    if (other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber != teamOwner)
-                    {
-                        b_isCapturing = true;
-                        ChangeState(Capturing);
-                        teamOnHellipad=other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber;
-                    }
-                }
-            }
-
         }
     }
 
@@ -124,23 +247,6 @@ public class StateMachine : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             nbPlayerOnHellipad.Remove(other.gameObject);
-            if (currentState == Capturing && nbPlayerOnHellipad.Count == 0)
-            {
-                if (b_isCaptured)
-                {
-                    if(other.gameObject.GetComponent<Complete.TankMovement>().m_PlayerNumber != teamOwner)
-                    {
-                        b_isCapturing = false;
-                        ChangeState(Capturing);
-                        teamOnHellipad = 0;
-                    }
-                }else if (b_isCapturing)
-                {
-                    teamOnHellipad = 0;
-                    b_isCapturing = false;
-                }
-            }
-
         }
     }
 

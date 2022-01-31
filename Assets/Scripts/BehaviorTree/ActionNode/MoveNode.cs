@@ -7,7 +7,6 @@ public class MoveNode : ActionNode
     public GameObject Tank;
     protected override void OnStart()
     {
-
         //TODO
     }
 

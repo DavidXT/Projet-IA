@@ -16,16 +16,6 @@ public class State : ScriptableObject
         this.m_stateMachine = _sm;
     }
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public virtual void Enter() { }
     public virtual void CheckState(StateMachine _sm) { }
     public virtual void Exit() { }
