@@ -22,7 +22,6 @@ public class BehaviorTreeManager : MonoBehaviour
 
         var loop = ScriptableObject.CreateInstance<RepeatNode>();
         loop.child = sequence;
-
         tree.root = loop;
     }
 

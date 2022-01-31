@@ -25,9 +25,8 @@ namespace Complete
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
         public List<Vector3> path;
         public List<Node> pathNode;
-        private RaycastHit hitBelow;
-        private RaycastHit hitAhead;
-        public bool b_onPoint;
+        public float distanceShoot;
+        public float currDistance = 1000;
 
         [SerializeField] private TankMovementMode m_MovementMode;
 
@@ -72,6 +71,8 @@ namespace Complete
 
         private void Start ()
         {
+            distanceShoot = 20;
+            currDistance = 1000;
             // The axes names are based on player number.
             if(m_PlayerNumber <= 2)
             {
@@ -82,7 +83,6 @@ namespace Complete
             m_OriginalPitch = m_MovementAudio.pitch;
             m_moveDistance = 2;
             m_IsIA = true;
-            b_onPoint = false;
             GetComponent<NavMeshAgent>().updatePosition = false;
         }
 
@@ -95,16 +95,8 @@ namespace Complete
                     if(path.Count > 0)
                     //if(path.Count > 1)
                     {
-                        if (!b_onPoint)
-                        {
-                            this.transform.LookAt(pathNode[0].worldPosition);
-                            //this.transform.LookAt((path[0] + path[1]) / 2);
-                        }
-                        else
-                        {
-                            var lookVector = this.GetComponent<Complete.TankShooting>().m_target.transform.position;
-                            this.transform.LookAt(lookVector);
-                        }
+                        this.transform.LookAt(pathNode[0].worldPosition);
+                        //this.transform.LookAt((path[0] + path[1]) / 2);
                     }
                 }
                 else
@@ -167,12 +159,12 @@ namespace Complete
 
         public void SearchTarget()
         {
-            float currDistance = 1000;
+            currDistance = 1000;
             currDistance = Vector3.Distance(this.transform.position, PathManager.Instance.targetPoint.transform.position);
             this.GetComponent<Complete.TankShooting>().m_target = PathManager.Instance.targetPoint.transform;
             for (int i = 0; i < PathManager.Instance.allTanks.Length; i++)
             {
-                if (Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position) < currDistance)
+                if (Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position) < currDistance || Vector3.Distance(PathManager.Instance.allTanks[i].transform.position, this.transform.position) < distanceShoot)
                 {
                     if (this.gameObject != PathManager.Instance.allTanks[i])
                     {
@@ -189,11 +181,25 @@ namespace Complete
             {
                 if (pathNode.Count > 0)
                 {
-                    if (!b_onPoint)
+                    if(this.GetComponent<Complete.TankShooting>().m_target != PathManager.Instance.targetPoint.transform)
+                    {
+                        if (currDistance < 10)
+                        {
+                            Turn(1);
+                            Move();
+                        }
+                        else
+                        {
+                            this.transform.LookAt(pathNode[0].worldPosition);
+                            Move();
+                        }
+                    }
+                    else
                     {
                         this.transform.LookAt(pathNode[0].worldPosition);
                         Move();
                     }
+
                 }
             }
         }

@@ -14,7 +14,6 @@ public class StateMachine : MonoBehaviour
     public State Neutral;
     public float currCaptureBar;
     public float captureValue;
-    public float nbPlayer;
     public Image fillBar;
 
     public int teamOnHellipad;
@@ -38,8 +37,7 @@ public class StateMachine : MonoBehaviour
         captureValue = 10;
         teamOnHellipad = 0; 
         currTeam = 0;
-         teamOwner = 0;
-        nbPlayer = 0;
+         teamOwner = 0;;
         if (currentState != null)
             currentState.Enter();
 
@@ -49,14 +47,6 @@ public class StateMachine : MonoBehaviour
     {
         if (currentState != null)
             currentState.CheckState(this);
-        nbPlayer = 0;
-        foreach (GameObject go in PathManager.Instance.allTanks)
-        {
-            if (go.GetComponent<Complete.TankMovement>().b_onPoint)
-            {
-                nbPlayer++;
-            }
-        }
         fillBar.fillAmount = currCaptureBar/captureValue;
         checkTanks();
         canCapture = checkTeamOnHellipad();

@@ -19,9 +19,6 @@ public float m_shootDistance;
 
         private string m_FireButton;                // The input axis that is used for launching shells.
         [SerializeField] private float m_CurrentLaunchForce = 50;         // The force that will be given to the shell when the fire button is released.
-        private float m_ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
-        private bool m_Fired;                       // Whether or not the shell has been launched with this button press.
-        [SerializeField] private SO_Cooldown m_soCooldown;
         [SerializeField] private float m_resetCooldown;
         [SerializeField] public float m_currCooldown;
 
@@ -43,7 +40,6 @@ public float m_shootDistance;
             m_shootDistance = 50;
             m_currCooldown = 0;
 
-        //m_soCooldown.fCooldown = 0;
         }
 
 
@@ -68,34 +64,32 @@ public float m_shootDistance;
         {
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_shootDistance))
             {
+                if(m_PlayerNumber == 1)
+                    Debug.Log(hit.collider.gameObject.tag);
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
                     if (m_currCooldown <= 0)
                     {
-                        Fire();
-                        //Rotate tank around target
-                        Quaternion turnRotation = Quaternion.Euler(0f, 90f, 0f);
-                        // Apply this rotation to the rigidbody's rotation.
-                        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+                        if (Vector3.Distance(transform.position, m_target.position) <= 5)
+                        {
+                        }
+                        else
+                        {
+                            Fire();
+                            //Rotate tank around target
+                            Quaternion turnRotation = Quaternion.Euler(0f, 90f, 0f);
+                            // Apply this rotation to the rigidbody's rotation.
+                            m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+                        }
+
                     }
                 }
             }
         }
 
 
-
-        //void OnDrawGizmos()
-        //{
-        //    // Draws a 5 unit long red line in front of the object
-        //    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
-        //}
-
-
         private void Fire ()
         {
-            // Set the fired flag so only Fire is only called once.
-            m_Fired = true;
-
             // Create an instance of the shell and store a reference to it's rigidbody.
             Rigidbody shellInstance =
                 Instantiate (m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
