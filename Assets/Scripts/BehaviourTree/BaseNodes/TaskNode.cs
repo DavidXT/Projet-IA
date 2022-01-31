@@ -1,30 +1,36 @@
-public class TaskNode : BTNode
+namespace Complete
 {
-    public delegate NodeStates ActionNodeDelegate();
-
-    private ActionNodeDelegate _action;
-
-    public TaskNode (ActionNodeDelegate action)
-    {
-        _action = action;
-    }
+    using UnityEngine;
     
-    public override NodeStates Evaluate()
+    [CreateAssetMenu(fileName = "TaskNode", menuName = "BehaviourTree/Nodes/Tasks/TaskNode")]
+    public class TaskNode : BTNode
     {
-        switch (_action())
+        public delegate NodeStates ActionNodeDelegate();
+
+        private ActionNodeDelegate _action;
+
+        public TaskNode (ActionNodeDelegate action)
         {
-            case NodeStates.SUCCESS:
-                nodeState = NodeStates.SUCCESS;
-                return nodeState;
-            case NodeStates.FAILURE:
-                nodeState = NodeStates.FAILURE;
-                return nodeState;
-            case NodeStates.RUNNING:
-                nodeState = NodeStates.RUNNING;
-                return nodeState;
-            default:
-                nodeState = NodeStates.FAILURE;
-                return nodeState;
+            _action = action;
+        }
+        
+        public override NodeStates Evaluate()
+        {
+            switch (_action())
+            {
+                case NodeStates.SUCCESS:
+                    nodeState = NodeStates.SUCCESS;
+                    return nodeState;
+                case NodeStates.FAILURE:
+                    nodeState = NodeStates.FAILURE;
+                    return nodeState;
+                case NodeStates.RUNNING:
+                    nodeState = NodeStates.RUNNING;
+                    return nodeState;
+                default:
+                    nodeState = NodeStates.FAILURE;
+                    return nodeState;
+            }
         }
     }
 }

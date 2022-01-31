@@ -19,7 +19,7 @@ namespace Complete
         private string MovementAxisName;          // The name of the input axis for moving forward and back.
         private string TurnAxisName;              // The name of the input axis for turning.
         private Rigidbody Rigidbody;              // Reference used to move the tank.
-        private float MovementInputValue;         // The current value of the movement input.
+        public float MovementInputValue;         // The current value of the movement input.
         private float TurnInputValue;             // The current value of the turn input.
         private float OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] particleSystems; // References to all the particles systems used by the Tanks
@@ -31,11 +31,15 @@ namespace Complete
 
         public TankMovementMode MovementMode = null;
         public BehaviourTree BehaviourTree = null;
+        [SerializeField] private BTNode _entryNode;
 
         private void Awake()
         {
-            BehaviourTree = GetComponent<BehaviourTree>();
             Rigidbody = GetComponent<Rigidbody>();
+            
+            BehaviourTree = ScriptableObject.CreateInstance<BehaviourTree>();
+            BehaviourTree.SetupTree(_entryNode);
+            BehaviourTree.Blackboard.tankMovement = this;
         }
         
         private void OnEnable()
@@ -85,15 +89,6 @@ namespace Complete
             IsIA = true;
             b_onPoint = false;
             GetComponent<NavMeshAgent>().updatePosition = false;
-            
-            BehaviourTree.SetupTree(new Sequence(
-                new List<BTNode>()
-                {
-                    new MoveTo(this)
-                })
-            );
-            
-            BehaviourTree.StartTree();
         }
 
 
@@ -107,6 +102,11 @@ namespace Complete
             }
 
             BehaviourTree.Blackboard.position = transform.position;
+
+            if (BehaviourTree.IsRunning)
+            {
+                BehaviourTree.EvaluateTree();
+            }
 
             EngineAudio();
         }
@@ -171,15 +171,15 @@ namespace Complete
 
         private void FixedUpdate()
         {
-            
+            MoveWithInput();
+            TurnWithInput();
         }
         
         private void Move()
         {
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
             //Vector3 movement = transform.forward * MovementInputValue * Speed * Time.deltaTime;
-            
-            
+
             Vector3 movement;
             if (!IsIA)
             {
@@ -195,31 +195,15 @@ namespace Complete
             // Apply this movement to the rigidbody's position.
             Rigidbody.MovePosition(Rigidbody.position + movement);
         }
-        private void Move(bool _b)
-        {
 
-            Vector3 movement;
-            if (_b)
-            {
-                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-                movement = transform.forward * Speed * Time.deltaTime;
-            }
-            else
-            {
-                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-                movement = -transform.forward * Speed * Time.deltaTime;
-            }
-
-            // Apply this movement to the rigidbody's position.
-            Rigidbody.MovePosition(Rigidbody.position + movement);
-        }
-        
         private void MoveWithInput()
         {
-            Vector3 movement = transform.forward * MovementInputValue * Speed * Time.deltaTime;
+            Vector3 movement = transform.forward * MovementInputValue * BehaviourTree.Blackboard.movementSpeed * Time.deltaTime;
 
             // Apply this movement to the rigidbody's position.
             Rigidbody.MovePosition(Rigidbody.position + movement);
+
+            BehaviourTree.Blackboard.position = Rigidbody.position;
         }
 
         private void Turn()
@@ -241,18 +225,20 @@ namespace Complete
             // Apply this rotation to the rigidbody's rotation.
             Rigidbody.MoveRotation (Rigidbody.rotation * turnRotation);
         }
-        private void Turn(float rotationRate)
+
+        public void Rotate(Vector3 destination)
         {
-            float turn;
-            if (!IsIA)
-            {
-                // Determine the number of degrees to be turned based on the input, speed and time between frames.
-                turn = TurnInputValue * TurnSpeed * Time.deltaTime;
-            }
-            else
-            {
-                turn = -1 * TurnSpeed * Time.deltaTime;
-            }
+            Vector3 direction = Vector3.Normalize(destination - transform.position);
+
+            float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+
+            TurnInputValue = angle;
+        }
+        
+        private void TurnWithInput()
+        {
+            // Determine the number of degrees to be turned based on the input, speed and time between frames.
+            float turn = TurnInputValue * TurnSpeed * Time.deltaTime;
 
             // Make this into a rotation in the y axis.
             Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);

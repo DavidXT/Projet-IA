@@ -1,54 +1,30 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[Serializable]
-public class BehaviourTree : MonoBehaviour
+namespace Complete
 {
-    [SerializeField] private Blackboard _blackboard;
+    using System.Collections;
+    using UnityEngine;
 
-    [SerializeField] private BTNode _entryNode;
-    
-    public Blackboard Blackboard => _blackboard;
-
-    private bool bIsRunning = false;
-    private Coroutine BTCoroutine = null;
-
-    private void Start()
+    [CreateAssetMenu(fileName = "BehaviourTree", menuName = "BehaviourTree/Tree")]
+    public class BehaviourTree : ScriptableObject
     {
-        _blackboard = ScriptableObject.CreateInstance<Blackboard>();
-    }
+        private Blackboard _blackboard;
 
-    public void SetupTree(BTNode entryNode)
-    {
-        _entryNode = entryNode;
-    }
+        [SerializeField] private BTNode _entryNode;
+        
+        public Blackboard Blackboard => _blackboard;
 
-    private void Update()
-    {
-        if (bIsRunning)
+        private bool bIsRunning = false;
+        public bool IsRunning => bIsRunning;
+        
+        public void SetupTree(BTNode entryNode)
         {
-            if(BTCoroutine == null)
-                BTCoroutine = StartCoroutine(BehaviourCoroutine());
+            _blackboard = ScriptableObject.CreateInstance<Blackboard>();
+            _entryNode = entryNode;
+            bIsRunning = true;
         }
-    }
-
-    public void StartTree()
-    {
-        bIsRunning = true;
-    }
-
-    private IEnumerator BehaviourCoroutine()
-    {
-        NodeStates state = _entryNode.Evaluate();
-
-        while (state == NodeStates.NOTDEFINED)
+        
+        public void EvaluateTree()
         {
-            Debug.Log("Test is running");
-            yield return null;
+            _entryNode.Evaluate();
         }
-
-        BTCoroutine = null;
     }
 }

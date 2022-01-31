@@ -13,7 +13,7 @@ namespace Complete
         public AudioClip ChargingClip;            // Audio that plays when each shot is charging up.
         public AudioClip FireClip;                // Audio that plays when each shot is fired.
         public Transform target;
-public float shootDistance;
+        public float shootDistance;
         private Rigidbody Rigidbody;
         RaycastHit hit;
 
@@ -106,6 +106,19 @@ public float shootDistance;
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, shootDistance))
             {
                 if (hit.collider.gameObject.CompareTag("Player"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        
+        public bool TargetCouldBeInRange()
+        {
+            if (Physics.Raycast(transform.position, (GetComponent<TankShooting>().target.position - transform.position).normalized, out hit, shootDistance))
+            {
+                if (Vector3.Distance(transform.position, GetComponent<TankShooting>().target.position) - Vector3.Distance(transform.position, hit.collider.gameObject.transform.position) < 2f)
                 {
                     return true;
                 }
