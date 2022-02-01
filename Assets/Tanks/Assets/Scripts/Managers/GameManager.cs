@@ -88,7 +88,6 @@ namespace Complete
             m_hellipad.GetComponent<StateMachine>().currentState = m_hellipad.GetComponent<StateMachine>().Neutral;
             m_hellipad.GetComponent<StateMachine>().nbPlayerOnHellipad.Clear();
             m_hellipad.GetComponent<StateMachine>().teamOwner = 0;
-            m_hellipad.GetComponent<StateMachine>().teamOnHellipad = 0;
 
             // This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
             if (m_GameWinner != null)

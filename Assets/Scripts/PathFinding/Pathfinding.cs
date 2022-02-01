@@ -103,7 +103,12 @@ public class Pathfinding : MonoBehaviour
                 {
                     NodeToCheck.Add(newTempNode);
                 }
-            }
+				if (newTempNode == targetNode)
+				{
+					RetracePath(startNode, targetNode);
+					return;
+				}
+			}
 
 
             ////droite
@@ -119,7 +124,12 @@ public class Pathfinding : MonoBehaviour
                 {
                     NodeToCheck.Add(newTempNode);
                 }
-            }
+				if (newTempNode == targetNode)
+				{
+					RetracePath(startNode, targetNode);
+					return;
+				}
+			}
 
 
             ////Bas
@@ -135,7 +145,12 @@ public class Pathfinding : MonoBehaviour
                 {
                     NodeToCheck.Add(newTempNode);
                 }
-            }
+				if (newTempNode == targetNode)
+				{
+					RetracePath(startNode, targetNode);
+					return;
+				}
+			}
 
 
             ////gauche
@@ -151,17 +166,15 @@ public class Pathfinding : MonoBehaviour
                 {
                     NodeToCheck.Add(newTempNode);
                 }
-            }
+				if (newTempNode == targetNode)
+				{
+					RetracePath(startNode, targetNode);
+					return;
+				}
+			}
 
             NodeChecked.Add(node);
 			NodeToCheck.Remove(node);
-
-			if (node == targetNode)
-            {
-                RetracePath(startNode, targetNode);
-                return;
-            }
-
 
             List<Node> tempResult = new List<Node>();
 

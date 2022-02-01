@@ -16,8 +16,6 @@ public class StateMachine : MonoBehaviour
     public float captureValue;
     public Image fillBar;
 
-    public int teamOnHellipad;
-    public int nbTeamOnHellipad;
     public int teamOwner;
     public int currTeam;
     public bool canCapture = false;
@@ -35,7 +33,6 @@ public class StateMachine : MonoBehaviour
         currentState = Neutral;
         currCaptureBar = 0;
         captureValue = 10;
-        teamOnHellipad = 0; 
         currTeam = 0;
          teamOwner = 0;;
         if (currentState != null)
