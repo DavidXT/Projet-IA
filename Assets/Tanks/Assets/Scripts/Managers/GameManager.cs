@@ -17,13 +17,12 @@ namespace Complete
         public float Timer;
         public Text timerText;
         public bool b_isPlaying = false;
+        public SO_Team[] m_Teams;
 
         public GameObject m_hellipad;
 
-        private int m_RoundNumber;                  // Which round the game is currently on.
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
-        private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.
-        private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
+        private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.         
         private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
 
 
@@ -128,18 +127,6 @@ namespace Complete
             // Once execution has returned here, run the 'RoundEnding' coroutine, again don't return until it's finished.
             yield return StartCoroutine (RoundEnding());
 
-            // This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
-            if (m_GameWinner != null)
-            {
-                // If there is a game winner, restart the level.
-                SceneManager.LoadScene (0);
-            }
-            else
-            {
-                // If there isn't a winner yet, restart this coroutine so the loop continues.
-                // Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.
-                StartCoroutine (GameLoop ());
-            }
         }
 
 
@@ -166,9 +153,8 @@ namespace Complete
             m_MessageText.text = string.Empty;
 
             // While there is not one tank left...
-            while (!OneTankLeft() || !TimerEnd())
+            while (!TimerEnd())
             {
-                TimerEnd();
                 // ... return on the next frame.
                 yield return null;
             }
@@ -181,19 +167,10 @@ namespace Complete
             // Stop tanks from moving.
             DisableTankControl ();
             b_isPlaying = false;
-            // Clear the winner from the previous round.
-            m_RoundWinner = null;
 
-            // See if there is a winner now the round is over.
-            m_RoundWinner = GetRoundWinner ();
-
-            // If there is a winner, increment their score.
-            if (m_RoundWinner != null)
-                m_RoundWinner.m_Wins++;
 
             // Now the winner's score has been incremented, see if someone has one the game.
             m_GameWinner = GetGameWinner ();
-
             // Get a message based on the scores and whether or not there is a game winner and display it.
             string message = EndMessage ();
             m_MessageText.text = message;
@@ -204,45 +181,9 @@ namespace Complete
 
         private bool TimerEnd()
         {
-
             return Timer <= 0;
         }
-        // This is used to check if there is one or fewer tanks remaining and thus the round should end.
-        private bool OneTankLeft()
-        {
-            // Start the count of tanks left at zero.
-            int numTanksLeft = 0;
-
-
-            // Go through all the tanks...
-            for (int i = 0; i < m_Tanks.Length; i++)
-            {
-                // ... and if they are active, increment the counter.
-                if (m_Tanks[i].m_Instance.activeSelf)
-                    numTanksLeft++;
-            }
-            // If there are one or fewer tanks remaining return true, otherwise return false.
-            return numTanksLeft <= 1;
-        }
         
-        
-        // This function is to find out if there is a winner of the round.
-        // This function is called with the assumption that 1 or fewer tanks are currently active.
-        private TankManager GetRoundWinner()
-        {
-            // Go through all the tanks...
-            for (int i = 0; i < m_Tanks.Length; i++)
-            {
-                // ... and if one of them is active, it is the winner so return it.
-                if (m_Tanks[i].m_Instance.activeSelf)
-                    return m_Tanks[i];
-            }
-
-            // If none of the tanks are active it is a draw so return null.
-            return null;
-        }
-
-
         // This function is to find out if there is a winner of the game.
         private TankManager GetGameWinner()
         {
@@ -263,24 +204,27 @@ namespace Complete
         private string EndMessage()
         {
             // By default when a round ends there are no winners so the default end message is a draw.
-            string message = "DRAW!";
-
-            // If there is a winner then change the message to reflect that.
-            if (m_RoundWinner != null)
-                message = m_RoundWinner.m_ColoredPlayerText + " WINS THE ROUND!";
+            string message = "GAME END!";
 
             // Add some line breaks after the initial message.
-            message += "\n\n\n\n";
+            message += "\n\n\n";
 
+            int winner = 0;
+            float winnerScore = 0;
             // Go through all the tanks and add each of their scores to the message.
-            for (int i = 0; i < m_Tanks.Length; i++)
+            for (int i = 0; i < m_Teams.Length; i++)
             {
-                message += m_Tanks[i].m_ColoredPlayerText + ": " + m_Tanks[i].m_Wins + " WINS\n";
+                message += "Team  " + m_Teams[i].m_TeamNumber + ": " + m_Teams[i].m_TeamScore + " PTS\n";
+                if(m_Teams[i].m_TeamScore > winnerScore)
+                {
+                    winnerScore = m_Teams[i].m_TeamNumber;
+                    winner = m_Teams[i].m_TeamNumber;
+                }
             }
 
-            // If there is a game winner, change the entire message to reflect that.
-            if (m_GameWinner != null)
-                message = m_GameWinner.m_ColoredPlayerText + " WINS THE GAME!";
+            // Add some line breaks after the initial message.
+            message += "\n\n\n";
+            message += "Team " + winner + " WINS THE GAME!";
 
             return message;
         }
