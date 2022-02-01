@@ -77,7 +77,7 @@ public class Pathfinding : MonoBehaviour
 	{
 		Node startNode = grid.NodeFromWorldPoint(startPos);
 		Node targetNode = grid.NodeFromWorldPoint(targetPos);
-
+		Vector3 worldBottomLeft = transform.position - Vector3.right * Grid.Instance.gridWorldSize.x / 2 - Vector3.forward * Grid.Instance.gridWorldSize.y / 2;
 		List<Node> NodeToCheck = new List<Node>();
 		List<Node> NodeChecked = new List<Node>();
 		Node[,] tempsGrid = Grid.Instance.grid;
@@ -91,108 +91,91 @@ public class Pathfinding : MonoBehaviour
 			NodeToCheck.RemoveAt(0);
 
 			//Haut
-			if (node.worldPosition.z < Grid.Instance.gridWorldSize.y - 1)
+			if (node.worldPosition.z < Grid.Instance.gridSizeY - 1)
             {
-				Node newTempNode = tempsGrid[(int)node.worldPosition.x, (int)node.worldPosition.z + 1];
+                Node newTempNode = tempsGrid[(int)node.gridX, (int)node.gridY + 1]; 
 				if (newTempNode == targetNode)
-				{
-					tempsEndNode = newTempNode;
-					break;
-				}
-				if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
-				{
-					NodeToCheck.Add(newTempNode);
-				}
-			}
-				for (int i = 1; i < NodeToCheck.Count; i++)
-			{
-				if (NodeToCheck[i].fCost < node.fCost || NodeToCheck[i].fCost == node.fCost)
-				{
-					if (NodeToCheck[i].hCost < node.hCost)
-						node = NodeToCheck[i];
-				}
-			}
+                {
+                    tempsEndNode = newTempNode;
+                    break;
+                }
+                if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+                {
+                    NodeToCheck.Add(newTempNode);
+                }
+            }
 
-			//droite
-			if (node.worldPosition.x < Grid.Instance.gridWorldSize.x - 1)
-			{
-				Node newTempNode = tempsGrid[(int)node.worldPosition.x + 1, (int)node.worldPosition.z];
-				if (newTempNode == targetNode)
-				{
-					tempsEndNode = newTempNode;
-					break;
-				}
-				if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
-				{
-					NodeToCheck.Add(newTempNode);
-				}
-			}
-			for (int i = 1; i < NodeToCheck.Count; i++)
-			{
-				if (NodeToCheck[i].fCost < node.fCost || NodeToCheck[i].fCost == node.fCost)
-				{
-					if (NodeToCheck[i].hCost < node.hCost)
-						node = NodeToCheck[i];
-				}
-			}
 
-			//Bas
-			if (node.worldPosition.z > 0)
-			{
-				Node newTempNode = tempsGrid[(int)node.worldPosition.x, (int)node.worldPosition.z - 1];
-				if (newTempNode == targetNode)
-				{
-					tempsEndNode = newTempNode;
-					break;
-				}
-				if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
-				{
-					NodeToCheck.Add(newTempNode);
-				}
-			}
-			for (int i = 1; i < NodeToCheck.Count; i++)
-			{
-				if (NodeToCheck[i].fCost < node.fCost || NodeToCheck[i].fCost == node.fCost)
-				{
-					if (NodeToCheck[i].hCost < node.hCost)
-						node = NodeToCheck[i];
-				}
-			}
+            ////droite
+            if (node.worldPosition.x < Grid.Instance.gridSizeX - 1)
+            {
+                Node newTempNode = tempsGrid[(int)node.gridX + 1, (int)node.gridY];
+                if (newTempNode == targetNode)
+                {
+                    tempsEndNode = newTempNode;
+                    break;
+                }
+                if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+                {
+                    NodeToCheck.Add(newTempNode);
+                }
+            }
 
-			//gauche
-			if (node.worldPosition.x > 0 )
-			{
-				Node newTempNode = tempsGrid[(int)node.worldPosition.x - 1, (int)node.worldPosition.z];
-				if (newTempNode == targetNode)
-				{
-					tempsEndNode = newTempNode;
-					break;
-				}
-				if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
-				{
-					NodeToCheck.Add(newTempNode);
-				}
-			}
 
-			NodeChecked.Add(node);
-			if (node == targetNode)
-			{
-				RetracePath(startNode, targetNode);
-				return;
-			}
+            ////Bas
+            if (node.worldPosition.z > 0)
+            {
+                Node newTempNode = tempsGrid[(int)node.gridX, (int)node.gridY - 1];
+                if (newTempNode == targetNode)
+                {
+                    tempsEndNode = newTempNode;
+                    break;
+                }
+                if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+                {
+                    NodeToCheck.Add(newTempNode);
+                }
+            }
 
-			List<Node> tempResult = new List<Node>();
 
-			tempResult.Add(tempsEndNode);
+            ////gauche
+            if (node.worldPosition.x > 0)
+            {
+                Node newTempNode = tempsGrid[(int)node.gridX - 1, (int)node.gridY];
+                if (newTempNode == targetNode)
+                {
+                    tempsEndNode = newTempNode;
+                    break;
+                }
+                if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+                {
+                    NodeToCheck.Add(newTempNode);
+                }
+            }
 
-			Node[] tempTilesResult = new Node[tempResult.Count];
-			for (int i = 0; i < tempTilesResult.Length; ++i)
-			{
-				tempTilesResult[i] = tempResult[tempResult.Count - i - 1];
-			}
-
+            NodeChecked.Add(node);
 			NodeToCheck.Remove(node);
-		}
+
+			if (node == targetNode)
+            {
+                RetracePath(startNode, targetNode);
+                return;
+            }
+
+
+            List<Node> tempResult = new List<Node>();
+
+            tempResult.Add(tempsEndNode);
+
+            Node[] tempTilesResult = new Node[tempResult.Count];
+
+            for (int i = 0; i < tempTilesResult.Length; ++i)
+            {
+                tempTilesResult[i] = tempResult[tempResult.Count - i - 1];
+            }
+
+
+        }
 	}
 
 	void RetracePath(Node startNode, Node endNode)

@@ -11,9 +11,8 @@ public class Grid : MonoBehaviour
 	public Node[,] grid;
 
 	public List<Node> path;
-
-	float nodeDiameter;
-	int gridSizeX, gridSizeY;
+	public float nodeDiameter;
+	public int gridSizeX, gridSizeY;
 
 	void Awake()
 	{
