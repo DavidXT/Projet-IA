@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,16 +20,21 @@ public class PathManager : MonoBehaviour
         pathfinding = GetComponent<Pathfinding>();
     }
 
+    void Start()
+    {
+        allTanks = GameObject.FindGameObjectsWithTag("Player");
+    }
+
     // Update is called once per frame
     void Update()
     {
-        allTanks = GameObject.FindGameObjectsWithTag("Player");
+        /*allTanks = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject go in allTanks)
         {
             GetNextLocation(allTanks, go);
             //pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().target.transform.position);
             //go.GetComponent<Complete.TankMovement>().path = Grid.Instance.path;
-        }
+        }*/
     }
 
     //Return the next location the tank will want to go

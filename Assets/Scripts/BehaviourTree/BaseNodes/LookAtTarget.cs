@@ -1,4 +1,4 @@
-using UnityEngine.Serialization;
+using System.Linq.Expressions;
 
 namespace Complete
 {
@@ -16,16 +16,21 @@ namespace Complete
         
         public override NodeStates Evaluate()
         {
-            TankMovement tankMovement = Blackboard.tankMovement;
-            Transform tankTransform = tankMovement.transform;
             
-            if (!Mathf.Approximately(Vector3.Dot(tankTransform.forward, (Blackboard.targetLocation - tankTransform.position).normalized), 1))
+            TankMovement tankMovement = Blackboard.tankMovement;
+            Transform tankTransform = Blackboard.tankTransform;
+            
+            tankMovement.Rotate(Blackboard.path[0]);
+            if (Vector3.Dot(tankTransform.forward, (Blackboard.path[0] - tankTransform.position).normalized) <= 0.8f)
             {
-                tankTransform.RotateAround(tankTransform.position, tankTransform.up, Vector3.Angle(tankTransform.forward, (Blackboard.targetLocation - tankTransform.position).normalized) * Time.deltaTime);
+                Debug.Log("LookAtTarget");
+                Debug.Log(Vector3.Dot(tankTransform.position, (Blackboard.path[1] - tankTransform.position).normalized));
                 return NodeStates.RUNNING;
             }
-
-            return NodeStates.SUCCESS;
+            else
+            {
+                return NodeStates.SUCCESS;
+            }
         }
 
         public override object Clone()

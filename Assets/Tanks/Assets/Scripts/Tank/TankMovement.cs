@@ -41,6 +41,7 @@ namespace Complete
 
             BehaviourTree = (BehaviourTree)BehaviourTree.Clone();
             BehaviourTree.Blackboard.tankMovement = this;
+            BehaviourTree.Blackboard.tankTransform = transform;
         }
         
         private void OnEnable()
@@ -200,8 +201,6 @@ namespace Complete
 
             // Apply this movement to the rigidbody's position.
             Rigidbody.MovePosition(Rigidbody.position + movement);
-
-            BehaviourTree.Blackboard.position = Rigidbody.position;
         }
 
         private void Turn()
@@ -229,7 +228,7 @@ namespace Complete
             Vector3 direction = Vector3.Normalize(destination - transform.position);
 
             float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
-            //angle += (float) Math.Sin(Time.time * 4) * 0.2f;
+            //Debug.Log("<color=#" + ColorUtility.ToHtmlStringRGB(BehaviourTree.Blackboard.playerColor) + ">████████████</color> angle = " + angle);
 
             if (angle > 0)
                 TurnInputValue = 1;
@@ -247,6 +246,8 @@ namespace Complete
 
             // Apply this rotation to the rigidbody's rotation.
             Rigidbody.MoveRotation(Rigidbody.rotation * turnRotation);
+
+            TurnInputValue = 0;
         }
     }
 }

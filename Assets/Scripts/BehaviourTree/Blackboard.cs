@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 namespace Complete
 {
@@ -8,10 +10,12 @@ namespace Complete
     public class Blackboard : ScriptableObject, ICloneable
     {
         public TankMovement tankMovement = null;
+
+        public Color playerColor;
         
-        public Vector3[] path = new Vector3[0];
+        public List<Vector3> path = new List<Vector3>();
         
-        public Vector3 position = Vector3.zero;
+        public Transform tankTransform = null;
         public Vector3 targetLocation = Vector3.zero;
         public Vector3 zoneLocation = Vector3.zero;
         
@@ -28,9 +32,7 @@ namespace Complete
         public object Clone()
         {
             Blackboard blackboard = CreateInstance<Blackboard>();
-            blackboard.tankMovement = tankMovement;
             blackboard.path = path;
-            blackboard.position = position;
             blackboard.targetLocation = targetLocation;
             blackboard.zoneLocation = zoneLocation;
             blackboard.movementSpeed = movementSpeed;

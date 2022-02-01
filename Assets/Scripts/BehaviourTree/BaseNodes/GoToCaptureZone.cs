@@ -15,17 +15,21 @@ namespace Complete
         
         public override NodeStates Evaluate()
         {
+            Debug.Log("GoToCaptureZone");
             TankMovement tankMovement = Blackboard.tankMovement;
             Transform tankTransform = tankMovement.transform;
-            List<Vector3> path = tankMovement.MovementMode.GetPathToLocation(Blackboard.position, Blackboard.zoneLocation);
-            Blackboard.path = path.ToArray();
+            
+            
+            if (Blackboard.path.Count == 0) return NodeStates.FAILURE;
 
-            if (path.Count <= 1) return NodeStates.FAILURE;
-
-            if (Vector3.Distance(tankTransform.position, Blackboard.zoneLocation) < 1f) return NodeStates.SUCCESS;
-
-            tankMovement.Rotate(path[0]);
-            tankMovement.MovementInputValue = 1;
+            if (Vector3.Distance(tankTransform.position, Blackboard.targetLocation) < 1f) return NodeStates.SUCCESS;
+            
+            tankMovement.Rotate(Blackboard.path[0]);
+            float input = Mathf.Sqrt(-2.7f * Mathf.Exp(-Mathf.Sqrt(Vector3.Distance(tankTransform.position, Blackboard.targetLocation))) + 1);
+            //Debug.Log(input);
+            tankMovement.MovementInputValue = input;
+            if (Vector3.Distance(tankTransform.position, Blackboard.path[0]) < 1)
+                Blackboard.path.RemoveAt(0);
             
             return NodeStates.RUNNING;
         }

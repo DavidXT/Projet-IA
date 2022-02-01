@@ -30,6 +30,8 @@ namespace Complete
             Movement = Instance.GetComponent<TankMovement>();
             Shooting = Instance.GetComponent<TankShooting>();
             CanvasGameObject = Instance.GetComponentInChildren<Canvas>().gameObject;
+
+            Movement.BehaviourTree.Blackboard.playerColor = PlayerColor;
             
             // Set the player numbers to be consistent across the scripts.
             Movement.PlayerNumber = PlayerNumber;
