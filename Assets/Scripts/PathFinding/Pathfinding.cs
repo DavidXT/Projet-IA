@@ -78,49 +78,120 @@ public class Pathfinding : MonoBehaviour
 		Node startNode = grid.NodeFromWorldPoint(startPos);
 		Node targetNode = grid.NodeFromWorldPoint(targetPos);
 
-		List<Node> openSet = new List<Node>();
-		HashSet<Node> closedSet = new HashSet<Node>();
-		openSet.Add(startNode);
+		List<Node> NodeToCheck = new List<Node>();
+		List<Node> NodeChecked = new List<Node>();
+		Node[,] tempsGrid = Grid.Instance.grid;
 
-		while (openSet.Count > 0)
+		Node tempsEndNode = null;
+		NodeToCheck.Add(startNode);
+
+		while (NodeToCheck.Count > 0)
 		{
-			Node node = openSet[0];
-			for (int i = 1; i < openSet.Count; i++)
-			{
-				if (openSet[i].fCost < node.fCost || openSet[i].fCost == node.fCost)
+			Node node = NodeToCheck[0];
+			NodeToCheck.RemoveAt(0);
+
+			//Haut
+			if (node.worldPosition.z < Grid.Instance.gridWorldSize.y - 1)
+            {
+				Node newTempNode = tempsGrid[(int)node.worldPosition.x, (int)node.worldPosition.z + 1];
+				if (newTempNode == targetNode)
 				{
-					if (openSet[i].hCost < node.hCost)
-						node = openSet[i];
+					tempsEndNode = newTempNode;
+					break;
+				}
+				if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+				{
+					NodeToCheck.Add(newTempNode);
+				}
+			}
+				for (int i = 1; i < NodeToCheck.Count; i++)
+			{
+				if (NodeToCheck[i].fCost < node.fCost || NodeToCheck[i].fCost == node.fCost)
+				{
+					if (NodeToCheck[i].hCost < node.hCost)
+						node = NodeToCheck[i];
 				}
 			}
 
-			openSet.Remove(node);
-			closedSet.Add(node);
+			//droite
+			if (node.worldPosition.x < Grid.Instance.gridWorldSize.x - 1)
+			{
+				Node newTempNode = tempsGrid[(int)node.worldPosition.x + 1, (int)node.worldPosition.z];
+				if (newTempNode == targetNode)
+				{
+					tempsEndNode = newTempNode;
+					break;
+				}
+				if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+				{
+					NodeToCheck.Add(newTempNode);
+				}
+			}
+			for (int i = 1; i < NodeToCheck.Count; i++)
+			{
+				if (NodeToCheck[i].fCost < node.fCost || NodeToCheck[i].fCost == node.fCost)
+				{
+					if (NodeToCheck[i].hCost < node.hCost)
+						node = NodeToCheck[i];
+				}
+			}
 
+			//Bas
+			if (node.worldPosition.z > 0)
+			{
+				Node newTempNode = tempsGrid[(int)node.worldPosition.x, (int)node.worldPosition.z - 1];
+				if (newTempNode == targetNode)
+				{
+					tempsEndNode = newTempNode;
+					break;
+				}
+				if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+				{
+					NodeToCheck.Add(newTempNode);
+				}
+			}
+			for (int i = 1; i < NodeToCheck.Count; i++)
+			{
+				if (NodeToCheck[i].fCost < node.fCost || NodeToCheck[i].fCost == node.fCost)
+				{
+					if (NodeToCheck[i].hCost < node.hCost)
+						node = NodeToCheck[i];
+				}
+			}
+
+			//gauche
+			if (node.worldPosition.x > 0 )
+			{
+				Node newTempNode = tempsGrid[(int)node.worldPosition.x - 1, (int)node.worldPosition.z];
+				if (newTempNode == targetNode)
+				{
+					tempsEndNode = newTempNode;
+					break;
+				}
+				if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+				{
+					NodeToCheck.Add(newTempNode);
+				}
+			}
+
+			NodeChecked.Add(node);
 			if (node == targetNode)
 			{
 				RetracePath(startNode, targetNode);
 				return;
 			}
 
-			foreach (Node neighbour in grid.GetNeighbours(node))
+			List<Node> tempResult = new List<Node>();
+
+			tempResult.Add(tempsEndNode);
+
+			Node[] tempTilesResult = new Node[tempResult.Count];
+			for (int i = 0; i < tempTilesResult.Length; ++i)
 			{
-				if (!neighbour.walkable || closedSet.Contains(neighbour))
-				{
-					continue;
-				}
-
-				int newCostToNeighbour = node.gCost + GetDistance(node, neighbour);
-				if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
-				{
-					neighbour.gCost = newCostToNeighbour;
-					neighbour.hCost = GetDistance(neighbour, targetNode);
-					neighbour.parent = node;
-
-					if (!openSet.Contains(neighbour))
-						openSet.Add(neighbour);
-				}
+				tempTilesResult[i] = tempResult[tempResult.Count - i - 1];
 			}
+
+			NodeToCheck.Remove(node);
 		}
 	}
 
