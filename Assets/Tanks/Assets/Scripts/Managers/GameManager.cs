@@ -14,6 +14,9 @@ namespace Complete
         public Text m_MessageText;                  // Reference to the overlay Text to display winning text, etc.
         public GameObject m_TankPrefab;             // Reference to the prefab the players will control.
         public TankManager[] m_Tanks;               // A collection of managers for enabling and disabling different aspects of the tanks.
+        public float Timer;
+        public Text timerText;
+        public bool b_isPlaying = false;
 
         public GameObject m_hellipad;
 
@@ -43,12 +46,51 @@ namespace Complete
             StartCoroutine (GameLoop ());
         }
 
+        private void Update()
+        {
+            if (b_isPlaying)
+            {
+                if (Timer > 0)
+                {
+                    Timer -= Time.deltaTime;
+                    timerText.text = System.Math.Round(Timer, 0).ToString();
+                    TimerEnd();
+                }
+                RespawnTanks();
+            }
+
+        }
+
+        private void RespawnTanks()
+        {
+            for (int i = 0; i < m_Tanks.Length; i++)
+            {
+
+                // ... and if one of them is active, it is the winner so return it.
+                if (!m_Tanks[i].m_Instance.activeSelf)
+                {
+                    TankMovement tank = m_Tanks[i].m_Instance.GetComponent<Complete.TankMovement>();
+                    if(tank.respawnTime > 0)
+                    {
+                        tank.respawnTime -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        m_Tanks[i].m_Instance.transform.position = m_Tanks[i].m_SpawnPoint.position;
+                        m_Tanks[i].m_Instance.SetActive(true);
+                        tank.respawnTime = 5;
+                    }
+                }
+                    
+            }
+        }
         private void SpawnAllTanks()
         {
             // For all the tanks...
             for (int i = 0; i < m_Tanks.Length; i++)
             {
                 // ... create them, set their player number and references needed for control.
+
                 m_Tanks[i].m_Instance =
                     Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
                 m_Tanks[i].m_PlayerNumber = i + 1;
@@ -85,9 +127,6 @@ namespace Complete
 
             // Once execution has returned here, run the 'RoundEnding' coroutine, again don't return until it's finished.
             yield return StartCoroutine (RoundEnding());
-            m_hellipad.GetComponent<StateMachine>().currentState = m_hellipad.GetComponent<StateMachine>().Neutral;
-            m_hellipad.GetComponent<StateMachine>().nbPlayerOnHellipad.Clear();
-            m_hellipad.GetComponent<StateMachine>().teamOwner = 0;
 
             // This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
             if (m_GameWinner != null)
@@ -109,13 +148,9 @@ namespace Complete
             // As soon as the round starts reset the tanks and make sure they can't move.
             ResetAllTanks ();
             DisableTankControl ();
-
+            b_isPlaying = false;
             // Snap the camera's zoom and position to something appropriate for the reset tanks.
             m_CameraControl.SetStartPositionAndSize ();
-
-            // Increment the round number and display text showing the players what round it is.
-            m_RoundNumber++;
-            m_MessageText.text = "ROUND " + m_RoundNumber;
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return m_StartWait;
@@ -126,24 +161,26 @@ namespace Complete
         {
             // As soon as the round begins playing let the players control the tanks.
             EnableTankControl ();
-
+            b_isPlaying = true;
             // Clear the text from the screen.
             m_MessageText.text = string.Empty;
 
             // While there is not one tank left...
-            while (!OneTankLeft())
+            while (!OneTankLeft() || !TimerEnd())
             {
+                TimerEnd();
                 // ... return on the next frame.
                 yield return null;
             }
         }
 
+        
 
         private IEnumerator RoundEnding ()
         {
             // Stop tanks from moving.
             DisableTankControl ();
-
+            b_isPlaying = false;
             // Clear the winner from the previous round.
             m_RoundWinner = null;
 
@@ -165,12 +202,17 @@ namespace Complete
             yield return m_EndWait;
         }
 
+        private bool TimerEnd()
+        {
 
+            return Timer <= 0;
+        }
         // This is used to check if there is one or fewer tanks remaining and thus the round should end.
         private bool OneTankLeft()
         {
             // Start the count of tanks left at zero.
             int numTanksLeft = 0;
+
 
             // Go through all the tanks...
             for (int i = 0; i < m_Tanks.Length; i++)
@@ -179,7 +221,6 @@ namespace Complete
                 if (m_Tanks[i].m_Instance.activeSelf)
                     numTanksLeft++;
             }
-
             // If there are one or fewer tanks remaining return true, otherwise return false.
             return numTanksLeft <= 1;
         }

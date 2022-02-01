@@ -16,8 +16,8 @@ public class StateMachine : MonoBehaviour
     public float captureValue;
     public Image fillBar;
 
-    public int teamOwner;
-    public int currTeam;
+    public SO_Team teamOwner;
+    public SO_Team currTeam;
     public bool canCapture = false;
     public List<GameObject> nbPlayerOnHellipad;
 
@@ -33,8 +33,8 @@ public class StateMachine : MonoBehaviour
         currentState = Neutral;
         currCaptureBar = 0;
         captureValue = 10;
-        currTeam = 0;
-         teamOwner = 0;;
+        currTeam = null;
+        teamOwner = null;
         if (currentState != null)
             currentState.Enter();
 
@@ -69,16 +69,16 @@ public class StateMachine : MonoBehaviour
         {
             for (int i = 1; i < nbPlayerOnHellipad.Count; i++)
             {
-                if(nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_PlayerNumber != nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_PlayerNumber)
+                if(nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_Team != nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_Team)
                 {
                     return false;
                 }
-                currTeam = nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_PlayerNumber;
+                currTeam = nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_Team;
             }
         }
         if(nbPlayerOnHellipad.Count == 1)
         {
-            currTeam = nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_PlayerNumber;
+            currTeam = nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_Team;
         }
         return true;
     }
@@ -89,7 +89,7 @@ public class StateMachine : MonoBehaviour
         {
             for (int i = 0; i < nbPlayerOnHellipad.Count; i++)
             {
-                if (teamOwner == nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_PlayerNumber)
+                if (teamOwner == nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_Team)
                 {
                     return true;
                 }

@@ -18,6 +18,7 @@ public class CapturedState : State
     public override void CheckState(StateMachine _sm)
     {
         base.CheckState(_sm);
+        _sm.teamOwner.m_TeamScore += Time.deltaTime;
         if (!_sm.checkOwner())
         {
             _sm.currCaptureBar -= Time.deltaTime;

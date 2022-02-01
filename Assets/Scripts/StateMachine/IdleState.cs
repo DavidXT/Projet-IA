@@ -17,7 +17,7 @@ public class IdleState : State
 
     public override void CheckState(StateMachine _sm)
     {
-        _sm.teamOwner = 0;
+        _sm.teamOwner = null;
         if (_sm.nbPlayerOnHellipad.Count >= 1)
         {
             _sm.ChangeState(_sm.Capturing);

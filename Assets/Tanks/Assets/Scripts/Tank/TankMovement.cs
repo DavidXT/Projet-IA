@@ -7,6 +7,9 @@ namespace Complete
     public class TankMovement : MonoBehaviour
     {
         public int m_PlayerNumber = 1;              // Used to identify which tank belongs to which player.  This is set by this tank's manager.
+        public SO_Team m_Team;
+        public float respawnTime = 5;
+
         public float m_Speed = 12f;                 // How fast the tank moves forward and back.
         public float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
         public AudioSource m_MovementAudio;         // Reference to the audio source used to play engine sounds. NB: different to the shooting audio source.
@@ -15,6 +18,7 @@ namespace Complete
 		public float m_PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
         public bool m_IsIA = false;
         public float m_moveDistance = 5;
+
 
         private string m_MovementAxisName;          // The name of the input axis for moving forward and back.
         private string m_TurnAxisName;              // The name of the input axis for turning.
@@ -82,7 +86,21 @@ namespace Complete
             // Store the original pitch of the audio source.
             m_OriginalPitch = m_MovementAudio.pitch;
             m_moveDistance = 2;
-            m_IsIA = true;
+            if (m_PlayerNumber == 1)
+            {
+                if (GameMode.Instance.currentMode == GameMode.mode.VSPLAYER)
+                {
+                    m_IsIA = false;
+                }
+                else
+                {
+                    m_IsIA = true;
+                }
+            }
+            else
+            {
+                m_IsIA = true;
+            }
             GetComponent<NavMeshAgent>().updatePosition = false;
         }
 
@@ -183,15 +201,19 @@ namespace Complete
                 {
                     if(this.GetComponent<Complete.TankShooting>().m_target != PathManager.Instance.targetPoint.transform)
                     {
-                        if (currDistance < 10)
-                        {
-                            Turn(1);
-                            Move();
-                        }
-                        else
+                        if(currDistance >= 10)
                         {
                             this.transform.LookAt(pathNode[0].worldPosition);
                             Move();
+                        }
+                        else if (currDistance < 10 || this.GetComponent<Complete.TankShooting>().m_currCooldown >= 0)
+                        {
+                            Turn(this.transform.right.z);
+                            Move();
+                        }
+                        else 
+                        {
+                            Turn(1);
                         }
                     }
                     else
