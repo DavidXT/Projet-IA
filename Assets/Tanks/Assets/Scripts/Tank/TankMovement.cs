@@ -14,7 +14,7 @@ namespace Complete
         public AudioSource MovementAudio;         // Reference to the audio source used to play engine sounds. NB: different to the shooting audio source.
         public AudioClip EngineIdling;            // Audio to play when the tank isn't moving.
         public AudioClip EngineDriving;           // Audio to play when the tank is moving.
-		public float PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
+        public float PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
         public bool IsIA = true;
         public float moveDistance = 5;
 
@@ -22,7 +22,7 @@ namespace Complete
         private string TurnAxisName;              // The name of the input axis for turning.
         private Rigidbody Rigidbody;              // Reference used to move the tank.
         public float MovementInputValue;         // The current value of the movement input.
-        private float TurnInputValue;             // The current value of the turn input.
+        public float TurnInputValue;             // The current value of the turn input.
         private float OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] particleSystems; // References to all the particles systems used by the Tanks
         [SerializeField] TankShooting shootScript;
@@ -33,6 +33,7 @@ namespace Complete
 
         public TankMovementMode MovementMode = null;
         public BehaviourTree BehaviourTree = null;
+        public float turnInputValue { get => TurnInputValue; }
         [SerializeField] private BTNode _entryNode;
 
         private void Awake()
@@ -193,6 +194,8 @@ namespace Complete
             
             // Apply this movement to the rigidbody's position.
             Rigidbody.MovePosition(Rigidbody.position + movement);
+
+            MovementInputValue = 0;
         }
 
         private void MoveWithInput()

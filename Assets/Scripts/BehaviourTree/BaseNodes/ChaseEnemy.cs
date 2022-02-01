@@ -14,25 +14,26 @@ namespace Complete
 
         public override NodeStates Evaluate()
         {
-            Debug.Log("ChaseEnemy");
             TankMovement tankMovement = Blackboard.tankMovement;
-            List<Vector3> path = tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.targetLocation);
+            List<Vector3> path = tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.targetLocation.position) ;
 
-            if (path.Count <= 1) return NodeStates.FAILURE;
+            if (path.Count <= 2) return NodeStates.FAILURE;
 
             if (!tankMovement.GetComponent<TankShooting>().TargetCouldBeInRange())
             {
                 tankMovement.Rotate(path[1]);
-                float input = Mathf.Sqrt(-2.7f * Mathf.Exp(-Mathf.Sqrt(Vector3.Distance(tankMovement.transform.position, Blackboard.targetLocation))) + 1);
-
-                tankMovement.MovementInputValue = input;
+                tankMovement.MovementInputValue = 1;
             }
             else
             {
-                tankMovement.Rotate(Blackboard.targetLocation);
-                float input = Mathf.Sqrt(-2.7f * Mathf.Exp(-Mathf.Sqrt(Vector3.Distance(tankMovement.transform.position, Blackboard.targetLocation))) + 1);
+                tankMovement.Rotate(Blackboard.targetLocation.position);
+                tankMovement.MovementInputValue = 1;
+            }
 
-                tankMovement.MovementInputValue = input;
+            if (Vector3.Distance(Blackboard.path[1], Blackboard.tankMovement.transform.position) > 0.2)
+            {
+                Blackboard.path.RemoveAt(1);
+                return NodeStates.SUCCESS;
             }
             return NodeStates.RUNNING;
         }

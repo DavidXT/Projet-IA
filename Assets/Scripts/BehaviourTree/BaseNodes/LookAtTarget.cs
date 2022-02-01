@@ -9,6 +9,8 @@ namespace Complete
     {
         private Blackboard Blackboard;
 
+        int loop = 0;
+
         public override void InitNode(Blackboard blackboard)
         {
             Blackboard = blackboard;
@@ -16,19 +18,27 @@ namespace Complete
         
         public override NodeStates Evaluate()
         {
-            
+            loop++;
+            if (loop > 100)
+            {
+                loop = 0;
+                return NodeStates.FAILURE;
+
+            }
             TankMovement tankMovement = Blackboard.tankMovement;
             Transform tankTransform = Blackboard.tankTransform;
-            
-            tankMovement.Rotate(Blackboard.path[0]);
-            if (Vector3.Dot(tankTransform.forward, (Blackboard.path[0] - tankTransform.position).normalized) <= 0.8f)
+
+            if (Blackboard.path.Count <= 1) return NodeStates.FAILURE;
+
+            tankMovement.Rotate(Blackboard.path[1]);
+            if (Vector3.Dot(tankTransform.forward, (Blackboard.path[1] - tankTransform.position).normalized) <= 0.9f)
             {
-                Debug.Log("LookAtTarget");
-                Debug.Log(Vector3.Dot(tankTransform.position, (Blackboard.path[1] - tankTransform.position).normalized));
                 return NodeStates.RUNNING;
             }
             else
             {
+                loop = 0;
+                tankMovement.TurnInputValue = 0;
                 return NodeStates.SUCCESS;
             }
         }

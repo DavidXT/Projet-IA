@@ -28,13 +28,13 @@ public class PathManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*allTanks = GameObject.FindGameObjectsWithTag("Player");
+        allTanks = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject go in allTanks)
         {
             GetNextLocation(allTanks, go);
             //pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().target.transform.position);
             //go.GetComponent<Complete.TankMovement>().path = Grid.Instance.path;
-        }*/
+        }
     }
 
     //Return the next location the tank will want to go
@@ -55,7 +55,7 @@ public class PathManager : MonoBehaviour
                 {
                     currDistance = Vector3.Distance(_tankList[i].transform.position, _currentTank.transform.position);
                     _currentTank.GetComponent<Complete.TankShooting>().target = _tankList[i].transform;
-                    _currentTank.GetComponent<Complete.TankMovement>().BehaviourTree.Blackboard.targetLocation = _tankList[i].transform.position;
+                    _currentTank.GetComponent<Complete.TankMovement>().BehaviourTree.Blackboard.targetLocation = _tankList[i].transform;
                 }
             }
         }

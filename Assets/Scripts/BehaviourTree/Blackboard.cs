@@ -16,7 +16,7 @@ namespace Complete
         public List<Vector3> path = new List<Vector3>();
         
         public Transform tankTransform = null;
-        public Vector3 targetLocation = Vector3.zero;
+        public Transform targetLocation = null;
         public Vector3 zoneLocation = Vector3.zero;
         
         public float movementSpeed = 12f;

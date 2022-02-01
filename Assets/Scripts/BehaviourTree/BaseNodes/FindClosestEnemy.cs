@@ -18,7 +18,7 @@ namespace Complete
         {
             Debug.Log("FindClosestEnemy");
 
-            float minDist = Vector3.Distance(Blackboard.tankTransform.position, Blackboard.zoneLocation);
+            float minDist =  10000;
             GameObject closestEnemy = null;
             GameObject[] allTanks = GameObject.FindGameObjectsWithTag("Player");
             if (allTanks.Length > 0)
@@ -35,8 +35,6 @@ namespace Complete
                 }
 
             }
-            Debug.Log(allTanks.Length);
-            Debug.Log(closestEnemy);
             if (closestEnemy)
             {
                 List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, closestEnemy.transform.position);
@@ -44,7 +42,7 @@ namespace Complete
                 if (path.Count > 0)
                 {
 
-                    Blackboard.targetLocation = closestEnemy.transform.position;
+                    Blackboard.targetLocation = closestEnemy.transform;
                     Blackboard.path = path;
                     return NodeStates.SUCCESS;
                 }

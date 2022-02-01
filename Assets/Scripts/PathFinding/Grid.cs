@@ -83,15 +83,21 @@ public class Grid : MonoBehaviour
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
-        if (grid != null)
+
+		if (grid != null)
         {
-            foreach (Node n in grid)
+
+			
+
+			foreach (Node n in grid)
             {
                 Gizmos.color = (n.walkable) ? Color.white : Color.red;
+				Debug.Log(PathManager.Instance.allTanks.Length);
                 foreach (GameObject go in PathManager.Instance.allTanks)
                 {
-                    if (go.GetComponent<Complete.TankMovement>().path != null)
-                        if (go.GetComponent<Complete.TankMovement>().path.Contains(n.worldPosition))
+
+                    if (go.GetComponent<Complete.TankMovement>().BehaviourTree.Blackboard.path != null)
+                        if (go.GetComponent<Complete.TankMovement>().BehaviourTree.Blackboard.path.Contains(n.worldPosition))
                             Gizmos.color = Color.green;
                 }
 

@@ -23,7 +23,7 @@ namespace Complete
 
         public override NodeStates Evaluate()
         {
-            Debug.Log("Start sequence for " + "<color=#" + ColorUtility.ToHtmlStringRGB(bb.playerColor) + ">████████████</color> currentChild = " + currentChild);
+            //Debug.Log("Start sequence for " + "<color=#" + ColorUtility.ToHtmlStringRGB(bb.playerColor) + ">████████████</color> currentChild = " + currentChild);
             if (_nodes.Count > 0)
             {
                 if (_nodes.Count > currentChild)
@@ -32,14 +32,17 @@ namespace Complete
                     {
                         case NodeStates.FAILURE:
                             currentChild = 0;
+                            Debug.Log("FAIL in Sequence");
                             nodeState = NodeStates.FAILURE;
                             return nodeState;
                         case NodeStates.SUCCESS:
                             currentChild++;
+                            Debug.Log("SUCCESS in Sequence");
                             Evaluate();
                             break;
                         case NodeStates.RUNNING:
                             nodeState = NodeStates.RUNNING;
+                            //Debug.Log("RUNNING in Sequence");
                             return nodeState;
                     }
                 }
