@@ -50,8 +50,6 @@ public class StateMachine : MonoBehaviour
         fillBar.fillAmount = currCaptureBar / captureValue;
         if (currentState != null)
             currentState.CheckState(this);
-
-
     }
 
     public void checkTanks()
@@ -138,5 +136,4 @@ public class StateMachine : MonoBehaviour
             nbPlayerOnHellipad.Remove(other.gameObject);
         }
     }
-
 }

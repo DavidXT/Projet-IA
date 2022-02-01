@@ -13,7 +13,6 @@ public class IdleState : State
     public override void Enter()
     {
         base.Enter();
-
     }
 
     public override void CheckState(StateMachine _sm)
