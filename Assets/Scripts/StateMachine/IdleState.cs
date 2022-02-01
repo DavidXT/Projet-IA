@@ -10,4 +10,18 @@ public class IdleState : State
         this.m_transition = _transition;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+    }
+
+    public override void CheckState(StateMachine _sm)
+    {
+        _sm.teamOwner = 0;
+        if (_sm.nbPlayerOnHellipad.Count >= 1)
+        {
+            _sm.ChangeState(_sm.Capturing);
+        }
+    }
 }

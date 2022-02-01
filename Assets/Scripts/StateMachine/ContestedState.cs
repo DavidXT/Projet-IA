@@ -19,6 +19,20 @@ public class ContestedState : State
     public override void CheckState(StateMachine _sm)
     {
         base.CheckState(_sm);
-        //TO DO
+        if (_sm.canCapture == false)
+        {
+            if (_sm.currCaptureBar >= 0)
+            {
+                _sm.currCaptureBar -= Time.deltaTime;
+                if (_sm.currCaptureBar <= 0)
+                {
+                    _sm.ChangeState(_sm.Neutral);
+                }
+            }
+        }
+        else
+        {
+            _sm.ChangeState(_sm.Capturing);
+        }
     }
 }

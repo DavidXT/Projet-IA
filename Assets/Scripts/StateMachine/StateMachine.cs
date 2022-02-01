@@ -45,126 +45,24 @@ public class StateMachine : MonoBehaviour
 
     void Update()
     {
-        if (currentState != null)
-            currentState.CheckState(this);
-        fillBar.fillAmount = currCaptureBar/captureValue;
         checkTanks();
         canCapture = checkTeamOnHellipad();
-        checkState();
-    }
-
-    void checkState()
-    {
-        if(currentState != null)
-        {
-            if(currentState == Capturing)
-            {
-                if(canCapture == true)
-                {
-                    if(nbPlayerOnHellipad.Count > 0)
-                    {
-                        if (currCaptureBar < captureValue)
-                        {
-                            currCaptureBar += Time.deltaTime;
-                            if (currCaptureBar > captureValue)
-                            {
-                                ChangeState(Captured);
-                                teamOwner = currTeam;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if(currCaptureBar >= 0)
-                        {
-                            currCaptureBar -= Time.deltaTime;
-                            if(currCaptureBar <= 0)
-                            {
-                                ChangeState(Neutral);
-                            }
-                        }
-                    }
-                   
-                }
-                else
-                {
-                    ChangeState(Contested);
-                }
-            }
+        fillBar.fillAmount = currCaptureBar / captureValue;
+        if (currentState != null)
+            currentState.CheckState(this);
 
 
-            if(currentState == Contested)
-            {
-                if(canCapture == false)
-                {
-                    if (currCaptureBar >= 0)
-                    {
-                        currCaptureBar -= Time.deltaTime;
-                        if (currCaptureBar <= 0)
-                        {
-                            ChangeState(Neutral);
-                        }
-                    }
-                }
-                else 
-                {
-                    ChangeState(Capturing);
-                }
-
-            }
-
-
-            if(currentState == Captured)
-            {
-                if(!checkOwner())
-                {
-                    currCaptureBar -= Time.deltaTime;
-                    if(currCaptureBar <= 0)
-                    {
-                        ChangeState(Neutral);
-                    }
-                }
-                else
-                {
-                    if(currCaptureBar < captureValue)
-                    {
-                        currCaptureBar += Time.deltaTime;
-                    }
-                }
-            }
-
-
-            if(currentState == Neutral)
-            {
-                teamOwner = 0;
-                if (nbPlayerOnHellipad.Count >= 1)
-                {
-                    ChangeState(Capturing);
-                }
-            }
-        }
     }
 
     public void checkTanks()
     {
         if(nbPlayerOnHellipad.Count > 0)
         {
-            if (nbPlayerOnHellipad.Count == 1)
+            foreach (GameObject go in nbPlayerOnHellipad.ToArray())
             {
-                if (nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_PlayerNumber != teamOwner)
+                if (go.activeSelf == false)
                 {
-                    //TODO
-                }
-                ChangeState(Capturing);
-            }
-            else
-            {
-                foreach (GameObject go in nbPlayerOnHellipad.ToArray())
-                {
-                    if (go.activeSelf == false)
-                    {
-                        nbPlayerOnHellipad.Remove(go);
-                    }
+                    nbPlayerOnHellipad.Remove(go);
                 }
             }
         }
@@ -204,6 +102,7 @@ public class StateMachine : MonoBehaviour
         }
         return false;
     }
+
     public void ChangeState(State newState)
     {
         foreach (Transition _transi in currentState.m_transition)

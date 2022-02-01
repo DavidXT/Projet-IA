@@ -18,7 +18,21 @@ public class CapturedState : State
     public override void CheckState(StateMachine _sm)
     {
         base.CheckState(_sm);
-        //TO DO
+        if (!_sm.checkOwner())
+        {
+            _sm.currCaptureBar -= Time.deltaTime;
+            if (_sm.currCaptureBar <= 0)
+            {
+                _sm.ChangeState(_sm.Neutral);
+            }
+        }
+        else
+        {
+            if (_sm.currCaptureBar < _sm.captureValue)
+            {
+                _sm.currCaptureBar += Time.deltaTime;
+            }
+        }
     }
 
 }

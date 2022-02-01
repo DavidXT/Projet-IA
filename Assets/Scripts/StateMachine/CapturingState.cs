@@ -19,5 +19,39 @@ public class CapturingState : State
     public override void CheckState(StateMachine _sm)
     {
         base.CheckState(_sm);
+        if (_sm.currentState == _sm.Capturing)
+        {
+            if (_sm.canCapture == true)
+            {
+                if (_sm.nbPlayerOnHellipad.Count > 0)
+                {
+                    if (_sm.currCaptureBar < _sm.captureValue)
+                    {
+                        _sm.currCaptureBar += Time.deltaTime;
+                        if (_sm.currCaptureBar > _sm.captureValue)
+                        {
+                            _sm.ChangeState(_sm.Captured);
+                            _sm.teamOwner = _sm.currTeam;
+                        }
+                    }
+                }
+                else
+                {
+                    if (_sm.currCaptureBar >= 0)
+                    {
+                        _sm.currCaptureBar -= Time.deltaTime;
+                        if (_sm.currCaptureBar <= 0)
+                        {
+                            _sm.ChangeState(_sm.Neutral);
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                _sm.ChangeState(_sm.Contested);
+            }
+        }
     }
 }
