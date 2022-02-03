@@ -7,13 +7,13 @@ public class State : ScriptableObject
 {
     // Start is called before the first frame update
 
-    protected StateMachine m_stateMachine;
-    public Transition[] m_transition;
+    protected StateMachine stateMachine;
+    public Transition[] transition;
 
     public State(StateMachine _sm, Transition[] _transition)
     {
-        this.m_transition = _transition;
-        this.m_stateMachine = _sm;
+        this.transition = _transition;
+        this.stateMachine = _sm;
     }
 
     public virtual void Enter() { }
