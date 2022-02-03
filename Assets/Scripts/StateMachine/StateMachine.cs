@@ -18,6 +18,7 @@ public class StateMachine : MonoBehaviour
 
     public SO_Team teamOwner;
     public SO_Team currTeam;
+    public SO_Team capturingTeam;
     public bool canCapture = false;
     public List<GameObject> nbPlayerOnHellipad;
 
@@ -35,6 +36,7 @@ public class StateMachine : MonoBehaviour
         captureValue = 5;
         currTeam = null;
         teamOwner = null;
+        capturingTeam = null;
         if (currentState != null)
             currentState.Enter();
 
@@ -44,6 +46,10 @@ public class StateMachine : MonoBehaviour
     {
         checkTanks();
         canCapture = checkTeamOnHellipad();
+        if (capturingTeam != null)
+        {
+            fillBar.color = capturingTeam.m_TeamColor;
+        }
         fillBar.fillAmount = currCaptureBar / captureValue;
         if (currentState != null)
             currentState.CheckState(this);
@@ -65,18 +71,23 @@ public class StateMachine : MonoBehaviour
 
     public bool checkTeamOnHellipad()
     {
-        if(nbPlayerOnHellipad.Count > 1)
+        if(nbPlayerOnHellipad.Count >= 1)
         {
-            for (int i = 1; i < nbPlayerOnHellipad.Count; i++)
+            for (int i = 0; i < nbPlayerOnHellipad.Count; i++)
             {
-                if(nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_Team != nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_Team)
+                if (nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_Team != capturingTeam)
                 {
                     return false;
                 }
+                if (nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_Team != nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_Team)
+                {
+                    return false;
+                }
+
                 currTeam = nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_Team;
             }
         }
-        if(nbPlayerOnHellipad.Count == 1)
+        else if(nbPlayerOnHellipad.Count == 1)
         {
             currTeam = nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_Team;
         }
@@ -89,13 +100,17 @@ public class StateMachine : MonoBehaviour
         {
             for (int i = 0; i < nbPlayerOnHellipad.Count; i++)
             {
-                if (teamOwner == nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_Team)
+                if (teamOwner != nbPlayerOnHellipad[i].GetComponent<Complete.TankMovement>().m_Team)
                 {
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        if(nbPlayerOnHellipad.Count <= 0)
+        {
+            return false;
+        }
+        return true;
     }
 
     public void ChangeState(State newState)

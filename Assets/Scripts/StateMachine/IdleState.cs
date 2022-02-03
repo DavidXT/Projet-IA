@@ -18,8 +18,10 @@ public class IdleState : State
     public override void CheckState(StateMachine _sm)
     {
         _sm.teamOwner = null;
+        _sm.capturingTeam = null;
         if (_sm.nbPlayerOnHellipad.Count >= 1)
         {
+            _sm.capturingTeam = _sm.nbPlayerOnHellipad[0].GetComponent<Complete.TankMovement>().m_Team;
             _sm.ChangeState(_sm.Capturing);
         }
     }
