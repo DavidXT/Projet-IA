@@ -129,36 +129,6 @@ namespace Complete
             }
             EngineAudio();
         }
-        
-        public void MoveToTarget()
-        {
-            /*
-            if (path != null)
-            {
-                if (this.GetComponent<Complete.TankShooting>().currCooldown <= 0)
-                {
-                    if(path.Count > 0)
-                    //if(path.Count > 1)
-                    {
-                        if (!b_onPoint)
-                        {
-                            this.transform.LookAt(path[0]);
-                            //this.transform.LookAt((path[0] + path[1]) / 2);
-                        }
-                        else
-                        {
-                            var lookVector = this.GetComponent<Complete.TankShooting>().target.transform.position;
-                            this.transform.LookAt(lookVector);
-                        }
-                    }
-                }
-                else
-                {
-                    Turn(-1);
-                }
-            }
-            */
-        }
 
         private void EngineAudio()
         {
@@ -193,29 +163,6 @@ namespace Complete
             MoveWithInput();
             TurnWithInput();
         }
-        
-        private void Move()
-        {
-            // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-            //Vector3 movement = transform.forward * MovementInputValue * Speed * Time.deltaTime;
-
-            Vector3 movement;
-            if (!IsIA)
-            {
-                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-                movement = transform.forward * MovementInputValue * Speed * Time.deltaTime;
-            }
-            else
-            {
-                // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-                movement = transform.forward * Speed * Time.deltaTime;
-            }
-            
-            // Apply this movement to the rigidbody's position.
-            Rigidbody.MovePosition(Rigidbody.position + movement);
-
-            MovementInputValue = 0;
-        }
 
         private void MoveWithInput()
         {
@@ -225,26 +172,6 @@ namespace Complete
             Rigidbody.MovePosition(Rigidbody.position + movement);
 
             MovementInputValue = 0f;
-        }
-
-        private void Turn()
-        {
-            float turn;
-            if (!IsIA)
-            {
-                // Determine the number of degrees to be turned based on the input, speed and time between frames.
-                turn = TurnInputValue * TurnSpeed * Time.deltaTime;
-            }
-            else
-            {
-                turn = 1 * TurnSpeed * Time.deltaTime;
-            }
-
-            // Make this into a rotation in the y axis.
-            Quaternion turnRotation = Quaternion.Euler (0f, turn, 0f);
-
-            // Apply this rotation to the rigidbody's rotation.
-            Rigidbody.MoveRotation (Rigidbody.rotation * turnRotation);
         }
 
         public void Rotate(Vector3 destination)
