@@ -22,7 +22,7 @@ namespace Complete
             {
                 TankMovement tankMovement = Blackboard.tankMovement;
                 Transform tankTransform = Blackboard.tankTransform;
-                Transform target = Blackboard.targetTransform;
+                Transform target = Blackboard.closestEnemy;
 
                 if (tankMovement && tankTransform && target && target.gameObject.GetComponent<TankHealth>())
                 {

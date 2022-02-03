@@ -5,15 +5,9 @@ namespace Complete
     using UnityEngine;
     
     [CreateAssetMenu(fileName = "FindClosestEnemy", menuName = "BehaviourTree/Nodes/Tasks/FindClosestEnemy")]
-    public class FindClosestEnemy : BTNode
+    public class FindClosestEnemy : BTTask
     {
-        private Blackboard Blackboard;
 
-        public override void InitNode(Blackboard blackboard)
-        {
-            Blackboard = blackboard;
-        }
-        
         public override NodeStates Evaluate()
         {
             float minDist =  100000;

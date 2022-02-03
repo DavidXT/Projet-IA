@@ -18,9 +18,8 @@ namespace Complete
             if (Blackboard)
             {
                 TankShooting shootComp = Blackboard.tankMovement.gameObject.GetComponent<TankShooting>();
-                GameObject target = Blackboard.targetTransform.gameObject;
-
-                if (shootComp && shootComp.m_currCooldown <= 0 && target.GetComponent<TankHealth>())
+                GameObject target = Blackboard.closestEnemy.gameObject;
+                if (shootComp && shootComp.m_currCooldown <= 0 && target.GetComponent<TankHealth>() && shootComp.TargetCouldBeInRange())
                 {
                     if (Vector3.Distance(target.transform.position, Blackboard.tankTransform.position) <= shootComp.m_shootDistance)
                     {

@@ -5,18 +5,12 @@ namespace Complete
     using UnityEngine;
     
     [CreateAssetMenu(fileName = "FindNextTarget", menuName = "BehaviourTree/Nodes/Tasks/FindNextTarget")]
-    public class FindNextTarget : BTNode
+    public class FindNextTarget : BTTask
     {
-        private Blackboard Blackboard;
-
-        public override void InitNode(Blackboard blackboard)
-        {
-            Blackboard = blackboard;
-        }
         
         public override NodeStates Evaluate()
         {
-            float minDist = Vector3.Distance(Blackboard.tankTransform.position, Blackboard.zoneTransform.position);
+            float minDist = 10000f;
             
             GameObject closestEnemy = null;
             GameObject[] allTanks = GameObject.FindGameObjectsWithTag("Player");
@@ -35,33 +29,33 @@ namespace Complete
             }
             if (closestEnemy)
             {
-                List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, closestEnemy.transform.position);
-                
-                if (path.Count > 0)
+                Blackboard.closestEnemy = closestEnemy.transform;
+
+
+                if (Vector3.Distance(Blackboard.tankTransform.position, closestEnemy.transform.position) > Blackboard.detectionRange)
                 {
-                    Blackboard.targetTransform = closestEnemy.transform;
-                    Blackboard.path = path;
-                    return NodeStates.SUCCESS;
+                    List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.zoneTransform.position);
+                    if (path.Count > 0)
+                    {
+                        Blackboard.path = path;
+                        Blackboard.targetTransform = Blackboard.zoneTransform;
+                        return NodeStates.SUCCESS;
+                    }
                 }
                 else
                 {
-                    return NodeStates.FAILURE;
+                    List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, closestEnemy.transform.position);
+                    if (path.Count > 0)
+                    {
+                        Blackboard.targetTransform = closestEnemy.transform;
+                        Blackboard.path = path;
+                        return NodeStates.SUCCESS;
+                    }
                 }
             }
-            else
-            {
-                List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.zoneTransform.position);
-                if (path.Count > 0)
-                {
-                    Blackboard.path = path;
-                    Blackboard.targetTransform = Blackboard.zoneTransform;
-                    return NodeStates.SUCCESS;
-                }
-                else
-                {
-                    return NodeStates.FAILURE;
-                }
-            }
+            return NodeStates.FAILURE;
+
+            
         }
 
         public override object Clone()

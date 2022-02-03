@@ -18,7 +18,9 @@ namespace Complete
         public Transform tankTransform = null;
         public Transform targetTransform = null;
         public Transform zoneTransform = null;
-        
+        public Transform closestEnemy = null;
+
+        public float detectionRange = 100;
         public float movementSpeed = 12f;
 
         public bool bIsOnPoint = false;
