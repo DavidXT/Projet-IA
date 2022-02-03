@@ -41,12 +41,10 @@ namespace Complete
                 {
                     Blackboard.targetTransform = closestEnemy.transform;
                     Blackboard.path = path;
-                    Debug.Log("Success1");
                     return NodeStates.SUCCESS;
                 }
                 else
                 {
-                    Debug.Log("Fail1");
                     return NodeStates.FAILURE;
                 }
             }
@@ -56,12 +54,10 @@ namespace Complete
                 if (path.Count > 0)
                 {
                     Blackboard.path = path;
-                    Debug.Log("Success2");
                     return NodeStates.SUCCESS;
                 }
                 else
                 {
-                    Debug.Log("Fail2");
                     return NodeStates.FAILURE;
                 }
             }
