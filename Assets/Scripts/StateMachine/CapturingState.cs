@@ -9,6 +9,7 @@ public class CapturingState : State
     public override void Enter()
     {
         base.Enter();
+
     }
     public CapturingState(StateMachine _sm, Transition[] _transition) : base(_sm, _transition)
     {
