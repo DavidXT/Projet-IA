@@ -105,11 +105,11 @@ namespace Complete
         {
             Blackboard blackboard = GetComponent<TankMovement>().BehaviourTree.Blackboard;
             
-            if (!blackboard.targetTransform.GetComponent<TankMovement>()) return false;
+            if (!blackboard.closestEnemy) return false;
             
-            if (Physics.Raycast(transform.position, (blackboard.targetTransform.position - transform.forward).normalized, out hit, m_shootDistance))
+            if (Physics.Raycast(blackboard.tankTransform.position, (blackboard.closestEnemy.position - transform.forward).normalized, out hit, m_shootDistance))
             {
-                if (Vector3.Distance(blackboard.tankTransform.position, blackboard.targetTransform.position) - hit.distance >= 1f)
+                if (Vector3.Distance(blackboard.tankTransform.position, blackboard.closestEnemy.position) - hit.distance > 1f)
                 {
                     return true;
                 }

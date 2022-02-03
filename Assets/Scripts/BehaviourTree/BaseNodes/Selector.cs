@@ -59,7 +59,7 @@ namespace Complete
         public override object Clone()
         {
             Selector selector = CreateInstance<Selector>();
-            foreach (var node in _nodes)
+            foreach (BTNode node in _nodes)
             {
                 selector._nodes.Add((BTNode)node.Clone());
             }
