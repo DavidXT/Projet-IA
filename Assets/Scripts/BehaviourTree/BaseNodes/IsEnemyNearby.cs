@@ -16,10 +16,8 @@ namespace Complete
         {
             if (Vector3.Distance(Blackboard.tankTransform.position, Blackboard.targetTransform.position) - Vector3.Distance(Blackboard.tankTransform.position, Blackboard.zoneLocation) > 2f)
             {
-                Debug.Log("Enemy nearby");
                 return NodeStates.SUCCESS;
             }
-                Debug.Log("No enemy nearby");
             return NodeStates.FAILURE;
         }
 

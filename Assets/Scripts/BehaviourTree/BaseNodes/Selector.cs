@@ -23,10 +23,8 @@ namespace Complete
                 switch (node.Evaluate())
                 {
                     case NodeStates.FAILURE:
-                        Debug.Log("Selector fail");
                         continue;
                     case NodeStates.SUCCESS:
-                        Debug.Log("Selector success");
                         nodeState = NodeStates.SUCCESS;
                         return nodeState;
                     case NodeStates.RUNNING:

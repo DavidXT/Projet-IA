@@ -16,7 +16,6 @@ namespace Complete
         public override NodeStates Evaluate()
         {
             Loop++;
-            Debug.Log("GoToCaptureZone");
             TankMovement tankMovement = this.Blackboard.tankMovement;
             Transform tankTransform = tankMovement.transform;
 
@@ -29,9 +28,7 @@ namespace Complete
 
             }
 
-            //tankMovement.Rotate(tempPos);
             float input = Mathf.Sqrt(-2.7f * Mathf.Exp(-Mathf.Sqrt(Vector3.Distance(tankTransform.position, Blackboard.targetTransform.position))) + 1);
-            //Debug.Log(input);
             tankMovement.MovementInputValue = input;
 
             if (Vector3.Distance(tankTransform.position, tempPos) < 2 || Blackboard.path.Count <= 2)

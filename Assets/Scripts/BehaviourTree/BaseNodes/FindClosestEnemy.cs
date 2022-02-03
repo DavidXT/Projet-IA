@@ -16,8 +16,6 @@ namespace Complete
         
         public override NodeStates Evaluate()
         {
-            Debug.Log("FindClosestEnemy");
-
             float minDist =  10000;
             GameObject closestEnemy = null;
             GameObject[] allTanks = GameObject.FindGameObjectsWithTag("Player");

@@ -14,7 +14,6 @@ namespace Complete
 
         public override NodeStates Evaluate()
         {
-            Debug.Log("ChaseEnemy");
             TankMovement tankMovement = Blackboard.tankMovement;
             List<Vector3> path = tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.targetTransform.position) ;
 

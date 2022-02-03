@@ -5,15 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/ChaseEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/ChaseEnemy.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/FindClosestEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/FindClosestEnemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/IsEnemyNearby.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/IsEnemyNearby.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveToTarget.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/BehaviourTree.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/BehaviourTree.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/RootSequence.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/RootSequence.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PathFinding/Grid.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PathFinding/Grid.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +88,7 @@
       <workItem from="1643616306671" duration="13427000" />
       <workItem from="1643636047270" duration="8848000" />
       <workItem from="1643703918971" duration="14214000" />
-      <workItem from="1643881096380" duration="3404000" />
+      <workItem from="1643881096380" duration="4262000" />
     </task>
     <servers />
   </component>
