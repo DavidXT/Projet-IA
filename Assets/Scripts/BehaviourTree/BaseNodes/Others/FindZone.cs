@@ -20,6 +20,9 @@ namespace Complete
                 {
                     Debug.Log("OUIOUIOUI");
                     Blackboard.targetTransform = Blackboard.zoneTransform;
+                    Blackboard.path =
+                        Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position,
+                            Blackboard.targetTransform.position);
                     return NodeStates.SUCCESS;
                 }
             return NodeStates.FAILURE;

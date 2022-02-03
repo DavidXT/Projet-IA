@@ -25,7 +25,7 @@ namespace Complete
             if (Blackboard.path.Count <= 1) return NodeStates.FAILURE;
 
             tankMovement.Rotate(Blackboard.path[1]);
-            if (Vector3.Dot(tankTransform.forward, (Blackboard.path[1] - tankTransform.position).normalized) <= 0.99f)
+            if (Vector3.Dot(tankTransform.forward, (Blackboard.path[1] - tankTransform.position).normalized) <= 0.9f)
             {
                 return NodeStates.RUNNING;
             }

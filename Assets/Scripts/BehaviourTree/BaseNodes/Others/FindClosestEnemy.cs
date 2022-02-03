@@ -7,10 +7,9 @@ namespace Complete
     [CreateAssetMenu(fileName = "FindClosestEnemy", menuName = "BehaviourTree/Nodes/Tasks/FindClosestEnemy")]
     public class FindClosestEnemy : BTTask
     {
-
         public override NodeStates Evaluate()
         {
-            float minDist =  100000;
+            float minDist = 100000;
             GameObject closestEnemy = null;
             GameObject[] allTanks = GameObject.FindGameObjectsWithTag("Player");
             if (allTanks.Length > 0)
@@ -18,7 +17,7 @@ namespace Complete
                 for (int i = 0; i < allTanks.Length; i++)
                 {
                     float tempDist = Vector3.Distance(Blackboard.tankMovement.transform.position, allTanks[i].transform.position);
-                    if (Blackboard.tankMovement.gameObject != allTanks[i] && tempDist < minDist )
+                    if (Blackboard.tankMovement.gameObject != allTanks[i] && tempDist < minDist && Blackboard.tankMovement.m_Team != allTanks[i].GetComponent<TankMovement>().m_Team)
                     {
                         closestEnemy = allTanks[i];
                         minDist = tempDist;

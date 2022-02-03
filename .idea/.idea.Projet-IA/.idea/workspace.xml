@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7f7f0668-50d4-4529-aa82-a61e6732c745" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Movement/Rotate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Movement/Rotate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Others/FindClosestEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Others/FindClosestEnemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Others/FindZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Others/FindZone.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/PassiveAI/PassiveTree.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/PassiveAI/PassiveTree.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/PassiveAI/RootPassiveSequence.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/PassiveAI/RootPassiveSequence.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Tanks/_Complete-Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/_Complete-Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +50,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/treeview/Snapping/SnapEngine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/Actions/IAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scene/Main Menu.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/PathFinding/PathManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Managers/TankManager.cs" root0="SKIP_HIGHLIGHTING" />
