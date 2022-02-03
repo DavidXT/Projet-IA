@@ -17,6 +17,8 @@ namespace Complete
         public float PitchRange = 0.2f;           // The amount by which the pitch of the engine noises can vary.
         public bool IsIA = true;
         public float moveDistance = 5;
+        public float respawnTime = 5;
+        public SO_Team m_Team;
 
         private string MovementAxisName;          // The name of the input axis for moving forward and back.
         private string TurnAxisName;              // The name of the input axis for turning.
@@ -89,7 +91,23 @@ namespace Complete
             // Store the original pitch of the audio source.
             OriginalPitch = MovementAudio.pitch;
             moveDistance = 2;
-            IsIA = true;
+            if (PlayerNumber == 1)
+            {
+                if (GameMode.Instance.currentMode == GameMode.mode.VSPLAYER)
+                {
+                    IsIA = false;
+                    this.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+                }
+                else
+                {
+                    IsIA = true;
+                }
+            }
+            else
+            {
+
+                IsIA = true;
+            }
             b_onPoint = false;
             GetComponent<NavMeshAgent>().updatePosition = false;
         }

@@ -110,7 +110,7 @@ namespace Complete
             }
 
             // These are the targets the camera should follow.
-            m_CameraControl.m_Targets = targets;
+            m_CameraControl.Targets = targets;
         }
 
 

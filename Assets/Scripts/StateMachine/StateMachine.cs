@@ -100,7 +100,7 @@ public class StateMachine : MonoBehaviour
 
     public void ChangeState(State newState)
     {
-        foreach (Transition _transi in currentState.m_transition)
+        foreach (Transition _transi in currentState.transition)
         {
             if(_transi.nextState == newState)
             {

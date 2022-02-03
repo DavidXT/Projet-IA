@@ -62,7 +62,7 @@ public float m_shootDistance;
 
         private void FixedUpdate()
         {
-            if(this.GetComponent<Complete.TankMovement>().m_IsIA == true)
+            if(this.GetComponent<Complete.TankMovement>().IsIA == true)
             {
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_shootDistance))
                 {
@@ -105,6 +105,12 @@ public float m_shootDistance;
             //m_soCooldown.fCooldown = m_resetCooldown;
             m_currCooldown = m_resetCooldown;
 
+        }
+
+        public bool TargetCouldBeInRange()
+        {
+            //TODO
+            return true;
         }
     }
 }

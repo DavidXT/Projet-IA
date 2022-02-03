@@ -33,7 +33,7 @@ namespace Complete
             m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas> ().gameObject;
 
             // Set the player numbers to be consistent across the scripts.
-            m_Movement.m_PlayerNumber = m_PlayerNumber;
+            m_Movement.PlayerNumber = m_PlayerNumber;
             m_Shooting.m_PlayerNumber = m_PlayerNumber;
             m_Movement.m_Team = m_Team;
             m_Movement.m_Team.m_TeamScore = 0;

@@ -80,22 +80,22 @@ public class Grid : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+        //Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
-        if (grid != null)
-        {
-            foreach (Node n in grid)
-            {
-                Gizmos.color = (n.walkable) ? Color.white : Color.red;
-                foreach (GameObject go in PathManager.Instance.allTanks)
-                {
-                    if (go.GetComponent<Complete.TankMovement>().pathNode != null)
-                        if (go.GetComponent<Complete.TankMovement>().pathNode.Contains(n))
-                            Gizmos.color = Color.blue;
-                }
+        //if (grid != null)
+        //{
+        //    foreach (Node n in grid)
+        //    {
+        //        Gizmos.color = (n.walkable) ? Color.white : Color.red;
+        //        foreach (GameObject go in PathManager.Instance.allTanks)
+        //        {
+        //            if (go.GetComponent<Complete.TankMovement>().pathNode != null)
+        //                if (go.GetComponent<Complete.TankMovement>().pathNode.Contains(n))
+        //                    Gizmos.color = Color.blue;
+        //        }
 
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
-            }
-        }
+        //        Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
+        //    }
+        //}
     }
 }
