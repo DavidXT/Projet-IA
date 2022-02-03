@@ -83,7 +83,7 @@ namespace Complete
         private void Start()
         {
             // The axes names are based on player number.
-            if(PlayerNumber <= 2)
+            if(PlayerNumber <= 3)
             {
                 MovementAxisName = "Vertical" + PlayerNumber;
                 TurnAxisName = "Horizontal" + PlayerNumber;
