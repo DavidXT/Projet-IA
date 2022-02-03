@@ -13,7 +13,7 @@ namespace Complete
         public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
         public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
         public Transform m_target;
-public float m_shootDistance;
+    public float m_shootDistance;
         private Rigidbody m_Rigidbody;
         RaycastHit hit;
 
@@ -70,18 +70,12 @@ public float m_shootDistance;
                     {
                         if (m_currCooldown <= 0)
                         {
-                            if (Vector3.Distance(transform.position, m_target.position) <= 5)
-                            {
-                            }
-                            else
-                            {
                                 Fire();
                                 //Rotate tank around target
                                 Quaternion turnRotation = Quaternion.Euler(0f, 90f, 0f);
                                 // Apply this rotation to the rigidbody's rotation.
                                 m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
-                            }
-
+                            
                         }
                     }
                 }

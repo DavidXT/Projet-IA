@@ -16,7 +16,7 @@ namespace Complete
         
         public override NodeStates Evaluate()
         {
-            float minDist = Vector3.Distance(Blackboard.tankTransform.position, Blackboard.zoneLocation);
+            float minDist = Vector3.Distance(Blackboard.tankTransform.position, Blackboard.zoneTransform.position);
             
             GameObject closestEnemy = null;
             GameObject[] allTanks = GameObject.FindGameObjectsWithTag("Player");
@@ -26,7 +26,7 @@ namespace Complete
                 foreach (GameObject tank in allTanks)
                 {
                     float tempDist = Vector3.Distance(Blackboard.tankTransform.position, tank.transform.position);
-                    if (Blackboard.tankMovement.gameObject != tank && tempDist < minDist)
+                    if (Blackboard.tankMovement.gameObject != tank && tempDist < minDist && Blackboard.tankMovement.m_Team != tank.GetComponent<TankMovement>().m_Team)
                     {
                         closestEnemy = tank;
                         minDist = tempDist;
@@ -50,10 +50,11 @@ namespace Complete
             }
             else
             {
-                List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.zoneLocation);
+                List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.zoneTransform.position);
                 if (path.Count > 0)
                 {
                     Blackboard.path = path;
+                    Blackboard.targetTransform = Blackboard.zoneTransform;
                     return NodeStates.SUCCESS;
                 }
                 else
