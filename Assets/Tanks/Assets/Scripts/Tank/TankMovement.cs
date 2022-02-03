@@ -33,7 +33,6 @@ namespace Complete
         public TankMovementMode MovementMode = null;
         public BehaviourTree BehaviourTree = null;
         public float turnInputValue { get => TurnInputValue; }
-        [SerializeField] private BTNode _entryNode;
 
         private void Awake()
         {
@@ -224,6 +223,8 @@ namespace Complete
 
             // Apply this movement to the rigidbody's position.
             Rigidbody.MovePosition(Rigidbody.position + movement);
+
+            MovementInputValue = 0f;
         }
 
         private void Turn()

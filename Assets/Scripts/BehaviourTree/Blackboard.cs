@@ -24,6 +24,8 @@ namespace Complete
         public bool bIsOnPoint = false;
         public bool bIsReloading = false;
 
+        public float acceptance = 0.999f; //valeur d'acceptance d'angle avant le shoot;
+
         private void OnEnable()
         {
             zoneLocation = GameObject.FindWithTag("Flag").gameObject.transform.position;

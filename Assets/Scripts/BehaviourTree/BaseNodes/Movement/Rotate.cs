@@ -4,17 +4,11 @@ namespace Complete
 {
     using UnityEngine;
     
-    [CreateAssetMenu(fileName = "LookAtTarget", menuName = "BehaviourTree/Nodes/Tasks/LookAtTarget")]
-    public class LookAtTarget : BTNode
+    [CreateAssetMenu(fileName = "Rotate", menuName = "BehaviourTree/Nodes/Tasks/Rotate")]
+    public class Rotate : BTTask
     {
-        private Blackboard Blackboard;
 
         int loop = 0;
-
-        public override void InitNode(Blackboard blackboard)
-        {
-            Blackboard = blackboard;
-        }
         
         public override NodeStates Evaluate()
         {
@@ -45,7 +39,7 @@ namespace Complete
 
         public override object Clone()
         {
-            LookAtTarget lookAtTarget = CreateInstance<LookAtTarget>();
+            Rotate lookAtTarget = CreateInstance<Rotate>();
             return lookAtTarget;
         }
     }

@@ -23,34 +23,25 @@ namespace Complete
 
         public override NodeStates Evaluate()
         {
-            if (_nodes.Count > 0)
+
+
+            for (int i = 0; i < _nodes.Count; i++)
             {
-                if (_nodes.Count > currentChild)
+                var child = _nodes[i];
+                switch (child.Evaluate())
                 {
-                    switch (_nodes[currentChild].Evaluate())
-                    {
-                        case NodeStates.FAILURE:
-                            currentChild = 0;
-                            nodeState = NodeStates.FAILURE;
-                            return nodeState;
-                        case NodeStates.SUCCESS:
-                            currentChild++;
-                            Evaluate();
-                            break;
-                        case NodeStates.RUNNING:
-                            nodeState = NodeStates.RUNNING;
-                            return nodeState;
-                    }
-                }
-                else
-                {
-                    nodeState = NodeStates.SUCCESS;
-                    currentChild = 0;
-                    return nodeState;
+                    case NodeStates.SUCCESS:
+                        continue;
+                    case NodeStates.FAILURE:
+                        nodeState = NodeStates.FAILURE;
+                        return nodeState;
+                    case NodeStates.RUNNING:
+                        nodeState = NodeStates.RUNNING;
+                        return nodeState;
                 }
             }
-            nodeState = NodeStates.FAILURE;
-            return NodeState;
+            nodeState = NodeStates.SUCCESS;
+            return nodeState;
         }
 
         public override object Clone()

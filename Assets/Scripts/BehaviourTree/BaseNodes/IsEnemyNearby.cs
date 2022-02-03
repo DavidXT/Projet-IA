@@ -3,14 +3,8 @@ namespace Complete
     using UnityEngine;
     
     [CreateAssetMenu(fileName = "IsEnemyNearby", menuName = "BehaviourTree/Nodes/Tasks/IsEnemyNearby")]
-    public class IsEnemyNearby : BTNode
+    public class IsEnemyNearby : BTTask
     {
-        private Blackboard Blackboard;
-
-        public override void InitNode(Blackboard blackboard)
-        {
-            Blackboard = blackboard;
-        }
         
         public override NodeStates Evaluate()
         {

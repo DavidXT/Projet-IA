@@ -16,17 +16,17 @@ namespace Complete
         
         public override NodeStates Evaluate()
         {
-            float minDist =  10000;
+            float minDist =  100000;
             GameObject closestEnemy = null;
             GameObject[] allTanks = GameObject.FindGameObjectsWithTag("Player");
             if (allTanks.Length > 0)
             {
-                foreach (GameObject tank in allTanks)
+                for (int i = 0; i < allTanks.Length; i++)
                 {
-                    float tempDist = Vector3.Distance(Blackboard.tankMovement.transform.position, tank.transform.position);
-                    if (Blackboard.tankMovement.gameObject != tank && tempDist < minDist)
+                    float tempDist = Vector3.Distance(Blackboard.tankMovement.transform.position, allTanks[i].transform.position);
+                    if (Blackboard.tankMovement.gameObject != allTanks[i] && tempDist < minDist)
                     {
-                        closestEnemy = tank;
+                        closestEnemy = allTanks[i];
                         minDist = tempDist;
                     }
                 }

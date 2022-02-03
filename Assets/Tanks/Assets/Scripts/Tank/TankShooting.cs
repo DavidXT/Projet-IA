@@ -60,7 +60,7 @@ public float m_shootDistance;
 
         }
 
-        private void FixedUpdate()
+        /*private void FixedUpdate()
         {
             if(this.GetComponent<Complete.TankMovement>().IsIA == true)
             {
@@ -86,10 +86,10 @@ public float m_shootDistance;
                     }
                 }
             }
-        }
+        }*/
 
 
-        private void Fire ()
+        public void Fire ()
         {
             // Create an instance of the shell and store a reference to it's rigidbody.
             Rigidbody shellInstance =
