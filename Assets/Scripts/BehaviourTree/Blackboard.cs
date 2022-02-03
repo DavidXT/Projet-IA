@@ -16,7 +16,7 @@ namespace Complete
         public List<Vector3> path = new List<Vector3>();
         
         public Transform tankTransform = null;
-        public Transform targetLocation = null;
+        public Transform targetTransform = null;
         public Vector3 zoneLocation = Vector3.zero;
         
         public float movementSpeed = 12f;
@@ -33,7 +33,7 @@ namespace Complete
         {
             Blackboard blackboard = CreateInstance<Blackboard>();
             blackboard.path = path;
-            blackboard.targetLocation = targetLocation;
+            blackboard.targetTransform = targetTransform;
             blackboard.zoneLocation = zoneLocation;
             blackboard.movementSpeed = movementSpeed;
             blackboard.bIsOnPoint = bIsOnPoint;

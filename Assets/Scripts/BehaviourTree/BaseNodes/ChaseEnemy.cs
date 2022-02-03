@@ -14,8 +14,9 @@ namespace Complete
 
         public override NodeStates Evaluate()
         {
+            Debug.Log("ChaseEnemy");
             TankMovement tankMovement = Blackboard.tankMovement;
-            List<Vector3> path = tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.targetLocation.position) ;
+            List<Vector3> path = tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.targetTransform.position) ;
 
             if (path.Count <= 2) return NodeStates.FAILURE;
 
@@ -26,7 +27,7 @@ namespace Complete
             }
             else
             {
-                tankMovement.Rotate(Blackboard.targetLocation.position);
+                tankMovement.Rotate(Blackboard.targetTransform.position);
                 tankMovement.MovementInputValue = 1;
             }
 

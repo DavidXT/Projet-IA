@@ -55,7 +55,7 @@ public class PathManager : MonoBehaviour
                 {
                     currDistance = Vector3.Distance(_tankList[i].transform.position, _currentTank.transform.position);
                     _currentTank.GetComponent<Complete.TankShooting>().target = _tankList[i].transform;
-                    _currentTank.GetComponent<Complete.TankMovement>().BehaviourTree.Blackboard.targetLocation = _tankList[i].transform;
+                    _currentTank.GetComponent<Complete.TankMovement>().BehaviourTree.Blackboard.targetTransform = _tankList[i].transform;
                 }
             }
         }

@@ -3,7 +3,7 @@ namespace Complete
     using System.Collections.Generic;
     using UnityEngine;
 
-    [CreateAssetMenu(fileName = "GoToCaptureZone", menuName = "BehaviourTree/Nodes/Tasks/GoToCaptureZone")]
+    [CreateAssetMenu(fileName = "MoveToTarget", menuName = "BehaviourTree/Nodes/Tasks/MoveToTarget")]
     public class MoveToTarget : BTNode
     {
         private Blackboard Blackboard;
@@ -30,7 +30,7 @@ namespace Complete
             }
 
             //tankMovement.Rotate(tempPos);
-            float input = Mathf.Sqrt(-2.7f * Mathf.Exp(-Mathf.Sqrt(Vector3.Distance(tankTransform.position, Blackboard.targetLocation.position))) + 1);
+            float input = Mathf.Sqrt(-2.7f * Mathf.Exp(-Mathf.Sqrt(Vector3.Distance(tankTransform.position, Blackboard.targetTransform.position))) + 1);
             //Debug.Log(input);
             tankMovement.MovementInputValue = input;
 

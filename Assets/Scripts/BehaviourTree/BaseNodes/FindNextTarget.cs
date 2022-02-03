@@ -4,8 +4,8 @@ namespace Complete
 {
     using UnityEngine;
     
-    [CreateAssetMenu(fileName = "FindClosestEnemy", menuName = "BehaviourTree/Nodes/Tasks/FindClosestEnemy")]
-    public class FindClosestEnemy : BTNode
+    [CreateAssetMenu(fileName = "FindNextTarget", menuName = "BehaviourTree/Nodes/Tasks/FindNextTarget")]
+    public class FindNextTarget : BTNode
     {
         private Blackboard Blackboard;
 
@@ -16,16 +16,16 @@ namespace Complete
         
         public override NodeStates Evaluate()
         {
-            Debug.Log("FindClosestEnemy");
-
-            float minDist =  10000;
+            float minDist = Vector3.Distance(Blackboard.tankTransform.position, Blackboard.zoneLocation);
+            
             GameObject closestEnemy = null;
             GameObject[] allTanks = GameObject.FindGameObjectsWithTag("Player");
+            
             if (allTanks.Length > 0)
             {
                 foreach (GameObject tank in allTanks)
                 {
-                    float tempDist = Vector3.Distance(Blackboard.tankMovement.transform.position, tank.transform.position);
+                    float tempDist = Vector3.Distance(Blackboard.tankTransform.position, tank.transform.position);
                     if (Blackboard.tankMovement.gameObject != tank && tempDist < minDist)
                     {
                         closestEnemy = tank;
@@ -41,16 +41,36 @@ namespace Complete
                 {
                     Blackboard.targetTransform = closestEnemy.transform;
                     Blackboard.path = path;
+                    Debug.Log("Success1");
                     return NodeStates.SUCCESS;
                 }
+                else
+                {
+                    Debug.Log("Fail1");
+                    return NodeStates.FAILURE;
+                }
             }
-            return NodeStates.FAILURE;
+            else
+            {
+                List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.zoneLocation);
+                if (path.Count > 0)
+                {
+                    Blackboard.path = path;
+                    Debug.Log("Success2");
+                    return NodeStates.SUCCESS;
+                }
+                else
+                {
+                    Debug.Log("Fail2");
+                    return NodeStates.FAILURE;
+                }
+            }
         }
 
         public override object Clone()
         {
-            FindClosestEnemy findClosestEnemy = CreateInstance<FindClosestEnemy>();
-            return findClosestEnemy;
+            FindNextTarget findNextTarget = CreateInstance<FindNextTarget>();
+            return findNextTarget;
         }
     }
 }
