@@ -37,15 +37,19 @@ namespace Complete
         private void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
+        }
+        
 
+        public void SetUpMovement(BehaviourTree bt)
+        {
             if (IsIA)
             {
-                BehaviourTree = (BehaviourTree)BehaviourTree.Clone();
+                BehaviourTree = (BehaviourTree)bt.Clone();
                 BehaviourTree.Blackboard.tankMovement = this;
                 BehaviourTree.Blackboard.tankTransform = transform;
             }
+            
         }
-        
         private void OnEnable()
         {
             // When the tank is turned on, make sure it's not kinematic.

@@ -20,7 +20,7 @@ namespace Complete
         public Transform zoneTransform = null;
         public Transform closestEnemy = null;
 
-        public float detectionRange = 100;
+        public float detectionRange = 30;
         public float movementSpeed = 12f;
 
         public bool bIsOnPoint = false;

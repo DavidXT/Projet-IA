@@ -25,10 +25,11 @@ namespace Complete
         private GameObject m_CanvasGameObject;                  // Used to disable the world space UI during the Starting and Ending phases of each round.
 
 
-        public void Setup ()
+        public void Setup (BehaviourTree bt)
         {
             // Get references to the components.
             m_Movement = m_Instance.GetComponent<TankMovement> ();
+            m_Movement.SetUpMovement(bt);
             m_Shooting = m_Instance.GetComponent<TankShooting> ();
             m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas> ().gameObject;
 

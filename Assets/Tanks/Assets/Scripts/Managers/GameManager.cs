@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,6 +20,8 @@ namespace Complete
         public bool b_isPlaying = false;
         public SO_Team[] m_Teams;
 
+
+        [SerializeField] private List<BehaviourTree> behaviorList = new List<BehaviourTree>();
         public GameObject m_hellipad;
 
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
@@ -84,16 +87,25 @@ namespace Complete
         }
         private void SpawnAllTanks()
         {
-            // For all the tanks...
-            for (int i = 0; i < m_Tanks.Length; i++)
-            {
-                // ... create them, set their player number and references needed for control.
 
-                m_Tanks[i].m_Instance =
-                    Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
-                m_Tanks[i].m_PlayerNumber = i + 1;
-                m_Tanks[i].Setup();
+            if (behaviorList.Count > 0)
+            {
+                int btIndex = 0;
+                for (int i = 0; i < m_Tanks.Length; i++)
+                {
+                    // ... create them, set their player number and references needed for control.
+
+                    m_Tanks[i].m_Instance =
+                        Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                    m_Tanks[i].m_PlayerNumber = i + 1;
+                    m_Tanks[i].Setup(behaviorList[btIndex]);
+                    btIndex++;
+                    if (btIndex >= behaviorList.Count)
+                        btIndex = 0;
+                }
+
             }
+            // For all the tanks...
         }
 
 
