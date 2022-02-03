@@ -91,6 +91,8 @@ namespace Complete
                 if (GameMode.Instance.currentMode == GameMode.mode.VSPLAYER)
                 {
                     m_IsIA = false;
+                    this.gameObject.GetComponent<BehaviorTreeManager>().enabled = false;
+                    this.gameObject.GetComponent<NavMeshAgent>().enabled = false;
                 }
                 else
                 {

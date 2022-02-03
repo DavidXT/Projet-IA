@@ -84,50 +84,6 @@ public class Pathfinding : MonoBehaviour
 		Node tempsEndNode = null;
 		NodeToCheck.Add(startNode);
 
-		List<Node> openSet = new List<Node>();
-		HashSet<Node> closedSet = new HashSet<Node>();
-		openSet.Add(startNode);
-
-		while (openSet.Count > 0)
-		{
-			Node node = openSet[0];
-			for (int i = 1; i < openSet.Count; i++)
-			{
-				if (openSet[i].fCost < node.fCost || openSet[i].fCost == node.fCost)
-				{
-					if (openSet[i].hCost < node.hCost)
-						node = openSet[i];
-				}
-			}
-
-			openSet.Remove(node);
-			closedSet.Add(node);
-
-			if (node == targetNode)
-			{
-				RetracePath(startNode, targetNode);
-				return;
-			}
-
-			foreach (Node neighbour in grid.GetNeighbours(node))
-			{
-				if (!neighbour.walkable || closedSet.Contains(neighbour))
-				{
-					continue;
-				}
-
-				int newCostToNeighbour = node.gCost + GetDistance(node, neighbour);
-				if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
-				{
-					neighbour.gCost = newCostToNeighbour;
-					neighbour.hCost = GetDistance(neighbour, targetNode);
-					neighbour.parent = node;
-
-					if (!openSet.Contains(neighbour))
-						openSet.Add(neighbour);
-				}
-			}
-		}
 		while (NodeToCheck.Count > 0)
 		{
 			Node node = NodeToCheck[0];
@@ -135,95 +91,95 @@ public class Pathfinding : MonoBehaviour
 
 			//Haut
 			if (node.worldPosition.z < Grid.Instance.gridSizeY - 1)
-            {
-                Node newTempNode = tempsGrid[node.gridX, node.gridY + 1];
-				newTempNode.Origin = node;
-				if (newTempNode == targetNode)
+			{
+				Node newTempNode = tempsGrid[node.gridX, node.gridY + 1];
+                if (newTempNode.walkable)
                 {
-                    tempsEndNode = newTempNode;
-                    break;
-                }
-                if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
-                {
-                    NodeToCheck.Add(newTempNode);
-                }
+					if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+					{
+						NodeToCheck.Add(newTempNode);
+						newTempNode.parent = node;
+						if (newTempNode == targetNode)
+						{
+							tempsEndNode = newTempNode;
+							RetracePath(startNode, tempsEndNode);
+							return;
+						}
+					}
+				}
+
 			}
 
 
-            ////droite
-            if (node.worldPosition.x < Grid.Instance.gridSizeX - 1)
-            {
-                Node newTempNode = tempsGrid[node.gridX + 1, node.gridY];
-				newTempNode.Origin = node;
-				if (newTempNode == targetNode)
+			////droite
+			if (node.worldPosition.x < Grid.Instance.gridSizeX - 1)
+			{
+				Node newTempNode = tempsGrid[node.gridX + 1, node.gridY];
+				if (newTempNode.walkable)
                 {
-                    tempsEndNode = newTempNode;
-					break;
-                }
-                if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
-                {
-                    NodeToCheck.Add(newTempNode);
-                }
+					if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+					{
+						NodeToCheck.Add(newTempNode);
+						newTempNode.parent = node;
+						if (newTempNode == targetNode)
+						{
+							tempsEndNode = newTempNode;
+							RetracePath(startNode, tempsEndNode);
+							return;
+						}
+					}
+				}
+
 			}
 
 
-            ////Bas
-            if (node.worldPosition.z > 0)
-            {
-                Node newTempNode = tempsGrid[node.gridX, node.gridY - 1];
-				newTempNode.Origin = node;
-				if (newTempNode == targetNode)
+			////Bas
+			if (node.worldPosition.z > 0)
+			{
+				Node newTempNode = tempsGrid[node.gridX, node.gridY - 1];
+				if (newTempNode.walkable)
                 {
-                    tempsEndNode = newTempNode;
+					if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+					{
+						NodeToCheck.Add(newTempNode);
+						newTempNode.parent = node;
+						if (newTempNode == targetNode)
+						{
+							tempsEndNode = newTempNode;
+							RetracePath(startNode, tempsEndNode);
+							return;
+						}
+					}
+				}
 
-					break;
-                }
-                if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
-                {
-                    NodeToCheck.Add(newTempNode);
-                }
 			}
 
 
-            ////gauche
-            if (node.worldPosition.x > 0)
-            {
-                Node newTempNode = tempsGrid[node.gridX - 1, node.gridY];
-				newTempNode.Origin = node;
-				if (newTempNode == targetNode)
+			////gauche
+			if (node.worldPosition.x > 0)
+			{
+				Node newTempNode = tempsGrid[node.gridX - 1, node.gridY];
+                if (newTempNode.walkable)
                 {
-                    tempsEndNode = newTempNode;
-
-                    break;
-                }
-                if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
-                {
-                    NodeToCheck.Add(newTempNode);
+					if (!Node.Contains(NodeToCheck, newTempNode) && !Node.Contains(NodeChecked, newTempNode))
+					{
+						NodeToCheck.Add(newTempNode);
+						newTempNode.parent = node;
+						if (newTempNode == targetNode)
+						{
+							tempsEndNode = newTempNode;
+							RetracePath(startNode, tempsEndNode);
+							return;
+						}
+					}
 				}
 			}
 
-
 			NodeChecked.Add(node);
+		}
+    }
 
-			List<Node> tempResult = new List<Node>();
-            //Debug.Log(tempsEndNode.Origin);
-            //while (tempsEndNode != startNode)
-            //{
-            //    tempResult.Add(tempsEndNode);
-            //    tempsEndNode = tempsEndNode.Origin;
-            //}
-            tempResult.Add(tempsEndNode);
-
-			Node[] tempNodesResult = new Node[tempResult.Count];
-
-            for (int i = 0; i < tempNodesResult.Length; ++i)
-            {
-                tempNodesResult[i] = tempResult[tempResult.Count - i - 1];
-			}
-        }
-	}
-
-	void RetracePath(Node startNode, Node endNode)
+    void RetracePath(Node startNode, Node endNode)
 	{
 		List<Node> path = new List<Node>();
 		Node currentNode = endNode;
@@ -236,9 +192,8 @@ public class Pathfinding : MonoBehaviour
 		path.Reverse();
 
 		grid.path = path;
-		//_p = grid.path;
-		//Debug.Log(_p);
 	}
+
 
 	int GetDistance(Node nodeA, Node nodeB)
 	{

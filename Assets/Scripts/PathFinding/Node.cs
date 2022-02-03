@@ -9,7 +9,6 @@ public class Node
 	public Vector3 worldPosition;
 	public int gridX;
 	public int gridY;
-	public Node Origin;
 
 	public int gCost;
 	public int hCost;
