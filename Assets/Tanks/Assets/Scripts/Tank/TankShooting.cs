@@ -13,7 +13,7 @@ namespace Complete
         public AudioClip m_ChargingClip;            // Audio that plays when each shot is charging up.
         public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
         public Transform m_target;
-    public float m_shootDistance;
+        public float m_shootDistance;
         private Rigidbody m_Rigidbody;
         RaycastHit hit;
 
@@ -37,7 +37,7 @@ namespace Complete
                 m_FireButton = "Fire" + m_PlayerNumber;
             }
 
-            m_shootDistance = 50;
+            m_shootDistance = 15;
             m_currCooldown = 0;
 
         }
@@ -109,7 +109,7 @@ namespace Complete
             
             if (Physics.Raycast(transform.position, (blackboard.targetTransform.position - transform.forward).normalized, out hit, m_shootDistance))
             {
-                if (Vector3.Distance(blackboard.tankTransform.position, blackboard.targetTransform.position) - Vector3.Distance(blackboard.tankTransform.position, blackboard.zoneTransform.position) <= 1f)
+                if (Vector3.Distance(blackboard.tankTransform.position, blackboard.targetTransform.position) - hit.distance >= 1f)
                 {
                     return true;
                 }

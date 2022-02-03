@@ -14,7 +14,7 @@ namespace Complete
             
             GameObject closestEnemy = null;
             GameObject[] allTanks = GameObject.FindGameObjectsWithTag("Player");
-            
+            TankShooting shootComp = Blackboard.tankMovement.gameObject.GetComponent<TankShooting>();
             if (allTanks.Length > 0)
             {
                 foreach (GameObject tank in allTanks)
@@ -31,8 +31,8 @@ namespace Complete
             {
                 Blackboard.closestEnemy = closestEnemy.transform;
 
-
-                if (Vector3.Distance(Blackboard.tankTransform.position, closestEnemy.transform.position) > Blackboard.detectionRange)
+                
+                if (Vector3.Distance(Blackboard.tankTransform.position, closestEnemy.transform.position) > Blackboard.detectionRange || (shootComp && shootComp.m_currCooldown > 0))
                 {
                     List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, Blackboard.zoneTransform.position);
                     if (path.Count > 0)

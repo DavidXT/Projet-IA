@@ -18,7 +18,7 @@ namespace Complete
                 for (int i = 0; i < allTanks.Length; i++)
                 {
                     float tempDist = Vector3.Distance(Blackboard.tankMovement.transform.position, allTanks[i].transform.position);
-                    if (Blackboard.tankMovement.gameObject != allTanks[i] && tempDist < minDist)
+                    if (Blackboard.tankMovement.gameObject != allTanks[i] && tempDist < minDist )
                     {
                         closestEnemy = allTanks[i];
                         minDist = tempDist;

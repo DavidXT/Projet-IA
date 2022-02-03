@@ -18,6 +18,11 @@ namespace Complete
             if (Blackboard)
             {
                 TankShooting shootComp = Blackboard.tankMovement.gameObject.GetComponent<TankShooting>();
+
+
+                if (!Blackboard.closestEnemy)
+                    return NodeStates.FAILURE;
+
                 GameObject target = Blackboard.closestEnemy.gameObject;
                 if (shootComp && shootComp.m_currCooldown <= 0 && target.GetComponent<TankHealth>() && shootComp.TargetCouldBeInRange())
                 {
