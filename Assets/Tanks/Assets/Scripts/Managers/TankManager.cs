@@ -36,6 +36,7 @@ namespace Complete
             m_Movement.m_PlayerNumber = m_PlayerNumber;
             m_Shooting.m_PlayerNumber = m_PlayerNumber;
             m_Movement.m_Team = m_Team;
+            m_Movement.m_Team.m_TeamScore = 0;
 
             // Create a string using the correct color that says 'PLAYER 1' etc based on the tank's color and the player's number.
             m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";

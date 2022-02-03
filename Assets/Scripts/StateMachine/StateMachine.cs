@@ -32,7 +32,7 @@ public class StateMachine : MonoBehaviour
         currentState = GetInitialState();
         currentState = Neutral;
         currCaptureBar = 0;
-        captureValue = 10;
+        captureValue = 5;
         currTeam = null;
         teamOwner = null;
         if (currentState != null)

@@ -48,7 +48,7 @@ public float m_shootDistance;
 
             if (m_PlayerNumber <= 2)
             {
-                if (Input.GetButtonDown(m_FireButton) && m_currCooldown < 0)
+                if (Input.GetButtonDown(m_FireButton) && m_currCooldown <= 0)
                 {
                     Fire();
                 }
@@ -62,26 +62,27 @@ public float m_shootDistance;
 
         private void FixedUpdate()
         {
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_shootDistance))
+            if(this.GetComponent<Complete.TankMovement>().m_IsIA == true)
             {
-                if(m_PlayerNumber == 1)
-                    Debug.Log(hit.collider.gameObject.tag);
-                if (hit.collider.gameObject.CompareTag("Player"))
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_shootDistance))
                 {
-                    if (m_currCooldown <= 0)
+                    if (hit.collider.gameObject.CompareTag("Player"))
                     {
-                        if (Vector3.Distance(transform.position, m_target.position) <= 5)
+                        if (m_currCooldown <= 0)
                         {
-                        }
-                        else
-                        {
-                            Fire();
-                            //Rotate tank around target
-                            Quaternion turnRotation = Quaternion.Euler(0f, 90f, 0f);
-                            // Apply this rotation to the rigidbody's rotation.
-                            m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
-                        }
+                            if (Vector3.Distance(transform.position, m_target.position) <= 5)
+                            {
+                            }
+                            else
+                            {
+                                Fire();
+                                //Rotate tank around target
+                                Quaternion turnRotation = Quaternion.Euler(0f, 90f, 0f);
+                                // Apply this rotation to the rigidbody's rotation.
+                                m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+                            }
 
+                        }
                     }
                 }
             }

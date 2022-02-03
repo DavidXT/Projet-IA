@@ -23,7 +23,6 @@ namespace Complete
 
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
         private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.         
-        private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
 
 
         const float k_MaxDepenetrationVelocity = float.PositiveInfinity;
@@ -160,43 +159,25 @@ namespace Complete
             }
         }
 
-        
-
         private IEnumerator RoundEnding ()
         {
             // Stop tanks from moving.
             DisableTankControl ();
+            Time.timeScale = 0;
             b_isPlaying = false;
 
-
-            // Now the winner's score has been incremented, see if someone has one the game.
-            m_GameWinner = GetGameWinner ();
             // Get a message based on the scores and whether or not there is a game winner and display it.
             string message = EndMessage ();
             m_MessageText.text = message;
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return m_EndWait;
+            SceneManager.LoadScene(0);
         }
 
         private bool TimerEnd()
         {
             return Timer <= 0;
-        }
-        
-        // This function is to find out if there is a winner of the game.
-        private TankManager GetGameWinner()
-        {
-            // Go through all the tanks...
-            for (int i = 0; i < m_Tanks.Length; i++)
-            {
-                // ... and if one of them has enough rounds to win the game, return it.
-                if (m_Tanks[i].m_Wins == m_NumRoundsToWin)
-                    return m_Tanks[i];
-            }
-
-            // If no tanks have enough rounds to win, return null.
-            return null;
         }
 
 
@@ -214,7 +195,7 @@ namespace Complete
             // Go through all the tanks and add each of their scores to the message.
             for (int i = 0; i < m_Teams.Length; i++)
             {
-                message += "Team  " + m_Teams[i].m_TeamNumber + ": " + m_Teams[i].m_TeamScore + " PTS\n";
+                message += "Team  " + m_Teams[i].m_TeamNumber + ": " + System.Math.Round(m_Teams[i].m_TeamScore) + " PTS\n";
                 if(m_Teams[i].m_TeamScore > winnerScore)
                 {
                     winnerScore = m_Teams[i].m_TeamNumber;

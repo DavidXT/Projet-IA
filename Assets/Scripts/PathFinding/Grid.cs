@@ -91,7 +91,7 @@ public class Grid : MonoBehaviour
                 {
                     if (go.GetComponent<Complete.TankMovement>().pathNode != null)
                         if (go.GetComponent<Complete.TankMovement>().pathNode.Contains(n))
-                            Gizmos.color = Color.green;
+                            Gizmos.color = Color.blue;
                 }
 
                 Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
