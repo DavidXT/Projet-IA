@@ -9,9 +9,6 @@ namespace Complete
     [CreateAssetMenu(fileName = "Sequence", menuName = "BehaviourTree/Nodes/Sequence")]
     public class Sequence : BTComposite
     {
-
-        
-
         protected override NodeStates CancellableEvaluate()
         {
             for (int i = 0; i < _nodes.Count; i++)
