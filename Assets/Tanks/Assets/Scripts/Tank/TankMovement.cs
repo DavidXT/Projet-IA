@@ -268,6 +268,8 @@ namespace Complete
             // Apply this rotation to the rigidbody's rotation.
             Rigidbody.MoveRotation(Rigidbody.rotation * turnRotation);
 
+            GetComponent<NavMeshAgent>().nextPosition = Rigidbody.position;
+
             TurnInputValue = 0;
         }
     }

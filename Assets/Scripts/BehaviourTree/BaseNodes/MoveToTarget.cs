@@ -28,6 +28,7 @@ namespace Complete
 
             }
 
+            Debug.Log("<color=#" + ColorUtility.ToHtmlStringRGB(Blackboard.playerColor) + ">████████████</color> target = " + Blackboard.targetTransform);
             float input = Mathf.Sqrt(-2.7f * Mathf.Exp(-Mathf.Sqrt(Vector3.Distance(tankTransform.position, Blackboard.targetTransform.position))) + 1);
             tankMovement.MovementInputValue = input;
 

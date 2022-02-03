@@ -31,7 +31,7 @@ public class PathManager : MonoBehaviour
         allTanks = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject go in allTanks)
         {
-            GetNextLocation(allTanks, go);
+            //GetNextLocation(allTanks, go);
             //pathfinding.AStar(go.transform.position, go.GetComponent<Complete.TankShooting>().target.transform.position);
             //go.GetComponent<Complete.TankMovement>().path = Grid.Instance.path;
         }

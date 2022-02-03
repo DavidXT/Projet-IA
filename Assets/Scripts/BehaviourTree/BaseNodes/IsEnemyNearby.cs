@@ -14,7 +14,9 @@ namespace Complete
         
         public override NodeStates Evaluate()
         {
-            if (Vector3.Distance(Blackboard.tankTransform.position, Blackboard.targetTransform.position) - Vector3.Distance(Blackboard.tankTransform.position, Blackboard.zoneLocation) > 2f)
+            if (!Blackboard.targetTransform) return NodeStates.FAILURE;
+            
+            if (Vector3.Distance(Blackboard.tankTransform.position, Blackboard.targetTransform.position) - Vector3.Distance(Blackboard.tankTransform.position, Blackboard.zoneTransform.position) > 2f)
             {
                 return NodeStates.SUCCESS;
             }
