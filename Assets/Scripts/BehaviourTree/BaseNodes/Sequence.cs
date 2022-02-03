@@ -4,27 +4,16 @@ namespace Complete
 {
     using System.Collections.Generic;
     using UnityEngine;
-    
+   
+
     [CreateAssetMenu(fileName = "Sequence", menuName = "BehaviourTree/Nodes/Sequence")]
-    public class Sequence : BTNode, ICloneable
+    public class Sequence : BTComposite
     {
-        [SerializeField] private List<BTNode> _nodes = new List<BTNode>();
-        private int currentChild = 0;
-        private Blackboard bb;
-        public override void InitNode(Blackboard blackboard)
+
+        
+
+        protected override NodeStates CancellableEvaluate()
         {
-            foreach (var node in _nodes)
-            {
-                node.InitNode(blackboard);
-            }
-
-            bb = blackboard;
-        }
-
-        public override NodeStates Evaluate()
-        {
-
-
             for (int i = 0; i < _nodes.Count; i++)
             {
                 var child = _nodes[i];
@@ -36,6 +25,28 @@ namespace Complete
                         nodeState = NodeStates.FAILURE;
                         return nodeState;
                     case NodeStates.RUNNING:
+                        nodeState = NodeStates.RUNNING;
+                        return nodeState;
+                }
+            }
+            nodeState = NodeStates.SUCCESS;
+            return nodeState;
+        }
+        protected override NodeStates WaitForTheEndEvaluate()
+        {
+            for (int i = _currentChild; i < _nodes.Count; i++)
+            {
+                var child = _nodes[i];
+                switch (child.Evaluate())
+                {
+                    case NodeStates.SUCCESS:
+                        continue;
+                    case NodeStates.FAILURE:
+                        _currentChild = 0;
+                        nodeState = NodeStates.FAILURE;
+                        return nodeState;
+                    case NodeStates.RUNNING:
+                        _currentChild = i;
                         nodeState = NodeStates.RUNNING;
                         return nodeState;
                 }

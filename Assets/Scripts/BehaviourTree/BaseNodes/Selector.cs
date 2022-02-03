@@ -4,23 +4,17 @@ namespace Complete
     using UnityEngine;
     
     [CreateAssetMenu(fileName = "Selector", menuName = "BehaviourTree/Nodes/Selector")]
-    public class Selector : BTNode
+    public class Selector : BTComposite
     {
-        [SerializeField] private List<BTNode> _nodes = new List<BTNode>();
 
-        public override void InitNode(Blackboard blackboard)
-        {
-            foreach (var node in _nodes)
-            {
-                node.InitNode(blackboard);
-            }
-        }
+       
 
-        public override NodeStates Evaluate()
+        protected override NodeStates CancellableEvaluate()
         {
-            foreach (BTNode node in _nodes)
+
+            for (int i = 0; i < _nodes.Count; i++)
             {
-                switch (node.Evaluate())
+                switch (_nodes[i].Evaluate())
                 {
                     case NodeStates.FAILURE:
                         continue;
@@ -28,6 +22,30 @@ namespace Complete
                         nodeState = NodeStates.SUCCESS;
                         return nodeState;
                     case NodeStates.RUNNING:
+                        nodeState = NodeStates.RUNNING;
+                        return nodeState;
+                    default:
+                        continue;
+                }
+            }
+            nodeState = NodeStates.FAILURE;
+            return nodeState;
+        }
+
+        protected override NodeStates WaitForTheEndEvaluate()
+        {
+            for (int i = _currentChild; i < _nodes.Count; i++)
+            {
+                switch (_nodes[i].Evaluate())
+                {
+                    case NodeStates.FAILURE:
+                        continue;
+                    case NodeStates.SUCCESS:
+                        _currentChild = 0;
+                        nodeState = NodeStates.SUCCESS;
+                        return nodeState;
+                    case NodeStates.RUNNING:
+                        _currentChild = i;
                         nodeState = NodeStates.RUNNING;
                         return nodeState;
                     default:
