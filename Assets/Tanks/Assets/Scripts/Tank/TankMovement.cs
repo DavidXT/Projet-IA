@@ -27,10 +27,7 @@ namespace Complete
         public float TurnInputValue;             // The current value of the turn input.
         private float OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] particleSystems; // References to all the particles systems used by the Tanks
-        [SerializeField] TankShooting shootScript;
         public List<Vector3> path;
-        private RaycastHit hit;
-        private RaycastHit hitBelow;
         public bool b_onPoint;
 
         public TankMovementMode MovementMode = null;
@@ -42,9 +39,12 @@ namespace Complete
         {
             Rigidbody = GetComponent<Rigidbody>();
 
-            BehaviourTree = (BehaviourTree)BehaviourTree.Clone();
-            BehaviourTree.Blackboard.tankMovement = this;
-            BehaviourTree.Blackboard.tankTransform = transform;
+            if (IsIA)
+            {
+                BehaviourTree = (BehaviourTree)BehaviourTree.Clone();
+                BehaviourTree.Blackboard.tankMovement = this;
+                BehaviourTree.Blackboard.tankTransform = transform;
+            }
         }
         
         private void OnEnable()
@@ -83,7 +83,7 @@ namespace Complete
         private void Start()
         {
             // The axes names are based on player number.
-            if(PlayerNumber <= 2)
+            if(PlayerNumber <= 3)
             {
                 MovementAxisName = "Vertical" + PlayerNumber;
                 TurnAxisName = "Horizontal" + PlayerNumber;
@@ -91,7 +91,7 @@ namespace Complete
             // Store the original pitch of the audio source.
             OriginalPitch = MovementAudio.pitch;
             moveDistance = 2;
-            if (PlayerNumber == 1)
+            if (PlayerNumber <= 3)
             {
                 if (GameMode.Instance.currentMode == GameMode.mode.VSPLAYER)
                 {
@@ -121,11 +121,13 @@ namespace Complete
                 TurnInputValue = Input.GetAxis(TurnAxisName);
             }
 
-            if (BehaviourTree.IsRunning)
+            if (IsIA)
             {
-                BehaviourTree.EvaluateTree();
+                if (BehaviourTree.IsRunning)
+                {
+                    BehaviourTree.EvaluateTree();
+                }
             }
-
             EngineAudio();
         }
         

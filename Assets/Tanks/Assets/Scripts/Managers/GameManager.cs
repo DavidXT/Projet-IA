@@ -196,9 +196,9 @@ namespace Complete
             for (int i = 0; i < m_Teams.Length; i++)
             {
                 message += "Team  " + m_Teams[i].m_TeamNumber + ": " + System.Math.Round(m_Teams[i].m_TeamScore) + " PTS\n";
-                if(m_Teams[i].m_TeamScore > winnerScore)
+                if(System.Math.Round(m_Teams[i].m_TeamScore) > winnerScore)
                 {
-                    winnerScore = m_Teams[i].m_TeamNumber;
+                    winnerScore = m_Teams[i].m_TeamScore;
                     winner = m_Teams[i].m_TeamNumber;
                 }
             }
