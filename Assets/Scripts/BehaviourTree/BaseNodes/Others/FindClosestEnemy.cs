@@ -27,9 +27,9 @@ namespace Complete
             if (closestEnemy)
             {
                 List<Vector3> path = Blackboard.tankMovement.MovementMode.GetPathToLocation(Blackboard.tankTransform.position, closestEnemy.transform.position);
-                
                 if (path.Count > 0)
                 {
+                    Blackboard.closestEnemy = closestEnemy.transform;
                     Blackboard.targetTransform = closestEnemy.transform;
                     Blackboard.path = path;
                     return NodeStates.SUCCESS;
