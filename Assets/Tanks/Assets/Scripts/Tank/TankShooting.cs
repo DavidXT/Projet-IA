@@ -103,8 +103,18 @@ namespace Complete
 
         public bool TargetCouldBeInRange()
         {
-            //TODO
-            return true;
+            Blackboard blackboard = GetComponent<TankMovement>().BehaviourTree.Blackboard;
+            
+            if (!blackboard.targetTransform.GetComponent<TankMovement>()) return false;
+            
+            if (Physics.Raycast(transform.position, (blackboard.targetTransform.position - transform.forward).normalized, out hit, m_shootDistance))
+            {
+                if (Vector3.Distance(blackboard.tankTransform.position, blackboard.targetTransform.position) - Vector3.Distance(blackboard.tankTransform.position, blackboard.zoneTransform.position) <= 1f)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
