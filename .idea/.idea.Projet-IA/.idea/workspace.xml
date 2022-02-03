@@ -3,16 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7f7f0668-50d4-4529-aa82-a61e6732c745" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Projet-IA/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scene/Main Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scene/Main Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/FindNextTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/FindNextTarget.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/IsEnemyNearby.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/IsEnemyNearby.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveToTarget.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PathFinding/PathManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteShell.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteShell.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Movement/MoveToTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Movement/MoveToTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/Selector.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Tree/Selector.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Tanks/_Complete-Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tanks/_Complete-Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,6 +24,7 @@
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Prefabs/CompleteShell.prefab" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/PathFinding/PathManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/StateMachine/CapturingState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ads@3.7.1/Runtime/Monetization/Analytics.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" root0="SKIP_HIGHLIGHTING" />
@@ -41,17 +37,21 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/IsEnemyNearby.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Managers/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Selector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Scene/Main Menu.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/PathFinding/Grid.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/BehaviourTree/BaseNodes/FindNextTarget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Managers/TankManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/Sequence.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/BehaviourTree/BaseNodes/FindNextTarget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Managers/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/StateMachine/CapturingState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Prefabs/CompleteShell.prefab" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/_Complete-Game.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Managers/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/FindNextTarget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/treeview/Snapping/SnapEngine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/Actions/IAction.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/MoveToTarget.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Scene/Main Menu.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/Blackboard.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/PathFinding/PathManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Tank/TankShooting.cs" root0="SKIP_HIGHLIGHTING" />
@@ -63,19 +63,25 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/Actions/TrackActions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/StateMachine/StateMachine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/BehaviourTree/BaseNodes/FindNextTarget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/PathFinding/Grid.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/StateMachine/StateMachine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/PathFinding/Grid.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/BehaviourTree/BaseNodes/FindNextTarget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/_Complete-Game.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/StateMachine/CapturingState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.postprocessing@2.3.0/PostProcessing/Editor/Utils/CurveEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ads@3.7.1/Runtime/Monetization/MiniJSON.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Prefabs/CompleteTank.prefab" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/FindClosestEnemy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/BehaviourTree/BaseNodes/FindNextTarget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/_Complete-Game.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/StateMachine/CapturingState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.purchasing@3.2.2/Runtime/WinRT/WinRTStore.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/fbiot/Projet-IA/Assets/Scene/Main Menu.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Editor/TMPro_CreateObjectMenu.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.4.8/Editor/Items/ItemsPerTrack.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Prefabs/CompleteShell.prefab" root0="SKIP_HIGHLIGHTING" />
@@ -84,7 +90,6 @@
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Scripts/PathFinding/PathManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/fbiot/Projet-IA/Assets/Tanks/Assets/Scripts/Tank/TankMovement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cafb29d5233847fbb4edcf8d7c32b1e3299c90/2e/31356f42/Void.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BehaviourTree/BaseNodes/LookAtTarget.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
